@@ -39,6 +39,7 @@
 .navigation__item {
   font-feature-settings: 'clig' off, 'liga' off;
   margin-right: 40.5px;
+
   &:last-child {
     margin-right: 0;
   }
@@ -82,5 +83,36 @@
   margin-right: 5px;
 }
 
+/*welcome section*/
 
+.welcome__image {
+  display: flex;
+  max-width: 1360px;
+  height: 644px;
+  border-radius: 40px;
+  background-image: url("../assets/images/img-hero.jpg");
+  background-color: lightgray;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  padding: 100px;
+}
 
+.offer{
+  @include flex(flex-start, center);
+  flex-direction: column;
+}
+
+.offer__heading {
+  max-width: 530px;
+}
+
+.heading1 {
+  @extend %font;
+  @extend %heading-1;
+  font-feature-settings: 'clig' off, 'liga' off;
+  color:$text-light;
+  &_accent {
+    @extend %accent;
+    color: $text-accent;
+  }
+}

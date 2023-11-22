@@ -1,3 +1,11 @@
+.heading1 {
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 105%; }
+
+.heading1_accent {
+  font-style: italic; }
+
 /*action*/
 .navigation__link, .navigation__link:visited {
   font-size: 16px;
@@ -5,7 +13,7 @@
   line-height: 150%; }
 
 /*Body*/
-.navigation__link, .navigation__link:visited {
+.navigation__link, .navigation__link:visited, .heading1 {
   font-family: 'Inter', sans-serif; }
 
 /* Reset and base styles  */
@@ -145,5 +153,32 @@ label {
 
 .coffee-menu__item {
   margin-right: 5px; }
+
+/*welcome section*/
+.welcome__image {
+  display: flex;
+  max-width: 1360px;
+  height: 644px;
+  border-radius: 40px;
+  background-image: url("../assets/images/img-hero.jpg");
+  background-color: lightgray;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  padding: 100px; }
+
+.offer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column; }
+
+.offer__heading {
+  max-width: 530px; }
+
+.heading1 {
+  font-feature-settings: 'clig' off, 'liga' off;
+  color: #E1D4C9; }
+  .heading1_accent {
+    color: #B0907A; }
 
 /*# sourceMappingURL=style.css.map */
