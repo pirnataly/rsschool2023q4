@@ -1,0 +1,86 @@
+@import 'abstracts/variables';
+@import "base/reset";
+@import "layout/header";
+
+
+.body {
+  background-color: $background-body;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.wrapper {
+  max-width: 1440px;
+  padding-left: $wrapper-padding;
+  padding-right: $wrapper-padding;
+  margin: auto;
+}
+
+.container {
+  @include flex();
+}
+
+.logo__heading {
+  display: none;
+}
+
+.burger {
+  display: none;
+}
+
+.header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.header__navigation {
+  @include flex();
+}
+
+.navigation__item {
+  font-feature-settings: 'clig' off, 'liga' off;
+  margin-right: 40.5px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.navigation__link {
+  padding-bottom: 4px;
+  letter-spacing: 0.2px;
+  position: relative;
+  @extend %link;
+  color: $text-dark;
+  @extend %font;
+
+  &:visited {
+    @extend %link;
+    color: $text-dark;
+    @extend %font;
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    left: 50%;
+    bottom: 0;
+    display: block;
+    width: 0;
+    height: 2px;
+    background: $text-dark;
+    transition: 0.3s;
+    transform: translateX(-50%);
+  }
+
+  @media (hover: hover) {
+    &:hover::after {
+      width: 100%
+    }
+  }
+}
+
+.coffee-menu__item {
+  margin-right: 5px;
+}
+
+
+
