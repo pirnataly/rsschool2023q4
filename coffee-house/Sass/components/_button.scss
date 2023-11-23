@@ -1,0 +1,12 @@
+.button {
+  @extend %font;
+  @extend %button;
+  color: $text-dark;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  padding: 20px;
+  border-radius: 100px;
+  background: $background-body;
+  max-width: 200px;
+  letter-spacing: 0.06em;
+}

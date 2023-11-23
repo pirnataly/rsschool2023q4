@@ -7,13 +7,18 @@
   font-style: italic; }
 
 /*action*/
-.navigation__link, .navigation__link:visited {
+.button, .navigation__link, .navigation__link:visited {
   font-size: 16px;
   font-weight: 600;
   line-height: 150%; }
 
 /*Body*/
-.navigation__link, .navigation__link:visited, .heading1 {
+.medium {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%; }
+
+.button, .navigation__link, .navigation__link:visited, .heading1, .medium {
   font-family: 'Inter', sans-serif; }
 
 /* Reset and base styles  */
@@ -93,9 +98,20 @@ button::-moz-focus-inner {
 label {
   cursor: pointer; }
 
+.button {
+  color: #403F3D;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  padding: 20px;
+  border-radius: 100px;
+  background: #E1D4C9;
+  max-width: 200px;
+  letter-spacing: 0.06em; }
+
 .body {
   background-color: #E1D4C9;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25); }
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  scroll-behavior: smooth; }
 
 .wrapper {
   max-width: 1440px;
@@ -169,16 +185,41 @@ label {
 .offer {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column; }
-
-.offer__heading {
-  max-width: 530px; }
+  .offer__heading {
+    max-width: 530px;
+    margin-bottom: 40px; }
+  .offer__button {
+    display: block;
+    width: 200px;
+    position: relative;
+    padding-right: 78px;
+    padding-left: 78px;
+    transition: padding-left 0.3s ease-in-out; }
+    .offer__button:hover {
+      padding-left: 64px; }
+    .offer__button::after {
+      position: absolute;
+      content: url("../assets/icons/coffee-cup.svg");
+      left: 64%;
+      bottom: 40%;
+      opacity: 0;
+      width: 20px;
+      height: 20px;
+      transition: opacity 0.3s ease-in-out; }
+  .offer__button:hover::after {
+    opacity: 1; }
 
 .heading1 {
   font-feature-settings: 'clig' off, 'liga' off;
   color: #E1D4C9; }
   .heading1_accent {
     color: #B0907A; }
+
+.medium {
+  color: #E1D4C9;
+  font-feature-settings: 'clig' off, 'liga' off;
+  letter-spacing: 0.034em; }
 
 /*# sourceMappingURL=style.css.map */
