@@ -11,7 +11,7 @@
 <div class="overlay"></div>
 <div class="wrapper">
   <header class="header">
-    <div class = "container">
+    <div class="container">
       <a href="#" class="logo">
         <img src="assets/icons/logo.svg" alt="">
         <h1 class="logo__heading">Coffee House</h1>
@@ -30,25 +30,54 @@
           <li class="navigation__item"><a class="navigation__link" href="#contacts">Contact us</a></li>
         </ul>
       </nav>
-    <div class="coffee-menu container">
-      <a class="navigation__link" href="pages/menu/menu__coffee.html">
-        <span class = "coffee-menu__item">Menu</span>
-        <img src="assets/icons/coffee-cup.svg" alt="">
-      </a>
-    </div>
+      <div class="coffee-menu container">
+        <a class="navigation__link" href="pages/menu/menu__coffee.html">
+          <span class="coffee-menu__item">Menu</span>
+          <img src="assets/icons/coffee-cup.svg" alt="">
+        </a>
+      </div>
     </div>
   </header>
   <section class="welcome">
-      <div class = "welcome__image">
-        <div class = "container">
-          <div class ="offer">
-            <p class = "offer__heading heading1"><span class="heading1_accent">Enjoy</span> premium coffee at our charming cafe</p>
-            <p class = "offer__heading medium">With its inviting atmosphere and delicious coffee options, the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy their favorite beverage.</p>
-           <a class="button offer__button"  href="pages/menu/menu__coffee.html"><span class="offer__button__item">Menu</span></a>
-          </div>
+    <div class="welcome__image">
+      <div class="container">
+        <div class="offer">
+          <p class="offer__heading heading1"><span class="heading1_accent">Enjoy</span> premium coffee at our charming
+            cafe</p>
+          <p class="offer__heading medium">With its inviting atmosphere and delicious coffee options, the Coffee House
+            Resource is a popular destination for coffee lovers and those seeking a warm and inviting space to enjoy
+            their favorite beverage.</p>
+          <a class="button offer__button" href="pages/menu/menu__coffee.html"><span
+              class="offer__button__item">Menu</span></a>
         </div>
       </div>
+    </div>
   </section>
-
+  <section class="favorite-coffee">
+    <div class="column-container">
+      <p class="favorite-coffee__heading heading2">Choose your <span class="heading2_accent">favorite</span> coffee</p>
+      <div class="slider container">
+      <button class = "pagination-button left-arrow"></button>
+        <div class="slider-container"><!--window-->
+          <div class="slider-track"><!--strape-->
+          <div class="column-container slider__item">
+            <div class="slider__item__image slider__image"></div>
+            <div class="slider__content column-container">
+              <p class="slider-content__heading heading3">S’mores Frappuccino</p>
+              <p class="slider-content__description medium">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.</p>
+              <p class="slider-content__price heading3">$5.50</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <button class = "pagination-button right-arrow"></button>
+    </div>
+      <div class="controls">
+        <div class="control control_active"></div>
+        <div class="control"></div>
+        <div class="control"></div>
+      </div>
+    </div>
+  </section>
 </div>
 </body>
