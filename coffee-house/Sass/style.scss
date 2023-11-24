@@ -101,7 +101,7 @@
 
 
 .offer {
-  @include flex(flex-start);
+@include flex(flex-start);
   flex-direction: column;
 
   &__heading {
@@ -117,9 +117,10 @@
     padding-right: 78px;
     padding-left: 78px;
     transition: padding-left 0.3s ease-in-out;
-
-    &:hover {
-      padding-left: 64px;
+    @media (hover: hover) {
+      &:hover {
+        padding-left: 64px;
+      }
     }
 
     &::after {
@@ -134,11 +135,12 @@
     }
   }
 
+ @media (hover: hover) {
   &__button:hover::after {
     opacity: 1;
   }
 }
-
+}
 .heading1 {
   @extend %font;
   @extend %heading-1;
@@ -253,4 +255,140 @@
   &_active{
     background-color: $border-dark;
   }
+}
+
+
+/*section about*/
+
+.about {
+  margin-bottom: 100px;
+}
+
+.about__text {
+   width: 100%;
+  margin-bottom: $wrapper-padding;
+}
+
+.about__img-container {
+  width: 100%;
+  height: 1060px;
+}
+
+.about__img-column {
+  max-width: 660px;
+  width: 660px;
+  min-width: 348px;
+  height: 100%;
+}
+
+.image-container {
+  border-radius: 20px;
+  background-size: 726px 726px;
+  transition: all 0.5s ease;
+}
+
+
+  .big-image {
+   min-width: 100%;
+    min-height: 590px;
+    background-repeat: no-repeat;
+    background-position:-33px -68px;
+    @media (hover: hover) {
+      &:hover {
+        background-position: 0px -33px;
+        background-size: 100% 660px;
+      }
+    }
+      }
+    .small-image {
+      width: 100%;
+      height: 430px;
+      background-position:-33px -148px;
+      background-repeat: no-repeat;
+      @media (hover: hover) {
+        &:hover {
+          background-position: 0px -115px;
+          background-size: 660px 660px;
+        }
+      }
+    }
+
+
+
+.left-column {
+  .big-image {
+    background-image: url("../assets/images/about-1.png");
+     }
+
+  .small-image {
+    background-image: url("../assets/images/about-2.png");
+
+  }
+}
+
+.right-column {
+  flex-direction: column-reverse;
+  .big-image{
+    background-image: url("../assets/images/about-4.png");
+  }
+  .small-image{
+    background-image: url("../assets/images/about-3.png");
+  }
+}
+
+/*mobile-app*/
+.buttons {
+ max-width: 420px;
+ width:420px;
+}
+
+
+.mobile-app {
+
+   margin-bottom: 100px;
+  &__offer{
+    letter-spacing: 0.2px;
+    max-width: 630px;
+  }
+  &__heading{
+    margin-bottom: $wrapper-padding;
+  }
+  &__download {
+    margin-bottom: $wrapper-padding;
+  }
+
+}
+
+.mobile-app__button {
+  @extend %font;
+  @include flex();
+  width: 200px;
+  padding: 12px 20px;
+  align-items: center;
+ }
+
+
+.mobile-app__button {
+  justify-content: flex-start;
+  border-radius: 100px;
+  border: 1px solid $border-dark;
+}
+
+
+.caption {
+  @extend %caption;
+  margin-bottom: 2px;
+  flex-wrap: nowrap;
+}
+.button__text__line2 {
+  @extend %button;
+}
+.button__ico {
+  margin-right: 8px;
+}
+.mobile-screens {
+  max-width: 630px;
+  height: 630px;
+  width: 100%;
+  background: url("../assets/images/mobile-screens.png") no-repeat;
 }

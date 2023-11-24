@@ -17,7 +17,7 @@
   font-weight: 600;
   line-height: 125%; }
 
-.button, .navigation__link, .navigation__link:visited {
+.button, .button__text__line2, .navigation__link, .navigation__link:visited {
   font-size: 16px;
   font-weight: 600;
   line-height: 150%; }
@@ -28,7 +28,12 @@
   font-weight: 400;
   line-height: 150%; }
 
-.button, .navigation__link, .navigation__link:visited, .heading1, .medium, .heading2, .heading3 {
+.caption {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 140%; }
+
+.button, .navigation__link, .navigation__link:visited, .heading1, .medium, .heading2, .heading3, .mobile-app__button {
   font-family: 'Inter', sans-serif; }
 
 /* Reset and base styles  */
@@ -218,8 +223,9 @@ label {
     padding-right: 78px;
     padding-left: 78px;
     transition: padding-left 0.3s ease-in-out; }
-    .offer__button:hover {
-      padding-left: 64px; }
+    @media (hover: hover) {
+      .offer__button:hover {
+        padding-left: 64px; } }
     .offer__button::after {
       position: absolute;
       content: url("../assets/icons/coffee-cup.svg");
@@ -229,8 +235,9 @@ label {
       width: 20px;
       height: 20px;
       transition: opacity 0.3s ease-in-out; }
-  .offer__button:hover::after {
-    opacity: 1; }
+  @media (hover: hover) {
+    .offer__button:hover::after {
+      opacity: 1; } }
 
 .heading1 {
   font-feature-settings: 'clig' off, 'liga' off;
@@ -306,5 +313,104 @@ label {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); }
   .control_active {
     background-color: #665F55; }
+
+/*section about*/
+.about {
+  margin-bottom: 100px; }
+
+.about__text {
+  width: 100%;
+  margin-bottom: 40px; }
+
+.about__img-container {
+  width: 100%;
+  height: 1060px; }
+
+.about__img-column {
+  max-width: 660px;
+  width: 660px;
+  min-width: 348px;
+  height: 100%; }
+
+.image-container {
+  border-radius: 20px;
+  background-size: 726px 726px;
+  transition: all 0.5s ease; }
+
+.big-image {
+  min-width: 100%;
+  min-height: 590px;
+  background-repeat: no-repeat;
+  background-position: -33px -68px; }
+  @media (hover: hover) {
+    .big-image:hover {
+      background-position: 0px -33px;
+      background-size: 100% 660px; } }
+
+.small-image {
+  width: 100%;
+  height: 430px;
+  background-position: -33px -148px;
+  background-repeat: no-repeat; }
+  @media (hover: hover) {
+    .small-image:hover {
+      background-position: 0px -115px;
+      background-size: 660px 660px; } }
+
+.left-column .big-image {
+  background-image: url("../assets/images/about-1.png"); }
+.left-column .small-image {
+  background-image: url("../assets/images/about-2.png"); }
+
+.right-column {
+  flex-direction: column-reverse; }
+  .right-column .big-image {
+    background-image: url("../assets/images/about-4.png"); }
+  .right-column .small-image {
+    background-image: url("../assets/images/about-3.png"); }
+
+/*mobile-app*/
+.buttons {
+  max-width: 420px;
+  width: 420px; }
+  .buttons .container {
+    align-items: flex-start; }
+
+.mobile-app {
+  margin-bottom: 100px; }
+  .mobile-app__offer {
+    align-items: flex-start;
+    letter-spacing: 0.2px;
+    max-width: 630px; }
+  .mobile-app__heading {
+    margin-bottom: 40px; }
+  .mobile-app__download {
+    margin-bottom: 40px; }
+
+.mobile-app__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  padding: 12px 20px;
+  align-items: center; }
+
+.mobile-app__button {
+  justify-content: flex-start;
+  border-radius: 100px;
+  border: 1px solid #665F55; }
+
+.caption {
+  margin-bottom: 2px;
+  flex-wrap: nowrap; }
+
+.button__ico {
+  margin-right: 8px; }
+
+.mobile-screens {
+  max-width: 630px;
+  height: 630px;
+  width: 100%;
+  background: url("../assets/images/mobile-screens.png") no-repeat; }
 
 /*# sourceMappingURL=style.css.map */
