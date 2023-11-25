@@ -3,11 +3,14 @@
 @import "layout/header";
 @import "components/button";
 
+html {
+  scroll-behavior: smooth;
+}
 
 .body {
   background-color: $background-body;
+  padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  scroll-behavior: smooth;
 }
 
 .wrapper {
@@ -15,10 +18,15 @@
   padding-left: $wrapper-padding;
   padding-right: $wrapper-padding;
   margin: auto;
+
 }
 
 .container {
   @include flex();
+}
+
+.logo {
+  cursor: default;
 }
 
 .logo__heading {
@@ -39,6 +47,7 @@
 }
 
 .navigation__item {
+
   font-feature-settings: 'clig' off, 'liga' off;
   margin-right: 40.5px;
 
@@ -70,7 +79,7 @@
     width: 0;
     height: 2px;
     background: $text-dark;
-    transition: 0.3s;
+    transition: 0.5s;
     transform: translateX(-50%);
   }
 
@@ -79,8 +88,12 @@
       width: 100%
     }
   }
-}
 
+  &:not(.coffee-link) {
+    cursor: default;
+  }
+
+}
 .coffee-menu__item {
   margin-right: 5px;
 }
@@ -157,7 +170,7 @@
    @extend %font;
   font-feature-settings: 'clig' off, 'liga' off;
   @extend %medium;
-  letter-spacing: 0.034em;
+  //letter-spacing: 0.034em;
 }
 
 
@@ -210,6 +223,11 @@
   min-height: 480px;
 }
 
+.slider__content {
+  @extend %font;
+}
+
+
 .slider-content__heading  {
   margin-bottom: 16px;
 }
@@ -228,6 +246,7 @@
 }
 
 .left-arrow {
+  cursor: default;
   transform: rotate(180deg);
 
 }
@@ -338,6 +357,7 @@
 
 /*mobile-app*/
 .buttons {
+  align-self: flex-start;
  max-width: 420px;
  width:420px;
 }
@@ -365,24 +385,66 @@
   width: 200px;
   padding: 12px 20px;
   align-items: center;
+  transition: all 0.3s ease;
+
+  @media(hover:hover) {
+  &:hover {
+    color:$text-light;
+    background-color: $background-container;
+  }
+  }
  }
 
 
 .mobile-app__button {
+  display: flex;
+  flex-shrink: 0;
   justify-content: flex-start;
   border-radius: 100px;
   border: 1px solid $border-dark;
 }
-
+.button__text {
+ padding-left: 40px;
+}
 
 .caption {
   @extend %caption;
   margin-bottom: 2px;
   flex-wrap: nowrap;
 }
+
+
+
 .button__text__line2 {
   @extend %button;
 }
+
+.app-store {
+   background: $background-body url("../assets/icons/icon-app-store.svg") no-repeat 20px center;
+  @media(hover: hover) {
+    &:hover {
+      @include background-hover($background-container, url("../assets/icons/icon-app-store-hover.svg"), 20px 50%);
+    }
+  }
+}
+
+.google-play {
+  background: $background-body url("../assets/icons/icon-google-play.svg") no-repeat 20px center;
+  @media(hover: hover) {
+    &:hover {
+      @include background-hover($background-container, url("../assets/icons/icon-google-play-hover.svg"), 20px 50%);
+    }
+  }
+}
+
+
+
+.icon-app-store {
+
+
+}
+
+
 .button__ico {
   margin-right: 8px;
 }
@@ -391,4 +453,104 @@
   height: 630px;
   width: 100%;
   background: url("../assets/images/mobile-screens.png") no-repeat;
+}
+
+/*footer*/
+.footer {
+  width: 100%;
+  height: 450px;
+  padding: 100px;
+  border-radius: 40px;
+  background: $background-container;
+  &__offer {
+    align-items: flex-start;
+    max-width: 530px;
+    min-width: 316px;
+  }
+  &__offer__heading {
+    margin-bottom: $wrapper-padding;
+  }
+}
+
+.social {
+  max-width: 204px;
+  width: 204px;
+}
+
+.social__button {
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  border: 1px solid $border-light;
+  color: $border-light;
+  transition: all 0.3s ease;
+   }
+
+.button-twitter {
+  background: url("../assets/icons/twitter.svg") no-repeat center;
+    &:hover {
+  @include background-hover($background-body,url("../assets/icons/twitter-hover.svg"),center);
+}
+}
+
+.button-instagram {
+  background: url("../assets/icons/instagram.svg") no-repeat center;
+  &:hover {
+    @include background-hover($background-body,url("../assets/icons/instagram-hover.svg"),center);
+  }
+ }
+
+.button-facebook {
+  background: url("../assets/icons/facebook.svg") no-repeat center;
+  &:hover {
+    @include background-hover($background-body, url("../assets/icons/facebook-hover.svg"),center);
+  }
+}
+
+.contacts {
+  max-width: 530px;
+  width: 530px;
+  min-width: 316px;
+  align-items: flex-start;
+ }
+
+.contacts-block {
+  align-items: flex-start;
+}
+  .contacts__link {
+    margin-bottom: 11.5px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+
+
+.contacts__heading {
+  margin-bottom: $wrapper-padding;
+}
+.contacts-heading {
+  color: $text-light;
+}
+.link-item {
+  font-feature-settings: 'clig' off, 'liga' off;
+  @extend %font;
+  @extend %link;
+  letter-spacing: 0.04px;
+  align-items: baseline;
+  color: $text-light;
+  font-style: normal;
+    &::after {
+    background: $text-light;
+  }
+  &:visited {
+    color: $text-light;
+  }
+}
+
+.contacts__ico {
+  margin-right: 8px;
 }

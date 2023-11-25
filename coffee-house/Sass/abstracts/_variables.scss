@@ -77,3 +77,7 @@ $h6: 10px;
 %font{
   font-family: 'Inter', sans-serif;
 }
+
+@mixin background-hover($background-color, $url, $position) {
+  background: $background-color $url no-repeat $position;
+}
