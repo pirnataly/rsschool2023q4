@@ -154,6 +154,8 @@ html {
 
 .logo {
   cursor: default; }
+  .menu__coffee .logo {
+    cursor: pointer; }
 
 .logo__heading {
   display: none; }
@@ -198,6 +200,8 @@ html {
     .navigation__link:hover::after {
       width: 100%; } }
   .navigation__link:not(.coffee-link) {
+    cursor: default; }
+  .menu__coffee .navigation__link {
     cursor: default; }
 
 .coffee-menu__item {
@@ -519,5 +523,13 @@ html {
 
 .contacts__ico {
   margin-right: 8px; }
+
+/*menu-coffee page*/
+.menu__coffee__heading {
+  max-width: 800px;
+  width: 800px;
+  min-width: 688px;
+  margin-bottom: 40px;
+  text-align: center; }
 
 /*# sourceMappingURL=style.css.map */
