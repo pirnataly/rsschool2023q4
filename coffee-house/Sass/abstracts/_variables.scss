@@ -81,3 +81,8 @@ $h6: 10px;
 @mixin background-hover($background-color, $url, $position) {
   background: $background-color $url no-repeat $position;
 }
+
+@mixin hover-and-active (){
+  background-color: $background-container;
+  color: $text-light;
+}

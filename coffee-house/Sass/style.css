@@ -17,7 +17,7 @@
   font-weight: 600;
   line-height: 125%; }
 
-.button, .button__text__line2, .navigation__link, .navigation__link:visited, .link-item {
+.button, .button__text__line2, .menu-tab, .navigation__link, .navigation__link:visited, .link-item {
   font-size: 16px;
   font-weight: 600;
   line-height: 150%; }
@@ -33,7 +33,7 @@
   font-weight: 600;
   line-height: 140%; }
 
-.button, .navigation__link, .navigation__link:visited, .heading1, .medium, .heading2, .slider__content, .heading3, .mobile-app__button, .link-item {
+.button, .navigation__link, .navigation__link:visited, .heading1, .medium, .heading2, .slider__content, .heading3, .mobile-app__button, .link-item, .menu-tab, .menu-item__content {
   font-family: 'Inter', sans-serif; }
 
 /* Reset and base styles  */
@@ -137,15 +137,15 @@ html {
   scroll-behavior: smooth; }
 
 .body {
-  background-color: #E1D4C9;
-  padding-bottom: 40px;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25); }
+  background-color: #E1D4C9; }
 
 .wrapper {
   max-width: 1440px;
   padding-left: 40px;
   padding-right: 40px;
-  margin: auto; }
+  margin: auto;
+  padding-bottom: 40px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25); }
 
 .container {
   display: flex;
@@ -206,6 +206,10 @@ html {
 
 .coffee-menu__item {
   margin-right: 5px; }
+
+.menu__coffee .coffee-link::after {
+  width: 100%;
+  height: 2.15px; }
 
 /*welcome section*/
 .welcome__image {
@@ -525,11 +529,98 @@ html {
   margin-right: 8px; }
 
 /*menu-coffee page*/
+.menu-container {
+  flex-wrap: wrap;
+  margin-bottom: 100px; }
+
 .menu__coffee__heading {
   max-width: 800px;
   width: 800px;
   min-width: 688px;
   margin-bottom: 40px;
   text-align: center; }
+
+.menu-tabs {
+  max-width: 361px;
+  width: 361px;
+  min-width: 345px; }
+
+.menu-tab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #403F3D;
+  flex-shrink: 0;
+  padding: 7px 15px 7px 7px;
+  border-radius: 100px;
+  border: 1px solid #C1B6AD;
+  margin-right: 16px; }
+  .menu-tab:last-child {
+    margin-right: 0; }
+  .menu-tab__image {
+    margin-right: 8px; }
+  .menu-tab:active, .menu-tab_active {
+    background-color: #665F55;
+    color: #E1D4C9; }
+  .menu-tab_active {
+    cursor: default; }
+  @media (hover: hover) {
+    .menu-tab:hover {
+      background-color: #665F55;
+      color: #E1D4C9; } }
+
+.menu-item {
+  max-width: 310px;
+  width: 310px;
+  min-width: 310px;
+  height: 506px;
+  margin-top: 40px;
+  border-radius: 40px;
+  border: 1px solid #C1B6AD; }
+  .menu-container .menu-item:nth-of-type(1) .menu-item__image {
+    background-image: url("../assets/images/coffee-1.png"); }
+  .menu-container .menu-item:nth-of-type(2) .menu-item__image {
+    background-image: url("../assets/images/coffee-2.png"); }
+  .menu-container .menu-item:nth-of-type(3) .menu-item__image {
+    background-image: url("../assets/images/coffee-3.png"); }
+  .menu-container .menu-item:nth-of-type(4) .menu-item__image {
+    background-image: url("../assets/images/coffee-4.png"); }
+  .menu-container .menu-item:nth-of-type(5) .menu-item__image {
+    background-image: url("../assets/images/coffee-5.png"); }
+  .menu-container .menu-item:nth-of-type(6) .menu-item__image {
+    background-image: url("../assets/images/coffee-6.png"); }
+  .menu-container .menu-item:nth-of-type(7) .menu-item__image {
+    background-image: url("../assets/images/coffee-7.png"); }
+  .menu-container .menu-item:nth-of-type(8) .menu-item__image {
+    background-image: url("../assets/images/coffee-8.png"); }
+  @media (hover: hover) {
+    .menu-item:hover {
+      cursor: pointer; }
+    .menu-item:hover .menu-item__image {
+      background-position: 0 0;
+      background-size: 100% 310px; } }
+  .menu-item__content {
+    width: 100%;
+    height: 196px;
+    padding: 20px;
+    align-items: flex-start;
+    justify-content: flex-start; }
+  .menu-item__heading {
+    margin-bottom: 12px; }
+  .menu-item__description {
+    width: 100%;
+    margin-bottom: auto; }
+  .menu-item__image {
+    border-radius: 40px;
+    min-width: 100%;
+    height: 310px;
+    transition: all 0.5s ease;
+    background-size: 340px 340px;
+    background-position: -15px -15px;
+    background-repeat: no-repeat; }
+    @media (hover: hover) {
+      .menu-item__image:hover {
+        background-position: 0 0;
+        background-size: 100% 310px; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -9,8 +9,6 @@ html {
 
 .body {
   background-color: $background-body;
-  padding-bottom: $wrapper-padding;
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .wrapper {
@@ -18,7 +16,8 @@ html {
   padding-left: $wrapper-padding;
   padding-right: $wrapper-padding;
   margin: auto;
-
+  padding-bottom: $wrapper-padding;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .container {
@@ -27,8 +26,9 @@ html {
 
 .logo {
   cursor: default;
+
   .menu__coffee & {
-    cursor:pointer;
+    cursor: pointer;
   }
 }
 
@@ -96,14 +96,24 @@ html {
   &:not(.coffee-link) {
     cursor: default;
   }
+
   .menu__coffee & {
     cursor: default;
   }
 
 }
+
 .coffee-menu__item {
   margin-right: 5px;
 }
+
+.coffee-link {
+  .menu__coffee &::after {
+    width: 100%;
+    height: 2.15px;
+  }
+}
+
 
 /*welcome section*/
 
@@ -121,7 +131,7 @@ html {
 
 
 .offer {
-@include flex(flex-start);
+  @include flex(flex-start);
   flex-direction: column;
 
   &__heading {
@@ -155,12 +165,13 @@ html {
     }
   }
 
- @media (hover: hover) {
-  &__button:hover::after {
-    opacity: 1;
+  @media (hover: hover) {
+    &__button:hover::after {
+      opacity: 1;
+    }
   }
 }
-}
+
 .heading1 {
   @extend %font;
   @extend %heading-1;
@@ -174,10 +185,9 @@ html {
 }
 
 .medium {
-   @extend %font;
+  @extend %font;
   font-feature-settings: 'clig' off, 'liga' off;
   @extend %medium;
-  //letter-spacing: 0.034em;
 }
 
 
@@ -195,7 +205,6 @@ html {
 }
 
 .favorite-coffee__heading {
-  //letter-spacing: 1.2px;
   margin-bottom: $wrapper-padding;
 }
 
@@ -210,18 +219,19 @@ html {
     color: $text-accent;
   }
 }
+
 .slider {
   width: 100%;
   margin-bottom: 40px;
 }
 
 
-
 .slider__item {
   max-width: 480px;
-&__image {
-  margin-bottom: 20px;
-}
+
+  &__image {
+    margin-bottom: 20px;
+  }
 }
 
 .slider__image {
@@ -235,7 +245,7 @@ html {
 }
 
 
-.slider-content__heading  {
+.slider-content__heading {
   margin-bottom: 16px;
 }
 
@@ -265,7 +275,7 @@ html {
 .controls {
   display: flex;
   width: 144px;
-  height:4px;
+  height: 4px;
   margin-left: auto;
   margin-right: auto;
 
@@ -278,7 +288,8 @@ html {
   height: 100%;
   margin-right: 12px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
-  &_active{
+
+  &_active {
     background-color: $border-dark;
   }
 }
@@ -291,7 +302,7 @@ html {
 }
 
 .about__text {
-   width: 100%;
+  width: 100%;
   margin-bottom: $wrapper-padding;
 }
 
@@ -314,37 +325,37 @@ html {
 }
 
 
-  .big-image {
-   min-width: 100%;
-    min-height: 590px;
-    background-repeat: no-repeat;
-    background-position:-33px -68px;
-    @media (hover: hover) {
-      &:hover {
-        background-position: 0px -33px;
-        background-size: 100% 660px;
-      }
+.big-image {
+  min-width: 100%;
+  min-height: 590px;
+  background-repeat: no-repeat;
+  background-position: -33px -68px;
+  @media (hover: hover) {
+    &:hover {
+      background-position: 0px -33px;
+      background-size: 100% 660px;
     }
-      }
-    .small-image {
-      width: 100%;
-      height: 430px;
-      background-position:-33px -148px;
-      background-repeat: no-repeat;
-      @media (hover: hover) {
-        &:hover {
-          background-position: 0px -115px;
-          background-size: 660px 660px;
-        }
-      }
-    }
+  }
+}
 
+.small-image {
+  width: 100%;
+  height: 430px;
+  background-position: -33px -148px;
+  background-repeat: no-repeat;
+  @media (hover: hover) {
+    &:hover {
+      background-position: 0px -115px;
+      background-size: 660px 660px;
+    }
+  }
+}
 
 
 .left-column {
   .big-image {
     background-image: url("../assets/images/about-1.png");
-     }
+  }
 
   .small-image {
     background-image: url("../assets/images/about-2.png");
@@ -354,10 +365,12 @@ html {
 
 .right-column {
   flex-direction: column-reverse;
-  .big-image{
+
+  .big-image {
     background-image: url("../assets/images/about-4.png");
   }
-  .small-image{
+
+  .small-image {
     background-image: url("../assets/images/about-3.png");
   }
 }
@@ -365,21 +378,24 @@ html {
 /*mobile-app*/
 .buttons {
   align-self: flex-start;
- max-width: 420px;
- width:420px;
+  max-width: 420px;
+  width: 420px;
 }
 
 
 .mobile-app {
 
-   margin-bottom: 100px;
-  &__offer{
+  margin-bottom: 100px;
+
+  &__offer {
     letter-spacing: 0.2px;
     max-width: 630px;
   }
-  &__heading{
+
+  &__heading {
     margin-bottom: $wrapper-padding;
   }
+
   &__download {
     margin-bottom: $wrapper-padding;
   }
@@ -394,13 +410,13 @@ html {
   align-items: center;
   transition: all 0.3s ease;
 
-  @media(hover:hover) {
-  &:hover {
-    color:$text-light;
-    background-color: $background-container;
+  @media(hover: hover) {
+    &:hover {
+      color: $text-light;
+      background-color: $background-container;
+    }
   }
-  }
- }
+}
 
 
 .mobile-app__button {
@@ -410,8 +426,9 @@ html {
   border-radius: 100px;
   border: 1px solid $border-dark;
 }
+
 .button__text {
- padding-left: 40px;
+  padding-left: 40px;
 }
 
 .caption {
@@ -421,13 +438,12 @@ html {
 }
 
 
-
 .button__text__line2 {
   @extend %button;
 }
 
 .app-store {
-   background: $background-body url("../assets/icons/icon-app-store.svg") no-repeat 20px center;
+  background: $background-body url("../assets/icons/icon-app-store.svg") no-repeat 20px center;
   @media(hover: hover) {
     &:hover {
       @include background-hover($background-container, url("../assets/icons/icon-app-store-hover.svg"), 20px 50%);
@@ -445,7 +461,6 @@ html {
 }
 
 
-
 .icon-app-store {
 
 
@@ -455,6 +470,7 @@ html {
 .button__ico {
   margin-right: 8px;
 }
+
 .mobile-screens {
   max-width: 630px;
   height: 630px;
@@ -469,11 +485,13 @@ html {
   padding: 100px;
   border-radius: 40px;
   background: $background-container;
+
   &__offer {
     align-items: flex-start;
     max-width: 530px;
     min-width: 316px;
   }
+
   &__offer__heading {
     margin-bottom: $wrapper-padding;
   }
@@ -495,26 +513,29 @@ html {
   border: 1px solid $border-light;
   color: $border-light;
   transition: all 0.3s ease;
-   }
+}
 
 .button-twitter {
   background: url("../assets/icons/twitter.svg") no-repeat center;
-    &:hover {
-  @include background-hover($background-body,url("../assets/icons/twitter-hover.svg"),center);
-}
+
+  &:hover {
+    @include background-hover($background-body, url("../assets/icons/twitter-hover.svg"), center);
+  }
 }
 
 .button-instagram {
   background: url("../assets/icons/instagram.svg") no-repeat center;
+
   &:hover {
-    @include background-hover($background-body,url("../assets/icons/instagram-hover.svg"),center);
+    @include background-hover($background-body, url("../assets/icons/instagram-hover.svg"), center);
   }
- }
+}
 
 .button-facebook {
   background: url("../assets/icons/facebook.svg") no-repeat center;
+
   &:hover {
-    @include background-hover($background-body, url("../assets/icons/facebook-hover.svg"),center);
+    @include background-hover($background-body, url("../assets/icons/facebook-hover.svg"), center);
   }
 }
 
@@ -523,25 +544,29 @@ html {
   width: 530px;
   min-width: 316px;
   align-items: flex-start;
- }
+}
 
 .contacts-block {
   align-items: flex-start;
 }
-  .contacts__link {
-    margin-bottom: 11.5px;
-    &:last-child{
-      margin-bottom: 0;
-    }
+
+.contacts__link {
+  margin-bottom: 11.5px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
+}
 
 
 .contacts__heading {
   margin-bottom: $wrapper-padding;
 }
+
 .contacts-heading {
   color: $text-light;
 }
+
 .link-item {
   font-feature-settings: 'clig' off, 'liga' off;
   @extend %font;
@@ -550,9 +575,11 @@ html {
   align-items: baseline;
   color: $text-light;
   font-style: normal;
-    &::after {
+
+  &::after {
     background: $text-light;
   }
+
   &:visited {
     color: $text-light;
   }
@@ -560,9 +587,15 @@ html {
 
 .contacts__ico {
   margin-right: 8px;
+
 }
 
 /*menu-coffee page*/
+
+.menu-container {
+  flex-wrap: wrap;
+  margin-bottom: 100px;
+}
 
 .menu__coffee__heading {
   max-width: 800px;
@@ -571,3 +604,132 @@ html {
   margin-bottom: $wrapper-padding;
   text-align: center;
 }
+
+.menu-tabs {
+  max-width: 361px;
+  width: 361px;
+  min-width: 345px;
+}
+
+.menu-tab {
+  @include flex();
+  @extend %font;
+  @extend %button;
+  color: $text-dark;
+  flex-shrink: 0;
+  padding: 7px 15px 7px 7px;
+  border-radius: 100px;
+  border: 1px solid $border-light;
+  margin-right: 16px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &__image {
+    margin-right: 8px;
+  }
+
+  &:active, &_active {
+    @include hover-and-active;
+  }
+  &_active {
+    cursor: default;
+  }
+
+  @media(hover: hover) {
+    &:hover, {
+      @include hover-and-active;
+    }
+  }
+}
+
+.menu-item {
+  max-width: 310px;
+  width: 310px;
+  min-width: 310px;
+  height: 506px;
+  margin-top: $wrapper-padding;
+  border-radius: 40px;
+  border: 1px solid $border-light;
+
+  .menu-container &:nth-of-type(1) &__image {
+    background-image: url("../assets/images/coffee-1.png");
+  }
+
+  .menu-container &:nth-of-type(2) &__image {
+    background-image: url("../assets/images/coffee-2.png");
+  }
+
+  .menu-container &:nth-of-type(3) &__image {
+    background-image: url("../assets/images/coffee-3.png");
+  }
+
+  .menu-container &:nth-of-type(4) &__image {
+    background-image: url("../assets/images/coffee-4.png");
+  }
+
+  .menu-container &:nth-of-type(5) &__image {
+    background-image: url("../assets/images/coffee-5.png");
+  }
+
+  .menu-container &:nth-of-type(6) &__image {
+    background-image: url("../assets/images/coffee-6.png");
+  }
+
+  .menu-container &:nth-of-type(7) &__image {
+    background-image: url("../assets/images/coffee-7.png");
+  }
+
+  .menu-container &:nth-of-type(8) &__image {
+    background-image: url("../assets/images/coffee-8.png");
+  }
+
+  @media(hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover &__image {
+      background-position: 0 0;
+      background-size: 100% 310px;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    height: 196px;
+    @extend %font;
+    padding: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  &__heading {
+    margin-bottom: 12px;
+  }
+
+  &__description {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  &__image {
+    border-radius: 40px;
+    min-width: 100%;
+    height: 310px;
+    transition: all 0.5s ease;
+    background-size: 340px 340px;
+    background-position: -15px -15px;
+    background-repeat: no-repeat;
+    @media(hover: hover) {
+      &:hover {
+        background-position: 0 0;
+        background-size: 100% 310px;
+      }
+    }
+  }
+
+}
+
+
