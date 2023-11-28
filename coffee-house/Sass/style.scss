@@ -3,6 +3,7 @@
 @import "layout/header";
 @import "components/button";
 
+
 html {
   scroll-behavior: smooth;
 }
@@ -265,10 +266,6 @@ html {
 .left-arrow {
   cursor: default;
   transform: rotate(180deg);
-
-}
-
-.right-arrow {
 
 }
 
