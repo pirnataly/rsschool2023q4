@@ -89,7 +89,7 @@ html {
   }
 
   @media (hover: hover) {
-    &:hover::after {
+    &:not(.contacts-block>a:last-child):hover::after {
       width: 100%
     }
   }

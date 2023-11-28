@@ -196,7 +196,7 @@ html {
     transition: 0.5s;
     transform: translateX(-50%); }
   @media (hover: hover) {
-    .navigation__link:hover::after {
+    .navigation__link:not(.contacts-block > a:last-child):hover::after {
       width: 100%; } }
   .navigation__link:not(.coffee-link) {
     cursor: default; }
@@ -460,7 +460,6 @@ html {
     max-width: 530px;
     min-width: 316px; }
   .footer__offer__heading {
-    color: #E1D4C9;
     margin-bottom: 40px; }
 
 .social {
