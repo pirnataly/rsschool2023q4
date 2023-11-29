@@ -109,6 +109,9 @@ html {
 }
 
 .coffee-link {
+  .menu-coffee &{
+    pointer-events: none;
+  }
   .menu__coffee &::after {
     width: 100%;
     height: 2.15px;
@@ -266,7 +269,6 @@ html {
 .left-arrow {
   cursor: default;
   transform: rotate(180deg);
-
 }
 
 .controls {
@@ -515,27 +517,31 @@ html {
 .button-twitter {
   background: url("../assets/icons/twitter.svg") no-repeat center;
 
-  &:hover {
-    @include background-hover($background-body, url("../assets/icons/twitter-hover.svg"), center);
+  @media(hover: hover) {
+    &:hover {
+      @include background-hover($background-body, url("../assets/icons/twitter-hover.svg"), center);
+    }
   }
 }
 
 .button-instagram {
   background: url("../assets/icons/instagram.svg") no-repeat center;
-
-  &:hover {
-    @include background-hover($background-body, url("../assets/icons/instagram-hover.svg"), center);
+  @media(hover: hover) {
+    &:hover {
+      @include background-hover($background-body, url("../assets/icons/instagram-hover.svg"), center);
+    }
   }
 }
 
 .button-facebook {
   background: url("../assets/icons/facebook.svg") no-repeat center;
 
-  &:hover {
-    @include background-hover($background-body, url("../assets/icons/facebook-hover.svg"), center);
+  @media(hover: hover) {
+    &:hover {
+      @include background-hover($background-body, url("../assets/icons/facebook-hover.svg"), center);
+    }
   }
 }
-
 .contacts {
   max-width: 530px;
   width: 530px;
