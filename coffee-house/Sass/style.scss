@@ -198,9 +198,6 @@ html {
 /*favorite coffee*/
 .favorite-coffee {
   margin: 100px 4px;
-  //margin-bottom: 100px;
-  //margin-left: 4px;
-  //margin-right: 4px;
 }
 
 .column-container {
@@ -492,6 +489,7 @@ html {
   }
 
   &__offer__heading {
+    color: $text-light;
     margin-bottom: $wrapper-padding;
   }
 }
