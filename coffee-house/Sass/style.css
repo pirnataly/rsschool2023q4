@@ -139,6 +139,9 @@ label {
   @media (hover: hover) {
     .pagination-button:hover {
       background: url("../assets/icons/ico-arrow-hover.svg"); } }
+  @media (max-width: 767px) {
+    .pagination-button {
+      display: none; } }
 
 html {
   scroll-behavior: smooth; }
@@ -162,6 +165,9 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between; }
+  @media (max-width: 767px) {
+    .slider .container {
+      justify-content: center; } }
 
 .logo {
   cursor: default; }
@@ -348,7 +354,8 @@ html {
   flex-direction: column; }
 
 .favorite-coffee__heading {
-  margin-bottom: 40px; }
+  margin-bottom: 40px;
+  text-align: center; }
 
 .heading2 {
   color: #403F3D;
@@ -372,6 +379,16 @@ html {
   background-image: url("../assets/images/coffee-slider-1.svg");
   min-width: 480px;
   min-height: 480px; }
+  @media (min-width: 380px) and (max-width: 768px) {
+    .slider__image {
+      min-width: calc(480px - (((768px) - 100vw) * 132 / 388));
+      min-height: calc(480px - (((768px) - 100vw) * 132 / 388));
+      background-size: auto 100%; } }
+  @media (max-width: 380px) {
+    .slider__image {
+      min-width: 348px;
+      min-height: 348px;
+      background-size: auto 100%; } }
 
 .slider-content__heading {
   margin-bottom: 16px; }
@@ -397,12 +414,14 @@ html {
   margin-right: auto; }
 
 .control {
-  width: 40px;
+  width: 44px;
   border-radius: 100px;
   background-color: #C1B6AD;
   height: 100%;
   margin-right: 12px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); }
+  .control:last-child {
+    margin-right: 0; }
   .control_active {
     background-color: #665F55; }
 

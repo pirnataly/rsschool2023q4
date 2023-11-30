@@ -27,6 +27,11 @@ html {
 
 .container {
   @include flex();
+  @media(max-width: $tablet - 1) {
+    .slider &{
+      justify-content: center;
+    }
+  }
 }
 
 .logo {
@@ -286,6 +291,7 @@ html {
 
 .favorite-coffee__heading {
   margin-bottom: $wrapper-padding;
+  text-align: center;
 }
 
 .heading2 {
@@ -296,7 +302,6 @@ html {
   @media (min-width:$mobile) and (max-width: $tablet) {
     font-size: calc-value-from-viewport($h3, $h3-mobile, $tablet, $mobile) ;
   }
-
 
 
   &_accent {
@@ -323,6 +328,16 @@ html {
   background-image: url("../assets/images/coffee-slider-1.svg");
   min-width: 480px;
   min-height: 480px;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    min-width: calc-value-from-viewport(480px,348px,$tablet,$mobile);
+    min-height: calc-value-from-viewport(480px,348px,$tablet,$mobile);
+    background-size:  auto 100%;
+  }
+  @media (max-width: $mobile) {
+    min-width: 348px;
+    min-height: 348px;
+    background-size:  auto 100%;
+  }
 }
 
 .slider__content {
@@ -362,12 +377,15 @@ html {
 }
 
 .control {
-  width: 40px;
+  width: 44px;
   border-radius: 100px;
   background-color: $border-light;
   height: 100%;
   margin-right: 12px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+  &:last-child {
+    margin-right: 0;
+  }
 
   &_active {
     background-color: $border-dark;
