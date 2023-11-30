@@ -19,6 +19,10 @@ html {
   margin: auto;
   padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet,$mobile);
+    padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet,$mobile);
+  }
 }
 
 .container {
@@ -49,10 +53,12 @@ html {
 
 .header__navigation {
   @include flex();
+  @media(max-width: $tablet) {
+    display: none;
+  }
 }
 
 .navigation__item {
-
   font-feature-settings: 'clig' off, 'liga' off;
   margin-right: 40.5px;
 
@@ -104,14 +110,59 @@ html {
 
 }
 
+.coffee-menu {
+  @media (max-width: $tablet) {
+    display: none;
+  }
+}
+
+.burger {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  border: 1px solid $border-dark;
+  flex-shrink: 0;
+  @media (min-width: $tablet + 1px) {
+    display: none;
+  }
+}
+
+.burger__container {
+  width: 20px;
+  height: 10px;
+
+}
+
+.line {
+  width: 16px;
+  height: 2px;
+  background-image: url("../assets/icons/Vector.svg");
+  background-repeat: no-repeat;
+
+}
+
+.line_up {
+  background-position: top center;
+}
+
+
+.line_bottom {
+  background-position: bottom center;
+}
+
+
 .coffee-menu__item {
   margin-right: 5px;
 }
 
 .coffee-link {
-  .menu-coffee &{
+  .menu-coffee & {
     pointer-events: none;
   }
+
   .menu__coffee &::after {
     width: 100%;
     height: 2.15px;
@@ -129,8 +180,21 @@ html {
   background-image: url("../assets/images/img-hero.jpg");
   background-color: lightgray;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: auto 100%;
+  background-position: center;
   padding: 100px;
+  @media (min-width: $tablet) and (max-width: $desktop) {
+    padding: 100px calc-value-from-viewport(100px, 60px);
+  }
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    padding: calc-value-from-viewport(100px, 60px,$tablet,$mobile) calc-value-from-viewport(60px, 16px,$tablet,$mobile);
+    background-image: url("../assets/images/hero-tablet.png");
+    height: calc-value-from-viewport(644px, 552px,$tablet,$mobile);
+  }
+  @media (max-width: $mobile) {
+         background-image: url("../assets/images/hero-mobile.png");
+        padding: 60px 16px;
+  }
 }
 
 
@@ -151,6 +215,9 @@ html {
     padding-right: 78px;
     padding-left: 78px;
     transition: padding-left 0.3s ease-in-out;
+    @media (max-width: $tablet) {
+      padding-left: 50px;
+    }
     @media (hover: hover) {
       &:hover {
         padding-left: 64px;
@@ -172,8 +239,17 @@ html {
   @media (hover: hover) {
     &__button:hover::after {
       opacity: 1;
+
     }
   }
+  @media (max-width: $tablet) {
+    &__button::after {
+      opacity: 1;
+      left: 58%;
+      bottom: 35%;
+    }
+  }
+
 }
 
 .heading1 {
@@ -181,6 +257,9 @@ html {
   @extend %heading-1;
   font-feature-settings: 'clig' off, 'liga' off;
   color: $text-light;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h2, $h2-mobile, $tablet, $mobile) ;
+  }
 
   &_accent {
     @extend %accent;
@@ -214,6 +293,11 @@ html {
   @extend %font;
   color: $text-dark;
   font-feature-settings: 'clig' off, 'liga' off;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h3, $h3-mobile, $tablet, $mobile) ;
+  }
+
+
 
   &_accent {
     @extend %accent;
@@ -540,6 +624,7 @@ html {
     }
   }
 }
+
 .contacts {
   max-width: 530px;
   width: 530px;
@@ -634,6 +719,7 @@ html {
   &:active, &_active {
     @include hover-and-active;
   }
+
   &_active {
     cursor: default;
   }
