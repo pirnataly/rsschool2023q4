@@ -10,6 +10,7 @@ $wrapper-padding: 40px;
 $desktop: 1440px;
 $tablet: 768px;
 $mobile: 380px;
+$newposition:calc-value-from-viewport(-33px, -19px, $desktop,$tablet);
 
 
 $h1: 84px;
@@ -108,5 +109,10 @@ $h3-mobile: 32px;
   }
 
   @function calc-value-from-viewport ($init, $target, $max-view:$desktop, $min-view:$tablet) {
-    @return calc(#{$init} - (((#{$max-view}) - 100vw) * #{calc-abs-value-diff($init, $target)} / #{calc-view-diff($max-view,$min-view)}));
+    @if ($init > $target) {
+      @return calc(#{$init} - (((#{$max-view}) - 100vw) * #{calc-abs-value-diff($init, $target)} / #{calc-view-diff($max-view,$min-view)}));
+    }
+    @else {
+      @return calc(#{$init} + (((#{$max-view}) - 100vw) * #{calc-abs-value-diff($init, $target)} / #{calc-view-diff($max-view,$min-view)}));
+    }
   }
