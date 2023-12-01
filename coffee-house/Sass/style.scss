@@ -19,7 +19,7 @@ html {
   margin: auto;
   padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  @media (min-width: $mobile) and (max-width: $tablet) {
+  @media  (max-width: $tablet) {
     padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
     padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
   }
@@ -411,8 +411,9 @@ html {
 .about__img-container {
   width: 100%;
   height: 1060px;
-  @media (max-width: $tablet) {
+  @media (max-width: 889px) {
     height: 1220px;
+    justify-content: center;
   }
 }
 
@@ -421,7 +422,7 @@ html {
   width: 660px;
   min-width: 348px;
   height: 100%;
-  @media(max-width: $tablet) {
+  @media(max-width: 889px) {
     max-width: 688px;
     width: 688px;
 
@@ -440,7 +441,7 @@ html {
   min-height: 590px;
   background-repeat: no-repeat;
   background-position: -33px -68px;
-  @media (min-width: $mobile) and (max-width: $desktop) {
+  @media (max-width: $desktop - 1px) {
     background-position: center;
   }
   @media (hover: hover) {
@@ -467,7 +468,7 @@ html {
 
 .left-column {
   margin-right: 40px;
-  @media (max-width: $tablet) {
+  @media (max-width: 888px) {
     margin-right: 0;
   }
 
@@ -478,10 +479,10 @@ html {
 
   .small-image {
     background-image: url("../assets/images/about-2.png");
-    @media (min-width: $tablet) and (max-width: $desktop) {
+    @media (min-width: 889px) and (max-width: $desktop) {
       background-position: center bottom;
     }
-    @media (max-width: $tablet) {
+    @media (max-width: 888px) {
       background-image: url("../assets/images/about-4.png");
       background-position: center;
       min-width: 100%;
@@ -495,7 +496,7 @@ html {
 
 .right-column {
   flex-direction: column-reverse;
-  @media (max-width: $tablet) {
+  @media (max-width: 888px) {
     display: none;
   }
 
@@ -505,7 +506,7 @@ html {
 
   .small-image {
     background-image: url("../assets/images/about-3.png");
-    @media (min-width: $tablet) and (max-width: $desktop) {
+    @media (min-width: 889px) and (max-width: $desktop) {
       background-position: right;
     }
   }
@@ -633,11 +634,13 @@ html {
   width: 100%;
   background: url("../assets/images/mobile-screens.png") no-repeat;
   background-size: auto 100%;
-  @media (min-width:$mobile) and (max-width: $tablet) {
-    height: calc-value-from-viewport(630px, 348px,$tablet,$mobile);
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    height: calc-value-from-viewport(630px, 348px, $tablet, $mobile);
+  }
+  @media (max-width: $mobile) {
+    height: 348px;
   }
 }
-
 /*footer*/
 .footer {
   width: 100%;
@@ -653,7 +656,7 @@ html {
   }
 
   &__container {
-    @media(min-width: $mobile) and (max-width: $tablet) {
+    @media (max-width: $tablet) {
       flex-direction: column;
       height: auto;
     }
@@ -785,12 +788,66 @@ html {
 .menu-container {
   flex-wrap: wrap;
   margin-bottom: 100px;
+  max-height: 1092px;
+
+  @media (min-width: $tablet + 1px) and (max-width: $desktop) {
+    overflow: hidden;
+    justify-content: space-evenly;
+    padding: 0 calc-value-from-viewport(0px, 14px, $desktop,$tablet);
+    margin-bottom: calc-value-from-viewport(100px,40px,$desktop,$tablet);
+  }
+  @media (max-width: $tablet) {
+    padding: 0 14px;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media (min-width:723px) and (max-width: $tablet - 1px){
+    padding: 0 14px;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media(min-width:$mobile) and (max-width: 722px){
+    padding: 0 14px;
+    max-height: 2184px;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media(max-width:$mobile){
+    padding: 0 14px;
+    max-height: 2184px;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
 }
+.menu-container__button {
+  margin: 0 auto 100px;
+ }
+
+.refresh-button {
+  display: none;
+  @media (max-width: 1027px) {
+    display: block;
+    border: 1px solid $border-dark;
+    background-image: url("../assets/icons/refresh-ico.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+
 
 .menu__coffee__heading {
   max-width: 800px;
-  width: 800px;
-  min-width: 688px;
+  min-width: 348px;
+  width: 100%;
   margin-bottom: $wrapper-padding;
   text-align: center;
 }
@@ -799,6 +856,9 @@ html {
   max-width: 361px;
   width: 361px;
   min-width: 345px;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+    width: calc-value-from-viewport(361px, 345px, $tablet,$mobile);
+  }
 }
 
 .menu-tab {
@@ -811,6 +871,9 @@ html {
   border-radius: 100px;
   border: 1px solid $border-light;
   margin-right: 16px;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+   margin-right: calc-value-from-viewport(16px, 8px, $tablet,$mobile);
+  }
 
   &:last-child {
     margin-right: 0;

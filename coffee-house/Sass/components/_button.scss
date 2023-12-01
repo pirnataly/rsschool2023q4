@@ -11,11 +11,19 @@
   letter-spacing: 0.06em;
 }
 
-.pagination-button {
+.pagination {
   display: flex;
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+}
+
+
+.pagination-button {
+  //display: flex;
+  //width: 60px;
+  //height: 60px;
+  //flex-shrink: 0;
   background: url("../assets/icons/ico-arrow-default.svg");
   @media(hover:hover) {
     &:hover {
