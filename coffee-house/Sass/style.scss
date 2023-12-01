@@ -20,15 +20,15 @@ html {
   padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   @media (min-width: $mobile) and (max-width: $tablet) {
-    padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet,$mobile);
-    padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet,$mobile);
+    padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
+    padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
   }
 }
 
 .container {
   @include flex();
-  @media(max-width: $tablet - 1) {
-    .slider &{
+  @media(max-width: $tablet) {
+    .slider & {
       justify-content: center;
     }
   }
@@ -192,13 +192,13 @@ html {
     padding: 100px calc-value-from-viewport(100px, 60px);
   }
   @media (min-width: $mobile) and (max-width: $tablet) {
-    padding: calc-value-from-viewport(100px, 60px,$tablet,$mobile) calc-value-from-viewport(60px, 16px,$tablet,$mobile);
+    padding: calc-value-from-viewport(100px, 60px, $tablet, $mobile) calc-value-from-viewport(60px, 16px, $tablet, $mobile);
     background-image: url("../assets/images/hero-tablet.png");
-    height: calc-value-from-viewport(644px, 552px,$tablet,$mobile);
+    height: calc-value-from-viewport(644px, 552px, $tablet, $mobile);
   }
   @media (max-width: $mobile) {
-         background-image: url("../assets/images/hero-mobile.png");
-        padding: 60px 16px;
+    background-image: url("../assets/images/hero-mobile.png");
+    padding: 60px 16px;
   }
 }
 
@@ -262,8 +262,8 @@ html {
   @extend %heading-1;
   font-feature-settings: 'clig' off, 'liga' off;
   color: $text-light;
-  @media (min-width:$mobile) and (max-width: $tablet) {
-    font-size: calc-value-from-viewport($h2, $h2-mobile, $tablet, $mobile) ;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h2, $h2-mobile, $tablet, $mobile);
   }
 
   &_accent {
@@ -299,8 +299,8 @@ html {
   @extend %font;
   color: $text-dark;
   font-feature-settings: 'clig' off, 'liga' off;
-  @media (min-width:$mobile) and (max-width: $tablet) {
-    font-size: calc-value-from-viewport($h3, $h3-mobile, $tablet, $mobile) ;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h3, $h3-mobile, $tablet, $mobile);
   }
 
 
@@ -313,8 +313,8 @@ html {
 .slider {
   width: 100%;
   margin-bottom: 40px;
-  @media(width: $tablet) {
-    width: 688px;
+  @media(min-width: $mobile) and (max-width: $tablet - 1px) {
+    justify-content: center;
   }
 }
 
@@ -332,14 +332,14 @@ html {
   min-width: 480px;
   min-height: 480px;
   @media (min-width: $mobile) and (max-width: $tablet) {
-    min-width: calc-value-from-viewport(480px,348px,$tablet,$mobile);
-    min-height: calc-value-from-viewport(480px,348px,$tablet,$mobile);
-    background-size:  auto 100%;
+    min-width: calc-value-from-viewport(480px, 348px, $tablet, $mobile);
+    min-height: calc-value-from-viewport(480px, 348px, $tablet, $mobile);
+    background-size: auto 100%;
   }
   @media (max-width: $mobile) {
     min-width: 348px;
     min-height: 348px;
-    background-size:  auto 100%;
+    background-size: auto 100%;
   }
 }
 
@@ -386,6 +386,7 @@ html {
   height: 100%;
   margin-right: 12px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+
   &:last-child {
     margin-right: 0;
   }
@@ -420,11 +421,11 @@ html {
   width: 660px;
   min-width: 348px;
   height: 100%;
-@media(max-width: $tablet) {
-  max-width: 688px;
-  width: 688px;
+  @media(max-width: $tablet) {
+    max-width: 688px;
+    width: 688px;
 
-}
+  }
 }
 
 .image-container {
@@ -469,6 +470,7 @@ html {
   @media (max-width: $tablet) {
     margin-right: 0;
   }
+
   .big-image {
     background-image: url("../assets/images/about-1.png");
 
@@ -477,11 +479,11 @@ html {
   .small-image {
     background-image: url("../assets/images/about-2.png");
     @media (min-width: $tablet) and (max-width: $desktop) {
-      background-position:center bottom;
+      background-position: center bottom;
     }
     @media (max-width: $tablet) {
       background-image: url("../assets/images/about-4.png");
-      background-position:center;
+      background-position: center;
       min-width: 100%;
       min-height: 590px;
       background-repeat: no-repeat;
@@ -494,7 +496,7 @@ html {
 .right-column {
   flex-direction: column-reverse;
   @media (max-width: $tablet) {
-display: none;
+    display: none;
   }
 
   .big-image {
@@ -513,15 +515,19 @@ display: none;
 .buttons {
   align-self: flex-start;
   max-width: 420px;
-  width: 420px;
-}
-
-.mobile-app__container {
-  @media(max-width: 1260px) {
-    flex-direction: column;
+  min-width: 200px;
+  width: 100%;
+  @media (max-width: 464px) {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
   }
 }
 
+.mobile-app__container {
+  @media (max-width: 1260px) {
+    flex-direction: column;
+  }
+}
 
 
 .mobile-app {
@@ -533,6 +539,9 @@ display: none;
     @media (max-width: 1260px) {
       max-width: 100%;
       margin-bottom: 100px;
+    }
+    @media (max-width: 464px) {
+      margin-bottom: 0;
     }
   }
 
@@ -553,7 +562,9 @@ display: none;
   padding: 11px 20px;
   align-items: center;
   transition: all 0.3s ease;
-
+  @media (max-width: 464px) {
+    margin-bottom: 20px;
+  }
   @media(hover: hover) {
     &:hover {
       color: $text-light;
@@ -607,9 +618,7 @@ display: none;
 
 .icon-app-store {
 
-
 }
-
 
 .button__ico {
   margin-right: 8px;
@@ -618,8 +627,15 @@ display: none;
 .mobile-screens {
   max-width: 630px;
   height: 630px;
+  max-height: 630px;
+  min-width: 348px;
+  min-height: 348px;
   width: 100%;
   background: url("../assets/images/mobile-screens.png") no-repeat;
+  background-size: auto 100%;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+    height: calc-value-from-viewport(630px, 348px,$tablet,$mobile);
+  }
 }
 
 /*footer*/
@@ -632,10 +648,15 @@ display: none;
   @media(min-width: $tablet) and (max-width: $desktop) {
     padding: 100px calc-value-from-viewport(100px, 60px);
   }
-  @media(min-width:$mobile) and (max-width:$tablet) {
-    padding: calc-value-from-viewport(100px, 60px,$tablet,$mobile)  calc-value-from-viewport(60px, 16px,$tablet,$mobile);
-    flex-direction: column;
-    height: auto;
+  @media(min-width: $mobile) and (max-width: $tablet) {
+    padding: calc-value-from-viewport(100px, 60px, $tablet, $mobile) calc-value-from-viewport(60px, 16px, $tablet, $mobile);
+  }
+
+  &__container {
+    @media(min-width: $mobile) and (max-width: $tablet) {
+      flex-direction: column;
+      height: auto;
+    }
   }
 
   &__offer {
@@ -643,8 +664,8 @@ display: none;
     max-width: 530px;
     min-width: 316px;
     @media(min-width: $mobile) and(max-width: $tablet) {
-      margin-bottom: calc-value-from-viewport(100px,40px,$tablet,$mobile);
-      max-width: calc-value-from-viewport(568px,316px,$tablet,$mobile);
+      margin-bottom: calc-value-from-viewport(100px, 40px, $tablet, $mobile);
+      max-width: calc-value-from-viewport(568px, 316px, $tablet, $mobile);
     }
   }
 
@@ -719,7 +740,7 @@ display: none;
 .contacts__link {
   margin-bottom: 11.5px;
   @media (max-width: $tablet) {
-    margin-bottom: 12.5px;
+    margin-bottom: 13px;
   }
 
   &:last-child {

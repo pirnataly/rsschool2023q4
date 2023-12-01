@@ -165,7 +165,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between; }
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     .slider .container {
       justify-content: center; } }
 
@@ -369,9 +369,9 @@ html {
 .slider {
   width: 100%;
   margin-bottom: 40px; }
-  @media (width: 768px) {
+  @media (min-width: 380px) and (max-width: 767px) {
     .slider {
-      width: 688px; } }
+      justify-content: center; } }
 
 .slider__item {
   max-width: 480px; }
@@ -518,7 +518,12 @@ html {
 .buttons {
   align-self: flex-start;
   max-width: 420px;
-  width: 420px; }
+  min-width: 200px;
+  width: 100%; }
+  @media (max-width: 464px) {
+    .buttons {
+      flex-wrap: wrap;
+      margin-bottom: 20px; } }
 
 @media (max-width: 1260px) {
   .mobile-app__container {
@@ -533,6 +538,9 @@ html {
       .mobile-app__offer {
         max-width: 100%;
         margin-bottom: 100px; } }
+    @media (max-width: 464px) {
+      .mobile-app__offer {
+        margin-bottom: 0; } }
   .mobile-app__heading {
     margin-bottom: 40px; }
   .mobile-app__download {
@@ -546,6 +554,9 @@ html {
   padding: 11px 20px;
   align-items: center;
   transition: all 0.3s ease; }
+  @media (max-width: 464px) {
+    .mobile-app__button {
+      margin-bottom: 20px; } }
   @media (hover: hover) {
     .mobile-app__button:hover {
       color: #E1D4C9;
@@ -583,8 +594,15 @@ html {
 .mobile-screens {
   max-width: 630px;
   height: 630px;
+  max-height: 630px;
+  min-width: 348px;
+  min-height: 348px;
   width: 100%;
-  background: url("../assets/images/mobile-screens.png") no-repeat; }
+  background: url("../assets/images/mobile-screens.png") no-repeat;
+  background-size: auto 100%; }
+  @media (min-width: 380px) and (max-width: 768px) {
+    .mobile-screens {
+      height: calc(630px - (((768px) - 100vw) * 282 / 388)); } }
 
 /*footer*/
 .footer {
@@ -598,7 +616,9 @@ html {
       padding: 100px calc(100px - (((1440px) - 100vw) * 40 / 672)); } }
   @media (min-width: 380px) and (max-width: 768px) {
     .footer {
-      padding: calc(100px - (((768px) - 100vw) * 40 / 388)) calc(60px - (((768px) - 100vw) * 44 / 388));
+      padding: calc(100px - (((768px) - 100vw) * 40 / 388)) calc(60px - (((768px) - 100vw) * 44 / 388)); } }
+  @media (min-width: 380px) and (max-width: 768px) {
+    .footer__container {
       flex-direction: column;
       height: auto; } }
   .footer__offer {
@@ -664,7 +684,7 @@ html {
   margin-bottom: 11.5px; }
   @media (max-width: 768px) {
     .contacts__link {
-      margin-bottom: 12.5px; } }
+      margin-bottom: 13px; } }
   .contacts__link:last-child {
     margin-bottom: 0; }
 
