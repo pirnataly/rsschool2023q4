@@ -11,17 +11,27 @@
   letter-spacing: 0.06em;
 }
 
-.pagination-button {
+.pagination {
   display: flex;
   width: 60px;
   height: 60px;
   flex-shrink: 0;
-  //transition: all 300ms ease;
+}
+
+
+.pagination-button {
+  //display: flex;
+  //width: 60px;
+  //height: 60px;
+  //flex-shrink: 0;
   background: url("../assets/icons/ico-arrow-default.svg");
   @media(hover:hover) {
     &:hover {
       background: url("../assets/icons/ico-arrow-hover.svg");
     }
+  }
+  @media (max-width: $tablet - 1) {
+    display: none;
   }
 }
 

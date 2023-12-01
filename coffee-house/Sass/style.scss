@@ -19,10 +19,19 @@ html {
   margin: auto;
   padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  @media  (max-width: $tablet) {
+    padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
+    padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
+  }
 }
 
 .container {
   @include flex();
+  @media(max-width: $tablet) {
+    .slider & {
+      justify-content: center;
+    }
+  }
 }
 
 .logo {
@@ -49,10 +58,12 @@ html {
 
 .header__navigation {
   @include flex();
+  @media(max-width: $tablet) {
+    display: none;
+  }
 }
 
 .navigation__item {
-
   font-feature-settings: 'clig' off, 'liga' off;
   margin-right: 40.5px;
 
@@ -104,14 +115,59 @@ html {
 
 }
 
+.coffee-menu {
+  @media (max-width: $tablet) {
+    display: none;
+  }
+}
+
+.burger {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  border: 1px solid $border-dark;
+  flex-shrink: 0;
+  @media (min-width: $tablet + 1px) {
+    display: none;
+  }
+}
+
+.burger__container {
+  width: 20px;
+  height: 10px;
+
+}
+
+.line {
+  width: 16px;
+  height: 2px;
+  background-image: url("../assets/icons/Vector.svg");
+  background-repeat: no-repeat;
+
+}
+
+.line_up {
+  background-position: top center;
+}
+
+
+.line_bottom {
+  background-position: bottom center;
+}
+
+
 .coffee-menu__item {
   margin-right: 5px;
 }
 
 .coffee-link {
-  .menu-coffee &{
+  .menu-coffee & {
     pointer-events: none;
   }
+
   .menu__coffee &::after {
     width: 100%;
     height: 2.15px;
@@ -129,8 +185,21 @@ html {
   background-image: url("../assets/images/img-hero.jpg");
   background-color: lightgray;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: auto 100%;
+  background-position: center;
   padding: 100px;
+  @media (min-width: $tablet) and (max-width: $desktop) {
+    padding: 100px calc-value-from-viewport(100px, 60px);
+  }
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    padding: calc-value-from-viewport(100px, 60px, $tablet, $mobile) calc-value-from-viewport(60px, 16px, $tablet, $mobile);
+    background-image: url("../assets/images/hero-tablet.png");
+    height: calc-value-from-viewport(644px, 552px, $tablet, $mobile);
+  }
+  @media (max-width: $mobile) {
+    background-image: url("../assets/images/hero-mobile.png");
+    padding: 60px 16px;
+  }
 }
 
 
@@ -151,6 +220,9 @@ html {
     padding-right: 78px;
     padding-left: 78px;
     transition: padding-left 0.3s ease-in-out;
+    @media (max-width: $tablet) {
+      padding-left: 50px;
+    }
     @media (hover: hover) {
       &:hover {
         padding-left: 64px;
@@ -172,8 +244,17 @@ html {
   @media (hover: hover) {
     &__button:hover::after {
       opacity: 1;
+
     }
   }
+  @media (max-width: $tablet) {
+    &__button::after {
+      opacity: 1;
+      left: 58%;
+      bottom: 35%;
+    }
+  }
+
 }
 
 .heading1 {
@@ -181,6 +262,9 @@ html {
   @extend %heading-1;
   font-feature-settings: 'clig' off, 'liga' off;
   color: $text-light;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h2, $h2-mobile, $tablet, $mobile);
+  }
 
   &_accent {
     @extend %accent;
@@ -207,6 +291,7 @@ html {
 
 .favorite-coffee__heading {
   margin-bottom: $wrapper-padding;
+  text-align: center;
 }
 
 .heading2 {
@@ -214,6 +299,10 @@ html {
   @extend %font;
   color: $text-dark;
   font-feature-settings: 'clig' off, 'liga' off;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    font-size: calc-value-from-viewport($h3, $h3-mobile, $tablet, $mobile);
+  }
+
 
   &_accent {
     @extend %accent;
@@ -224,6 +313,9 @@ html {
 .slider {
   width: 100%;
   margin-bottom: 40px;
+  @media(min-width: $mobile) and (max-width: $tablet - 1px) {
+    justify-content: center;
+  }
 }
 
 
@@ -239,6 +331,16 @@ html {
   background-image: url("../assets/images/coffee-slider-1.svg");
   min-width: 480px;
   min-height: 480px;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    min-width: calc-value-from-viewport(480px, 348px, $tablet, $mobile);
+    min-height: calc-value-from-viewport(480px, 348px, $tablet, $mobile);
+    background-size: auto 100%;
+  }
+  @media (max-width: $mobile) {
+    min-width: 348px;
+    min-height: 348px;
+    background-size: auto 100%;
+  }
 }
 
 .slider__content {
@@ -278,12 +380,16 @@ html {
 }
 
 .control {
-  width: 40px;
+  width: 44px;
   border-radius: 100px;
   background-color: $border-light;
   height: 100%;
   margin-right: 12px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   &_active {
     background-color: $border-dark;
@@ -305,6 +411,10 @@ html {
 .about__img-container {
   width: 100%;
   height: 1060px;
+  @media (max-width: 889px) {
+    height: 1220px;
+    justify-content: center;
+  }
 }
 
 .about__img-column {
@@ -312,6 +422,11 @@ html {
   width: 660px;
   min-width: 348px;
   height: 100%;
+  @media(max-width: 889px) {
+    max-width: 688px;
+    width: 688px;
+
+  }
 }
 
 .image-container {
@@ -326,6 +441,9 @@ html {
   min-height: 590px;
   background-repeat: no-repeat;
   background-position: -33px -68px;
+  @media (max-width: $desktop - 1px) {
+    background-position: center;
+  }
   @media (hover: hover) {
     &:hover {
       background-position: 0px -33px;
@@ -349,18 +467,38 @@ html {
 
 
 .left-column {
+  margin-right: 40px;
+  @media (max-width: 888px) {
+    margin-right: 0;
+  }
+
   .big-image {
     background-image: url("../assets/images/about-1.png");
+
   }
 
   .small-image {
     background-image: url("../assets/images/about-2.png");
+    @media (min-width: 889px) and (max-width: $desktop) {
+      background-position: center bottom;
+    }
+    @media (max-width: 888px) {
+      background-image: url("../assets/images/about-4.png");
+      background-position: center;
+      min-width: 100%;
+      min-height: 590px;
+      background-repeat: no-repeat;
+
+    }
 
   }
 }
 
 .right-column {
   flex-direction: column-reverse;
+  @media (max-width: 888px) {
+    display: none;
+  }
 
   .big-image {
     background-image: url("../assets/images/about-4.png");
@@ -368,6 +506,9 @@ html {
 
   .small-image {
     background-image: url("../assets/images/about-3.png");
+    @media (min-width: 889px) and (max-width: $desktop) {
+      background-position: right;
+    }
   }
 }
 
@@ -375,17 +516,34 @@ html {
 .buttons {
   align-self: flex-start;
   max-width: 420px;
-  width: 420px;
+  min-width: 200px;
+  width: 100%;
+  @media (max-width: 464px) {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+}
+
+.mobile-app__container {
+  @media (max-width: 1260px) {
+    flex-direction: column;
+  }
 }
 
 
 .mobile-app {
-
   margin-bottom: 100px;
 
   &__offer {
     letter-spacing: 0.2px;
     max-width: 630px;
+    @media (max-width: 1260px) {
+      max-width: 100%;
+      margin-bottom: 100px;
+    }
+    @media (max-width: 464px) {
+      margin-bottom: 0;
+    }
   }
 
   &__heading {
@@ -402,10 +560,12 @@ html {
   @extend %font;
   @include flex();
   width: 200px;
-  padding: 12px 20px;
+  padding: 11px 20px;
   align-items: center;
   transition: all 0.3s ease;
-
+  @media (max-width: 464px) {
+    margin-bottom: 20px;
+  }
   @media(hover: hover) {
     &:hover {
       color: $text-light;
@@ -459,9 +619,7 @@ html {
 
 .icon-app-store {
 
-
 }
-
 
 .button__ico {
   margin-right: 8px;
@@ -470,10 +628,19 @@ html {
 .mobile-screens {
   max-width: 630px;
   height: 630px;
+  max-height: 630px;
+  min-width: 348px;
+  min-height: 348px;
   width: 100%;
   background: url("../assets/images/mobile-screens.png") no-repeat;
+  background-size: auto 100%;
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    height: calc-value-from-viewport(630px, 348px, $tablet, $mobile);
+  }
+  @media (max-width: $mobile) {
+    height: 348px;
+  }
 }
-
 /*footer*/
 .footer {
   width: 100%;
@@ -481,11 +648,28 @@ html {
   padding: 100px;
   border-radius: 40px;
   background: $background-container;
+  @media(min-width: $tablet) and (max-width: $desktop) {
+    padding: 100px calc-value-from-viewport(100px, 60px);
+  }
+  @media(min-width: $mobile) and (max-width: $tablet) {
+    padding: calc-value-from-viewport(100px, 60px, $tablet, $mobile) calc-value-from-viewport(60px, 16px, $tablet, $mobile);
+  }
+
+  &__container {
+    @media (max-width: $tablet) {
+      flex-direction: column;
+      height: auto;
+    }
+  }
 
   &__offer {
     align-items: flex-start;
     max-width: 530px;
     min-width: 316px;
+    @media(min-width: $mobile) and(max-width: $tablet) {
+      margin-bottom: calc-value-from-viewport(100px, 40px, $tablet, $mobile);
+      max-width: calc-value-from-viewport(568px, 316px, $tablet, $mobile);
+    }
   }
 
   &__offer__heading {
@@ -540,11 +724,16 @@ html {
     }
   }
 }
+
 .contacts {
   max-width: 530px;
   width: 530px;
   min-width: 316px;
   align-items: flex-start;
+  @media (max-width: $tablet) {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 .contacts-block {
@@ -553,6 +742,9 @@ html {
 
 .contacts__link {
   margin-bottom: 11.5px;
+  @media (max-width: $tablet) {
+    margin-bottom: 13px;
+  }
 
   &:last-child {
     margin-bottom: 0;
@@ -596,12 +788,66 @@ html {
 .menu-container {
   flex-wrap: wrap;
   margin-bottom: 100px;
+  max-height: 1092px;
+
+  @media (min-width: $tablet + 1px) and (max-width: $desktop) {
+    overflow: hidden;
+    justify-content: space-evenly;
+    padding: 0 calc-value-from-viewport(0px, 14px, $desktop,$tablet);
+    margin-bottom: calc-value-from-viewport(100px,40px,$desktop,$tablet);
+  }
+  @media (max-width: $tablet) {
+    padding: 0 14px;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media (min-width:723px) and (max-width: $tablet - 1px){
+    padding: 0 14px;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media(min-width:$mobile) and (max-width: 722px){
+    padding: 0 14px;
+    max-height: 2184px;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  @media(max-width:$mobile){
+    padding: 0 14px;
+    max-height: 2184px;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
 }
+.menu-container__button {
+  margin: 0 auto 100px;
+ }
+
+.refresh-button {
+  display: none;
+  @media (max-width: 1027px) {
+    display: block;
+    border: 1px solid $border-dark;
+    background-image: url("../assets/icons/refresh-ico.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+
 
 .menu__coffee__heading {
   max-width: 800px;
-  width: 800px;
-  min-width: 688px;
+  min-width: 348px;
+  width: 100%;
   margin-bottom: $wrapper-padding;
   text-align: center;
 }
@@ -610,6 +856,9 @@ html {
   max-width: 361px;
   width: 361px;
   min-width: 345px;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+    width: calc-value-from-viewport(361px, 345px, $tablet,$mobile);
+  }
 }
 
 .menu-tab {
@@ -622,6 +871,9 @@ html {
   border-radius: 100px;
   border: 1px solid $border-light;
   margin-right: 16px;
+  @media (min-width:$mobile) and (max-width: $tablet) {
+   margin-right: calc-value-from-viewport(16px, 8px, $tablet,$mobile);
+  }
 
   &:last-child {
     margin-right: 0;
@@ -634,6 +886,7 @@ html {
   &:active, &_active {
     @include hover-and-active;
   }
+
   &_active {
     cursor: default;
   }

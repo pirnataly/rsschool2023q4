@@ -18,8 +18,10 @@
       </a>
       <nav class="navigation">
         <div class="burger">
-          <span class="line"></span>
-          <span class="line line_middle"></span>
+          <div class="burger__container column-container">
+          <div class="line line_up"></div>
+          <div class="line line_bottom"></div>
+          </div>
         </div>
         <ul class="header__navigation">
           <li class="navigation__item"><a class="navigation__link" href="#favorite-coffee">Favorite coffee</a>
@@ -57,7 +59,7 @@
     <div class="column-container">
       <h3 class="favorite-coffee__heading heading2">Choose your <span class="heading2_accent">favorite</span> coffee</h3>
       <div class="slider container">
-      <button class = "pagination-button left-arrow"></button>
+      <button class = "pagination pagination-button left-arrow" type="button"></button>
         <div class="slider-container"><!--window-->
           <div class="slider-track"><!--strape-->
           <div class="column-container slider__item">
@@ -70,7 +72,7 @@
           </div>
           </div>
         </div>
-        <button class = "pagination-button right-arrow"></button>
+        <button class = "pagination pagination-button right-arrow"></button>
     </div>
       <div class="controls">
         <div class="control control_active"></div>
@@ -93,7 +95,7 @@
     </div>
   </section>
   <section class="mobile-app" id="mobile-app">
-    <div class="container">
+    <div class="mobile-app__container container">
       <div class="mobile-app__offer column-container">
         <h3 class="mobile-app__heading heading2"><span class="heading2_accent">Download</span> our apps to start ordering</h3>
         <p class="mobile-app__download medium">Download the Resource app today and experience the comfort of ordering your favorite coffee from wherever you are</p>
@@ -115,7 +117,7 @@
       <div class="mobile-screens "></div>
     </div>
   </section>
-  <footer class="footer container" id="contacts">
+  <footer class="footer footer__container container" id="contacts">
     <div class="footer__offer column-container">
       <p class="footer__offer__heading heading2">Sip, Savor, Smile.<span class="heading2_accent"> It’s coffee time!</span></p>
       <div class="social container">

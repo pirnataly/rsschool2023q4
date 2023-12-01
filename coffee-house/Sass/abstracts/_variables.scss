@@ -7,6 +7,11 @@ $background-backdrop: #403F3D;
 $border-light: #C1B6AD;
 $border-dark: #665F55;
 $wrapper-padding: 40px;
+$desktop: 1440px;
+$tablet: 768px;
+$mobile: 380px;
+
+
 
 $h1: 84px;
 $h2: 72px;
@@ -14,9 +19,11 @@ $h3: 60px;
 $h4: 24px;
 $h5: 16px;
 $h6: 10px;
+$h2-mobile: 42px;
+$h3-mobile: 32px;
 
 
-@mixin flex($align:center, $justify:space-between){
+@mixin flex($align:center, $justify:space-between) {
   display: flex;
   align-items: $align;
   justify-content: $justify;
@@ -26,63 +33,86 @@ $h6: 10px;
   font-size: $h2;
   font-weight: 600;
   line-height: 105%;
-}
+    @media (max-width: $mobile) {
+      font-size: $h2-mobile;
+      line-height: 115%
+    }
+  }
 
-%accent {
-  font-style: italic;
-}
-            /*action*/
-%heading-2 {
-  font-size: $h3;
-  font-weight: 600;
-  line-height: 125%
-}
+  %accent {
+    font-style: italic;
+  }
 
-%heading-3{
-  font-size: $h4;
-  font-weight: 600;
-  line-height: 125%
-}
+  /*action*/
+  %heading-2 {
+    font-size: $h3;
+    font-weight: 600;
+    line-height: 125%;
+    @media (max-width: $mobile) {
+      font-size: $h3-mobile;
+    }
+  }
 
-
-
-%button, %link {
-  font-size: $h5;
-  font-weight: 600;
-  line-height:  150%;
-}
-
-%burger-link {
-  font-size: 32px;
-  font-weight: 600px;
-  line-height: 125%;
-}
+  %heading-3 {
+    font-size: $h4;
+    font-weight: 600;
+    line-height: 125%
+  }
 
 
+  %button, %link {
+    font-size: $h5;
+    font-weight: 600;
+    line-height: 150%;
+  }
 
-/*Body*/
-%medium {
-  font-size: $h5;
-  font-weight: 400;
-  line-height: 150%;
-}
-
-%caption {
-  font-size: $h6;
-  font-weight: 600;
-  line-height: 140%;
-}
+  %burger-link {
+    font-size: 32px;
+    font-weight: 600px;
+    line-height: 125%;
+  }
 
 
-%font{
-  font-family: 'Inter', sans-serif;
-}
+  /*Body*/
+  %medium {
+    font-size: $h5;
+    font-weight: 400;
+    line-height: 150%;
+  }
 
-@mixin background-hover($background-color, $url, $position) {
-  background: $background-color $url no-repeat $position;
-}
+  %caption {
+    font-size: $h6;
+    font-weight: 600;
+    line-height: 140%;
+  }
 
-@mixin hover-and-active (){
-  background-color: $background-container;
-  color: $text-light;
-}
+
+  %font {
+    font-family: 'Inter', sans-serif;
+  }
+
+  @mixin background-hover($background-color, $url, $position) {
+    background: $background-color $url no-repeat $position;
+  }
+
+  @mixin hover-and-active() {
+    background-color: $background-container;
+    color: $text-light;
+  }
+
+  @function calc-view-diff($max-view:$desktop, $min-view:$tablet) {
+    @return ($max-view - $min-view) / 1px;
+  }
+
+  @function calc-abs-value-diff($init, $target) {
+    @return abs($init - $target) / 1px;
+  }
+
+  @function calc-value-from-viewport ($init, $target, $max-view:$desktop, $min-view:$tablet) {
+    @if ($init > $target) {
+      @return calc(#{$init} - (((#{$max-view}) - 100vw) * #{calc-abs-value-diff($init, $target)} / #{calc-view-diff($max-view,$min-view)}));
+    }
+    @else {
+      @return calc(#{$init} + (((#{$max-view}) - 100vw) * #{calc-abs-value-diff($init, $target)} / #{calc-view-diff($max-view,$min-view)}));
+    }
+  }
