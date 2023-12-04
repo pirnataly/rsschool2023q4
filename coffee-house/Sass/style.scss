@@ -12,6 +12,11 @@ html {
   background-color: $background-body;
 }
 
+.lock {
+  overflow: hidden;
+}
+
+
 .wrapper {
   max-width: 1440px;
   padding-left: $wrapper-padding;
@@ -19,7 +24,7 @@ html {
   margin: auto;
   padding-bottom: $wrapper-padding;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  @media  (max-width: $tablet) {
+  @media (max-width: $tablet) {
     padding-left: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
     padding-right: calc-value-from-viewport($wrapper-padding, 16px, $tablet, $mobile);
   }
@@ -35,6 +40,7 @@ html {
 }
 
 .logo {
+  flex: 1 0 auto;
   cursor: default;
 
   .menu__coffee & {
@@ -53,28 +59,66 @@ html {
 .header {
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.navigation {
+  @include flex();
+  flex: 1 1 auto;
+  @media (max-width: $tablet) {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    right: -100vw;
+    background: $background-body;
+    padding: 60px $wrapper-padding;
+    z-index: 1;
+    top: 100px;
+    transition: right 1s ease;
+  }
+  @media (max-width: $mobile) {
+
+  }
 
 }
+
 
 .header__navigation {
   @include flex();
-  @media(max-width: $tablet) {
-    display: none;
+  @media (max-width: $tablet) {
+    flex-direction: column;
   }
 }
 
+.burger__menu_show {
+  right: 0;
+
+}
+
+
 .navigation__item {
   font-feature-settings: 'clig' off, 'liga' off;
-  margin-right: 40.5px;
+  margin-right: 40px;
 
   &:last-child {
     margin-right: 0;
+    @media (max-width: $tablet) {
+      margin-bottom:100px;
+    }
   }
+
+  @media (max-width: $tablet) {
+    margin-right: 0;
+    margin-bottom: 60px;
+  }
+
 }
 
 .navigation__link {
   padding-bottom: 4px;
-  letter-spacing: 0.2px;
   position: relative;
   @extend %link;
   color: $text-dark;
@@ -112,13 +156,25 @@ html {
   .menu__coffee & {
     cursor: default;
   }
-
+.navigation & {
+  @media(max-width: $tablet) {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 125%;
+  }
+}
 }
 
 .coffee-menu {
   @media (max-width: $tablet) {
-    display: none;
-  }
+    }
+}
+
+.coffee-menu__img {
+  @media(max-width: $tablet) {
+    width: 40px;
+    height: 40px;
+  };
 }
 
 .burger {
@@ -136,31 +192,50 @@ html {
 }
 
 .burger__container {
-  width: 20px;
+  position: relative;
+  width: 16px;
   height: 10px;
+}
 
+.burger_active .line {
+  top: 50%;
+}
+
+
+.burger_active > .line:first-child {
+  transform: rotate(-45deg);
+}
+
+
+.burger_active > .line:last-child {
+  transform: rotate(45deg);
 }
 
 .line {
+  position: absolute;
+  background: $text-dark;
   width: 16px;
   height: 2px;
-  background-image: url("../assets/icons/Vector.svg");
-  background-repeat: no-repeat;
-
+  transition: transform 0.3s ease;
 }
 
+
 .line_up {
-  background-position: top center;
+  left: 0;
+  top: 0;
 }
 
 
 .line_bottom {
-  background-position: bottom center;
+  left: 0;
+  bottom: 0;
 }
-
 
 .coffee-menu__item {
   margin-right: 5px;
+  @media (max-width: $tablet) {
+    margin-right: 9px;
+  }
 }
 
 .coffee-link {
@@ -171,7 +246,11 @@ html {
   .menu__coffee &::after {
     width: 100%;
     height: 2.15px;
+    @media(max-width: $tablet) {
+      display: none;
+    }
   }
+
 }
 
 
@@ -641,6 +720,7 @@ html {
     height: 348px;
   }
 }
+
 /*footer*/
 .footer {
   width: 100%;
@@ -793,8 +873,8 @@ html {
   @media (min-width: $tablet + 1px) and (max-width: $desktop) {
     overflow: hidden;
     justify-content: space-evenly;
-    padding: 0 calc-value-from-viewport(0px, 14px, $desktop,$tablet);
-    margin-bottom: calc-value-from-viewport(100px,40px,$desktop,$tablet);
+    padding: 0 calc-value-from-viewport(0px, 14px, $desktop, $tablet);
+    margin-bottom: calc-value-from-viewport(100px, 40px, $desktop, $tablet);
   }
   @media (max-width: $tablet) {
     padding: 0 14px;
@@ -803,14 +883,14 @@ html {
     margin-bottom: 40px;
   }
 
-  @media (min-width:723px) and (max-width: $tablet - 1px){
+  @media (min-width: 723px) and (max-width: $tablet - 1px) {
     padding: 0 14px;
     justify-content: space-between;
     overflow: hidden;
     margin-bottom: 40px;
   }
 
-  @media(min-width:$mobile) and (max-width: 722px){
+  @media(min-width: $mobile) and (max-width: 722px) {
     padding: 0 14px;
     max-height: 2184px;
     justify-content: center;
@@ -818,7 +898,7 @@ html {
     margin-bottom: 40px;
   }
 
-  @media(max-width:$mobile){
+  @media(max-width: $mobile) {
     padding: 0 14px;
     max-height: 2184px;
     justify-content: center;
@@ -827,9 +907,10 @@ html {
   }
 
 }
+
 .menu-container__button {
   margin: 0 auto 100px;
- }
+}
 
 .refresh-button {
   display: none;
@@ -854,8 +935,8 @@ html {
   max-width: 361px;
   width: 361px;
   min-width: 345px;
-  @media (min-width:$mobile) and (max-width: $tablet) {
-    width: calc-value-from-viewport(361px, 345px, $tablet,$mobile);
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    width: calc-value-from-viewport(361px, 345px, $tablet, $mobile);
   }
 }
 
@@ -869,8 +950,8 @@ html {
   border-radius: 100px;
   border: 1px solid $border-light;
   margin-right: 16px;
-  @media (min-width:$mobile) and (max-width: $tablet) {
-   margin-right: calc-value-from-viewport(16px, 8px, $tablet,$mobile);
+  @media (min-width: $mobile) and (max-width: $tablet) {
+    margin-right: calc-value-from-viewport(16px, 8px, $tablet, $mobile);
   }
 
   &:last-child {

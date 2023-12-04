@@ -17,12 +17,6 @@
         <h1 class="logo__heading">Coffee House</h1>
       </a>
       <nav class="navigation">
-        <div class="burger">
-          <div class="burger__container column-container">
-          <div class="line line_up"></div>
-          <div class="line line_bottom"></div>
-          </div>
-        </div>
         <ul class="header__navigation">
           <li class="navigation__item"><a class="navigation__link" href="#favorite-coffee">Favorite coffee</a>
           </li>
@@ -31,13 +25,20 @@
           <li class="navigation__item"><a class="navigation__link" href="#mobile-app">Mobile app</a></li>
           <li class="navigation__item"><a class="navigation__link" href="#contacts">Contact us</a></li>
         </ul>
+        <div class="coffee-menu container">
+          <a class="navigation__link coffee-link" href="pages/menu/menu-coffee.html">
+            <span class="coffee-menu__item">Menu</span>
+            <img src="assets/icons/coffee-cup.svg" alt="" class="coffee-menu__img">
+          </a>
+        </div>
       </nav>
-      <div class="coffee-menu container">
-        <a class="navigation__link coffee-link" href="pages/menu/menu-coffee.html">
-          <span class="coffee-menu__item">Menu</span>
-          <img src="assets/icons/coffee-cup.svg" alt="">
-        </a>
-      </div>
+        <div class="burger">
+          <div class="burger__container">
+            <div class="line line_up"></div>
+            <div class="line line_bottom"></div>
+          </div>
+        </div>
+
     </div>
   </header>
   <section class="welcome">
@@ -57,23 +58,25 @@
   </section>
   <section class="favorite-coffee" id="favorite-coffee">
     <div class="column-container">
-      <h3 class="favorite-coffee__heading heading2">Choose your <span class="heading2_accent">favorite</span> coffee</h3>
+      <h3 class="favorite-coffee__heading heading2">Choose your <span class="heading2_accent">favorite</span> coffee
+      </h3>
       <div class="slider container">
-      <button class = "pagination pagination-button left-arrow" type="button"></button>
+        <button class="pagination pagination-button left-arrow" type="button"></button>
         <div class="slider-container"><!--window-->
           <div class="slider-track"><!--strape-->
-          <div class="column-container slider__item">
-            <div class="slider__item__image slider__image"></div>
-            <div class="slider__content column-container">
-              <p class="slider-content__heading heading3">S’mores Frappuccino</p>
-              <p class="slider-content__description medium">This new drink takes an espresso and mixes it with brown sugar and cinnamon before being topped with oat milk.</p>
-              <p class="slider-content__price heading3">$5.50</p>
+            <div class="column-container slider__item">
+              <div class="slider__item__image slider__image"></div>
+              <div class="slider__content column-container">
+                <p class="slider-content__heading heading3">S’mores Frappuccino</p>
+                <p class="slider-content__description medium">This new drink takes an espresso and mixes it with brown
+                  sugar and cinnamon before being topped with oat milk.</p>
+                <p class="slider-content__price heading3">$5.50</p>
+              </div>
             </div>
           </div>
-          </div>
         </div>
-        <button class = "pagination pagination-button right-arrow"></button>
-    </div>
+        <button class="pagination pagination-button right-arrow"></button>
+      </div>
       <div class="controls">
         <div class="control control_active"></div>
         <div class="control"></div>
@@ -82,7 +85,8 @@
     </div>
   </section>
   <section class="about" id="about">
-    <h3 class="about__text heading2">Resource is <span class="heading2_accent">the perfect and cozy place</span> where you can enjoy a variety of hot beverages, relax, catch up with friends, or get some work done.</h3>
+    <h3 class="about__text heading2">Resource is <span class="heading2_accent">the perfect and cozy place</span> where
+      you can enjoy a variety of hot beverages, relax, catch up with friends, or get some work done.</h3>
     <div class="about__img-container container ">
       <div class="about__img-column left-column column-container">
         <div class="image-container big-image"></div>
@@ -97,17 +101,19 @@
   <section class="mobile-app" id="mobile-app">
     <div class="mobile-app__container container">
       <div class="mobile-app__offer column-container">
-        <h3 class="mobile-app__heading heading2"><span class="heading2_accent">Download</span> our apps to start ordering</h3>
-        <p class="mobile-app__download medium">Download the Resource app today and experience the comfort of ordering your favorite coffee from wherever you are</p>
+        <h3 class="mobile-app__heading heading2"><span class="heading2_accent">Download</span> our apps to start
+          ordering</h3>
+        <p class="mobile-app__download medium">Download the Resource app today and experience the comfort of ordering
+          your favorite coffee from wherever you are</p>
         <div class="buttons container">
-          <div  class="mobile-app__button app-store">
-              <div class="button__text column-container">
+          <div class="mobile-app__button app-store">
+            <div class="button__text column-container">
               <p class="caption">Available on the</p>
               <p class="button__text__line2">App Store</p>
             </div>
           </div>
-          <div  class="mobile-app__button google-play">
-              <div class="button__text column-container">
+          <div class="mobile-app__button google-play">
+            <div class="button__text column-container">
               <p class="caption">Available on the</p>
               <p class="button__text__line2">Google Play</p>
             </div>
@@ -119,7 +125,8 @@
   </section>
   <footer class="footer footer__container container" id="contacts">
     <div class="footer__offer column-container">
-      <p class="footer__offer__heading heading2">Sip, Savor, Smile.<span class="heading2_accent"> It’s coffee time!</span></p>
+      <p class="footer__offer__heading heading2">Sip, Savor, Smile.<span
+          class="heading2_accent"> It’s coffee time!</span></p>
       <div class="social container">
         <button class="social__button button-twitter"></button>
         <button class="social__button button-instagram"></button>
@@ -129,12 +136,18 @@
     <div class="contacts column-container">
       <p class="contacts__heading heading3 contacts-heading">Contact us</p>
       <div class="contacts-block column-container">
-      <a class="navigation__link link-item  contacts__link container" href="https://goo.gl/maps/jWdwvEpiPd29JZMe8" target="_blank"><img class="contacts__ico" src="./assets/icons/pin-alt.svg" alt="map image">8558 Green Rd.,  LA</a>
-        <a class="navigation__link link-item  contacts__link container" href="tel:+16035550123"><img class="contacts__ico" src="./assets/icons/phone.svg" alt="">+1 (603) 555-0123</a>
-        <a class="navigation__link link-item  contacts__link container"><img class="contacts__ico" src="./assets/icons/clock.svg" alt="">Mon-Sat: 9:00 AM – 23:00 PM</a>
+        <a class="navigation__link link-item  contacts__link container" href="https://goo.gl/maps/jWdwvEpiPd29JZMe8"
+           target="_blank"><img class="contacts__ico" src="./assets/icons/pin-alt.svg" alt="map image">8558 Green Rd.,
+          LA</a>
+        <a class="navigation__link link-item  contacts__link container" href="tel:+16035550123"><img
+            class="contacts__ico" src="./assets/icons/phone.svg" alt="">+1 (603) 555-0123</a>
+        <a class="navigation__link link-item  contacts__link container"><img class="contacts__ico"
+                                                                             src="./assets/icons/clock.svg" alt="">Mon-Sat:
+          9:00 AM – 23:00 PM</a>
       </div>
     </div>
   </footer>
 </div>
+<script src="index.js"></script>
 </body>
 </html>
