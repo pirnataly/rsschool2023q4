@@ -20,11 +20,7 @@
 
 
 .pagination-button {
-  //display: flex;
-  //width: 60px;
-  //height: 60px;
-  //flex-shrink: 0;
-  background: url("../assets/icons/ico-arrow-default.svg");
+   background: url("../assets/icons/ico-arrow-default.svg");
   @media(hover:hover) {
     &:hover {
       background: url("../assets/icons/ico-arrow-hover.svg");
