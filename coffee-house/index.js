@@ -8,14 +8,14 @@ const controls = document.querySelectorAll('.control');
 const sliderItems = document.querySelectorAll('.slider__item');
 let position = 0;
 let controlIndex = 0;
-const sliderItem = sliderTrack.firstElementChild;
 let sliderItemWidth;
 let controlActive = controls[0];
 let timerId;
 let progressId;
-
+let initProducts;
 
 countItemWidth();
+
 //бургер
 burgerContainer.addEventListener('click', () => {
   burgerContainer.classList.toggle('burger_active');
@@ -93,8 +93,10 @@ const prevSlide = () => {
 }
 
 function countItemWidth() {
-  sliderItemWidth = parseInt(getComputedStyle(sliderItem).width);
-  return sliderItemWidth;
+    const sliderItem = sliderTrack.firstElementChild;
+    sliderItemWidth = parseInt(getComputedStyle(sliderItem).width);
+     return sliderItemWidth;
+
 }
 
 function matchControl(index) {
@@ -133,8 +135,6 @@ function progressBar() {
   }
    increaseProgress();
 }
-
-
 
 
 
