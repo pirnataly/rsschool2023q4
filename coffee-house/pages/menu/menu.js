@@ -5,7 +5,9 @@ const menuContainer = document.querySelector('.menu-container');
 const menuTabs = document.querySelector('.menu-tabs');
 let tabActive = menuTabs.children[0];
 let category = 'coffee';
-console.log(category);
+const loadMoreButton = document.querySelector('.refresh-button');
+
+console.log(loadMoreButton);
 
 
 //бургер
@@ -56,7 +58,7 @@ function makeItem(product) {
     menuItem.className = 'menu-item column-container';
     const menuItemImage = document.createElement('div');
     menuItemImage.classList.add('menu-item__image');
-    menuItemImage.style.background = `url("${product.img}") no-repeat`;
+    menuItemImage.style.backgroundImage = `url("${product.img}")`;
     menuItem.append((menuItemImage));
     const menuItemContent = document.createElement('div');
     menuItemContent.className = 'menu-item__content column-container';
@@ -95,11 +97,25 @@ menuTabs.addEventListener('click', (ev) => {
             menuTab.classList.add('menu-tab_active');
             category = menuTab.children[1].textContent.toLowerCase();
             console.log(category.toLowerCase());
+            loadMoreButton.classList.remove('invisible');
+            menuContainer.classList.remove('load-more-mode')
             update();
-
             }
         }
     }
 )
+
+//load more
+
+loadMoreButton.addEventListener('click',()=>{
+    loadMoreButton.classList.add('invisible');
+    menuContainer.classList.add('load-more-mode')
+})
+
+window.onresize = () => {
+    loadMoreButton.classList.remove('invisible');
+    menuContainer.classList.remove('load-more-mode')
+}
+
 
 initSlider();
