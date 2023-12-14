@@ -99,7 +99,15 @@ menuTabs.addEventListener('click', (ev) => {
             if (menuTab.contains(ev.target)) {
                 menuTab.classList.add('menu-tab_active');
                 category = menuTab.children[1].textContent.toLowerCase();
-                loadMoreButton.classList.remove('invisible');
+                let sumOfcategoryProducts = 0;
+                for (let i = 0; i < initProducts.length; i += 1) {
+                    if (initProducts[i].category === category) {
+                        sumOfcategoryProducts += 1;
+                    }
+                }
+                (sumOfcategoryProducts > 4)?loadMoreButton.classList.remove('invisible'):
+                    loadMoreButton.classList.add('invisible');
+
                 menuContainer.classList.remove('load-more-mode')
                 update();
             }
@@ -188,7 +196,7 @@ function getProductName(e) {
 
     }
     productName = clickedItem.children[1].children[0].textContent;
-     return productName;
+    return productName;
 }
 
 function findProduct(productName, products) {
@@ -203,9 +211,10 @@ function findProduct(productName, products) {
             popupHeading.textContent = products[i].name;
             popupDescription.textContent = products[i].description;
             popupSum.textContent = `$${products[i].price}`;
-            popupSizeTabs.children[0].children[1].textContent=products[i].sizes.s.size ;
-            popupSizeTabs.children[1].children[1].textContent=products[i].sizes.m.size ;
-            popupSizeTabs.children[2].children[1].textContent=products[i].sizes.l.size ;
+            console.log(popupSum.textContent.length);
+            popupSizeTabs.children[0].children[1].textContent = products[i].sizes.s.size;
+            popupSizeTabs.children[1].children[1].textContent = products[i].sizes.m.size;
+            popupSizeTabs.children[2].children[1].textContent = products[i].sizes.l.size;
             for (let j = 0; j < 3; j += 1) {
                 additives.children[j].children[1].textContent = products[i].additives[j].name;
 
@@ -223,6 +232,7 @@ function findProduct(productName, products) {
 
 //popup-size-tab switching
 popupSizeTabs.addEventListener('click', (ev) => {
+
         for (let popupSizeTab of popupSizeTabs.children) {
             popupSizeTab.classList.remove('size-tab_active');
             if (popupSizeTab.contains(ev.target)) {
@@ -239,6 +249,7 @@ const additives = document.querySelectorAll('.additive-tab');
 
 for (let k = 0; k < additives.length; k += 1) {
     additives[k].addEventListener('click', (ev) => {
+
             additives[k].classList.toggle('additive-tab_active');
         }
     )
@@ -271,9 +282,8 @@ function countTotalSum(arrayProducts, event) {
 
 function showTotalSum(number) {
     const popupSum = document.querySelector('.popup-price_sum');
-    popupSum.textContent = `$${number}`
+    popupSum.textContent = `$${number.toFixed(2)}`;
 }
-
 
 initSlider();
 
