@@ -5,9 +5,12 @@ const menuContainer = document.querySelector('.menu-container');
 const menuTabs = document.querySelector('.menu-tabs');
 let tabActive = menuTabs.children[0];
 let category = 'coffee';
+let size = 's';
 const loadMoreButton = document.querySelector('.refresh-button');
 const overlay = document.querySelector('.overlay');
 const popup = document.querySelector('.popup');
+const popupSizeTabs = document.querySelector('.popup__size-tabs');
+
 
 //бургер
 burgerContainer.addEventListener('click', () => {
@@ -42,6 +45,7 @@ async function getArrayFromPromise() {
 
 async function initSlider() {
     makeGallery(await getArrayFromPromise());
+    showPopup(await getArrayFromPromise());
 }
 
 function makeGallery(products) {
@@ -94,7 +98,6 @@ menuTabs.addEventListener('click', (ev) => {
         if (menuTab.contains(ev.target)) {
             menuTab.classList.add('menu-tab_active');
             category = menuTab.children[1].textContent.toLowerCase();
-            console.log(category.toLowerCase());
             loadMoreButton.classList.remove('invisible');
             menuContainer.classList.remove('load-more-mode')
             update();
@@ -120,12 +123,15 @@ function openPopup(){
     popup.classList.add('show_popup');
     overlay.classList.add('body_background');
     document.body.classList.add('lock');
+    size='s';
+
 }
 
-function showPopup() {
+function showPopup(products) {
     menuContainer.addEventListener('click', (e) => {
+        getProductName(e);
         e.stopPropagation();
-        // findPet(getPetName(e),pets);
+        findProduct(getProductName(e),products);
         openPopup();
     })
 }
@@ -135,6 +141,9 @@ function outsideEvtListener(event) {
         popup.classList.remove('show_popup');
         overlay.classList.remove('body_background');
         document.body.classList.remove('lock');
+        size='s';
+
+
     }
 }
 
@@ -144,9 +153,89 @@ popup.addEventListener('click',(ev)=>{
     ev.stopPropagation();
 })
 
+//закрытие модального окна по кнопке
+const popupButton = document.querySelector('.popup__button');
+popupButton.addEventListener('click', (ev)=>{
+    ev.stopPropagation();
+    popup.classList.remove('show_popup');
+    overlay.classList.remove('body_background');
+    document.body.classList.remove('lock');
+  ;
+})
 
 
+function getProductName(e) {
+    let clickedItem;
+    let productName;
+    let target = e.target;
+    for (let i = 0; i < menuContainer.children.length; i++) {
+         if (target.classList.contains('menu-item')) {
+            clickedItem=target;
+            console.log('clickedItem1=', clickedItem);
+            break;
+        }
+        if(target.parentElement.classList.contains('menu-item')) {
+            clickedItem=target.parentElement;
+            console.log('clickedItem2=', clickedItem);
+            break;
+        }
+        if(menuContainer.children[i].contains(target)) {
+            clickedItem=menuContainer.children[i];
+            console.log('clickedItem3=', clickedItem);
+            break;
+        }
 
-showPopup()
+
+    }
+    productName = clickedItem.children[1].children[0].textContent;
+    console.log(productName,'=productName is');
+    return productName;
+}
+
+function findProduct(productName,products){
+    const popupImage = document.querySelector('.popup__image');
+    const popupHeading = document.querySelector('.popup__heading');
+    const popupDescription = document.querySelector('.popup__description');
+    const popupSum = document.querySelector('.popup-price_sum');
+    for(let i=0; i < products.length;i++) {
+        if (productName === products[i].name) {
+            popupImage.style.background = `url("${products[i].img}") no-repeat`;
+            popupHeading.textContent=products[i].name;
+             popupDescription.textContent=products[i].description;
+           popupSum.textContent=`$${products[i].price}`;
+            for (let popupSizeTab of popupSizeTabs.children) {
+                popupSizeTab.classList.remove('size-tab_active');
+        }
+            popupSizeTabs.children[0].classList.add('size-tab_active');
+        }
+
+    }
+}
+
+//popup switching
+
+// popupSizeTabs.addEventListener('click', (ev) => {
+//     let currentprice = document.querySelector('.popup-price_sum')
+//   let currentpriceNumber = Number(currentprice.textContent.slice(1));
+//     console.log(currentpriceNumber);
+//         for (let popupSizeTab of popupSizeTabs.children) {
+//             popupSizeTab.classList.remove('size-tab_active');
+//             if (popupSizeTab.contains(ev.target)) {
+//                 popupSizeTab.classList.add('size-tab_active');
+//                 size = popupSizeTab.children[0].textContent.toLowerCase();
+//                 switch(size) {
+//                     case 's': currentprice.textContent =`$${currentpriceNumber}`;
+//                     break;
+//                     case 'm': currentprice.textContent =`$${currentpriceNumber+0.5}`;
+//                     break;
+//                     case 's';
+//                                  }
+//
+//             }
+//         }
+//     }
+// )
+
+
 initSlider();
 
