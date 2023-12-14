@@ -1,94 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
-  <title>Coffee House</title>
-  <link rel="stylesheet" href="../../Sass/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../assets/icons/favicon.ico">
+    <title>Coffee House</title>
+    <link rel="stylesheet" href="../../Sass/style.css">
 </head>
 <body class="menu__coffee body">
 <div class="overlay"></div>
 <div class="wrapper">
-  <header class="header">
-    <div class="container">
-      <a href="../../main.html" class="logo">
-        <img src="../../assets/icons/logo.svg" alt="">
-        <h1 class="logo__heading">Coffee House</h1>
-      </a>
-      <nav class="navigation">
-        <ul class="header__navigation">
-          <li class="navigation__item"><a class="navigation__link" href="../../main.html#favorite-coffee">Favorite
-            coffee</a>
-          </li>
-          <li class="navigation__item"><a class="navigation__link" href="../../main.html#about">About</a>
-          </li>
-          <li class="navigation__item"><a class="navigation__link" href="../../main.html#mobile-app">Mobile app</a></li>
-          <li class="navigation__item"><a class="navigation__link" href="#contacts">Contact us</a></li>
-        </ul>
-        <div class="coffee-menu container">
-          <a class="navigation__link coffee-link" href="#">
-            <span class="coffee-menu__item">Menu</span>
-            <img src="../../assets/icons/coffee-cup.svg" alt="" class="coffee-menu__img">
-          </a>
-        </div>
-      </nav>
-      <div class="burger">
-        <div class="burger__container column-container">
-          <div class="line line_up"></div>
-          <div class="line line_bottom"></div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <section class="menu__coffee__content column-container">
-    <div class="menu__coffee__offer column-container">
-      <h3 class="menu__coffee__heading heading2">Behind each of our cups hides an <span class="heading2_accent"> amazing surprise</span>
-      </h3>
-      <div class="menu-tabs container">
-        <button class="menu-tab menu-tab_active">
-          <img src="../../assets/icons/icon-coffee-tab.svg" alt="" class="menu-tab__image">
-          <span class="menu-tab__text">Coffee</span>
-        </button>
-        <button class="menu-tab">
-          <img src="../../assets/icons/icon-tea-tab.svg" alt="" class="menu-tab__image">
-          <span class="menu-tab__text">Tea</span>
-        </button>
-        <button class="menu-tab">
-          <img src="../../assets/icons/icon-dessert-tab.svg" alt="" class="menu-tab__image">
-          <span class="menu-tab__text">Dessert</span>
-        </button>
-      </div>
-      <div class="menu-container container">
+    <div class="popup">
+        <div class="container">
+            <div class="popup__image"></div>
+            <div class="popup__block">
+                <p class="popup__heading heading3">Irish coffee</p>
+                <p class="popup__description medium">Fragrant black coffee with Jameson Irish whiskey and whipped
+                    milk</p>
+                <div class="popup__size column-container">
+                    <p class="popup__size_heading medium">Size</p>
+                    <div class="popup__size-tabs size-tabs container">
+                        <button class="popup-tab size-tab size-tab_active">
+                            <span class="popup-tab__image container action-button">S</span>
+                            <span class="popup-tab__text action-button">200 ml</span>
+                        </button>
 
-      </div>
-      <button class="button pagination refresh-button menu-container__button"></button>
+                        <button class="popup-tab size-tab">
+                            <span class="popup-tab__image container action-button">M</span>
+                            <span class="popup-tab__text action-button">300 ml</span>
+                        </button>
+
+                        <button class="popup-tab size-tab ">
+                            <span class="popup-tab__image container action-button">L</span>
+                            <span class="popup-tab__text action-button">400 ml</span>
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="popup__additives column-container">
+                    <p class="popup__additives_heading medium">Additives</p>
+                    <div class="popup__size-tabs additive-tabs container">
+                        <button class="popup-tab additive-tab">
+                            <span class="popup-tab__image additive-tab__image container action-button">1</span>
+                            <span class="popup-tab__text additive-text action-button">Sugar</span>
+                        </button>
+
+                        <button class="popup-tab size-tab">
+                            <span class="popup-tab__image container action-button">2</span>
+                            <span class="popup-tab__text action-button">Cinnamon</span>
+                        </button>
+
+                        <button class="popup-tab size-tab">
+                            <span class="popup-tab__image container action-button">3</span>
+                            <span class="popup-tab__text action-button">Syrup</span>
+                        </button>
+
+                    </div>
+                </div>
+                <div class="popup-price container">
+                    <div class="popup-price_text heading3">Total:</div>
+                    <div class="popup-price_sum heading3">$7.00</div>
+                </div>
+                <div class="alert popup__alert container">
+                    <div class="alert-ico popup__alert-ico" alt=""></div>
+                    <p class="alert-text popup__alert-text caption">The cost is not final. Download our mobile app to
+                        see the final price and place your order.
+                        Earn loyalty points and enjoy your favorite coffee with up to 20% discount.</p>
+                </div>
+            </div>
+        </div>
+        <div class="close-button popup__button action-button">Close</div>
     </div>
-  </section>
-  <footer class="footer footer__container container" id="contacts">
-    <div class="footer__offer column-container">
-      <p class="footer__offer__heading heading2">Sip, Savor, Smile.<span
-          class="heading2_accent"> It’s coffee time!</span></p>
-      <div class="social container">
-        <button class="social__button button-twitter"></button>
-        <button class="social__button button-instagram"></button>
-        <button class="social__button button-facebook"></button>
-      </div>
-    </div>
-    <div class="contacts column-container">
-      <p class="contacts__heading heading3 contacts-heading">Contact us</p>
-      <div class="contacts-block column-container">
-        <a class="navigation__link link-item  contacts__link container" href="https://goo.gl/maps/jWdwvEpiPd29JZMe8"
-           target="_blank"><img class="contacts__ico" src="../../assets/icons/pin-alt.svg" alt="map image">8558 Green
-          Rd., LA</a>
-        <a class="navigation__link link-item  contacts__link container" href="tel:+16035550123"><img
-            class="contacts__ico" src="../../assets/icons/phone.svg" alt="map image">+1 (603) 555-0123</a>
-        <a class="navigation__link link-item  contacts__link container"><img class="contacts__ico"
-                                                                             src="../../assets/icons/clock.svg"
-                                                                             alt="map image">Mon-Sat: 9:00 AM – 23:00 PM</a>
-      </div>
-    </div>
-  </footer>
+    <header class="header">
+        <div class="container">
+            <a href="../../main.html" class="logo">
+                <img src="../../assets/icons/logo.svg" alt="">
+                <h1 class="logo__heading">Coffee House</h1>
+            </a>
+            <nav class="navigation">
+                <ul class="header__navigation">
+                    <li class="navigation__item"><a class="navigation__link" href="../../main.html#favorite-coffee">Favorite
+                        coffee</a>
+                    </li>
+                    <li class="navigation__item"><a class="navigation__link" href="../../main.html#about">About</a>
+                    </li>
+                    <li class="navigation__item"><a class="navigation__link" href="../../main.html#mobile-app">Mobile
+                        app</a></li>
+                    <li class="navigation__item"><a class="navigation__link" href="#contacts">Contact us</a></li>
+                </ul>
+                <div class="coffee-menu container">
+                    <a class="navigation__link coffee-link" href="#">
+                        <span class="coffee-menu__item">Menu</span>
+                        <img src="../../assets/icons/coffee-cup.svg" alt="" class="coffee-menu__img">
+                    </a>
+                </div>
+            </nav>
+            <div class="burger">
+                <div class="burger__container column-container">
+                    <div class="line line_up"></div>
+                    <div class="line line_bottom"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="menu__coffee__content column-container">
+        <div class="menu__coffee__offer column-container">
+            <h3 class="menu__coffee__heading heading2">Behind each of our cups hides an <span class="heading2_accent"> amazing surprise</span>
+            </h3>
+            <div class="menu-tabs container">
+                <button class="menu-tab menu-tab_active">
+                    <img src="../../assets/icons/icon-coffee-tab.svg" alt="" class="menu-tab__image">
+                    <span class="menu-tab__text">Coffee</span>
+                </button>
+                <button class="menu-tab">
+                    <img src="../../assets/icons/icon-tea-tab.svg" alt="" class="menu-tab__image">
+                    <span class="menu-tab__text">Tea</span>
+                </button>
+                <button class="menu-tab">
+                    <img src="../../assets/icons/icon-dessert-tab.svg" alt="" class="menu-tab__image">
+                    <span class="menu-tab__text">Dessert</span>
+                </button>
+            </div>
+            <div class="menu-container container">
+
+            </div>
+            <button class="button pagination refresh-button menu-container__button"></button>
+        </div>
+    </section>
+    <footer class="footer footer__container container" id="contacts">
+        <div class="footer__offer column-container">
+            <p class="footer__offer__heading heading2">Sip, Savor, Smile.<span
+                    class="heading2_accent"> It’s coffee time!</span></p>
+            <div class="social container">
+                <button class="social__button button-twitter"></button>
+                <button class="social__button button-instagram"></button>
+                <button class="social__button button-facebook"></button>
+            </div>
+        </div>
+        <div class="contacts column-container">
+            <p class="contacts__heading heading3 contacts-heading">Contact us</p>
+            <div class="contacts-block column-container">
+                <a class="navigation__link link-item  contacts__link container"
+                   href="https://goo.gl/maps/jWdwvEpiPd29JZMe8"
+                   target="_blank"><img class="contacts__ico" src="../../assets/icons/pin-alt.svg" alt="map image">8558
+                    Green
+                    Rd., LA</a>
+                <a class="navigation__link link-item  contacts__link container" href="tel:+16035550123"><img
+                        class="contacts__ico" src="../../assets/icons/phone.svg" alt="map image">+1 (603) 555-0123</a>
+                <a class="navigation__link link-item  contacts__link container"><img class="contacts__ico"
+                                                                                     src="../../assets/icons/clock.svg"
+                                                                                     alt="map image">Mon-Sat: 9:00 AM –
+                    23:00 PM</a>
+            </div>
+        </div>
+    </footer>
 </div>
 <script src="menu.js"></script>
 </body>

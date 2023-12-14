@@ -6,9 +6,8 @@ const menuTabs = document.querySelector('.menu-tabs');
 let tabActive = menuTabs.children[0];
 let category = 'coffee';
 const loadMoreButton = document.querySelector('.refresh-button');
-
-console.log(loadMoreButton);
-
+const overlay = document.querySelector('.overlay');
+const popup = document.querySelector('.popup');
 
 //бургер
 burgerContainer.addEventListener('click', () => {
@@ -51,7 +50,7 @@ function makeGallery(products) {
             menuContainer.append(makeItem(products[i]));
         }
     }
-}
+       }
 
 function makeItem(product) {
     const menuItem = document.createElement('div');
@@ -81,7 +80,6 @@ function makeItem(product) {
 
 async function update() {
     menuContainer.innerHTML = "";
-    console.log(category);
     makeGallery(await getArrayFromPromise())
     // for (let i = 0; i < products.length; i++) {
     //     track.append(makeItem(pets[i]));
@@ -117,5 +115,38 @@ window.onresize = () => {
     menuContainer.classList.remove('load-more-mode')
 }
 
+//popup
+function openPopup(){
+    popup.classList.add('show_popup');
+    overlay.classList.add('body_background');
+    document.body.classList.add('lock');
+}
 
+function showPopup() {
+    menuContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // findPet(getPetName(e),pets);
+        openPopup();
+    })
+}
+
+function outsideEvtListener(event) {
+    if (!event.target.closest('.popup')) {
+        popup.classList.remove('show_popup');
+        overlay.classList.remove('body_background');
+        document.body.classList.remove('lock');
+    }
+}
+
+//закрытие модального окна вне щелчка по попапу
+document.addEventListener('click',outsideEvtListener);
+popup.addEventListener('click',(ev)=>{
+    ev.stopPropagation();
+})
+
+
+
+
+showPopup()
 initSlider();
+
