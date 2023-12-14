@@ -471,6 +471,7 @@ html {
 
 /*welcome section*/
 .welcome__image {
+    position: relative;
     display: flex;
     max-width: 1360px;
     height: 644px;
@@ -482,6 +483,19 @@ html {
     background-position: center;
     padding: 100px;
 }
+
+.media__video {
+    top: 0;
+    left: 0;
+    position: absolute;
+    object-fit: cover;
+    width:100%;
+    height: 100%;
+    border-radius: 40px;
+}
+
+
+
 
 @media (min-width: 768px) and (max-width: 1440px) {
     .welcome__image {
@@ -505,6 +519,7 @@ html {
 }
 
 .offer {
+    position: absolute;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -1292,7 +1307,7 @@ html {
     margin-right: 8px;
 }
 
-.menu-tab:active, .menu-tab_active, .additive-tab_active {
+.menu-tab:active, .menu-tab_active, button.additive-tab_active {
     background-color: #665F55;
     color: #E1D4C9;
 }
