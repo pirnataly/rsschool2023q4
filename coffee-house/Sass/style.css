@@ -1290,7 +1290,7 @@ html {
     margin-right: 8px;
 }
 
-.menu-tab:active, .menu-tab_active {
+.menu-tab:active, .menu-tab_active, .additive-tab_active {
     background-color: #665F55;
     color: #E1D4C9;
 }
@@ -1471,6 +1471,7 @@ html {
   font-weight: 600;
   line-height: 150%; /* 24px */
 }
+
 .popup-price {
   width: 438px;
   margin-bottom: 20px;

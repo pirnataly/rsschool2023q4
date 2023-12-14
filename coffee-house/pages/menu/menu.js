@@ -5,12 +5,14 @@ const menuContainer = document.querySelector('.menu-container');
 const menuTabs = document.querySelector('.menu-tabs');
 let tabActive = menuTabs.children[0];
 let category = 'coffee';
-let size = 's';
+let sizeActive = 's';
 const loadMoreButton = document.querySelector('.refresh-button');
 const overlay = document.querySelector('.overlay');
 const popup = document.querySelector('.popup');
 const popupSizeTabs = document.querySelector('.popup__size-tabs');
-
+const additiveTabs = document.querySelector('.additive-tabs');
+let initProducts;
+let sumOfAdditives = 0;
 
 //бургер
 burgerContainer.addEventListener('click', () => {
@@ -40,8 +42,10 @@ async function getJson() {
 
 async function getArrayFromPromise() {
     const array = await getJson();
+    initProducts = array;
     return array;
 }
+
 
 async function initSlider() {
     makeGallery(await getArrayFromPromise());
@@ -54,7 +58,7 @@ function makeGallery(products) {
             menuContainer.append(makeItem(products[i]));
         }
     }
-       }
+}
 
 function makeItem(product) {
     const menuItem = document.createElement('div');
@@ -85,22 +89,19 @@ function makeItem(product) {
 async function update() {
     menuContainer.innerHTML = "";
     makeGallery(await getArrayFromPromise())
-    // for (let i = 0; i < products.length; i++) {
-    //     track.append(makeItem(pets[i]));
-    }
+}
 
 
 //menu-tabs switching
-
 menuTabs.addEventListener('click', (ev) => {
-    for (let menuTab of menuTabs.children) {
-        menuTab.classList.remove('menu-tab_active');
-        if (menuTab.contains(ev.target)) {
-            menuTab.classList.add('menu-tab_active');
-            category = menuTab.children[1].textContent.toLowerCase();
-            loadMoreButton.classList.remove('invisible');
-            menuContainer.classList.remove('load-more-mode')
-            update();
+        for (let menuTab of menuTabs.children) {
+            menuTab.classList.remove('menu-tab_active');
+            if (menuTab.contains(ev.target)) {
+                menuTab.classList.add('menu-tab_active');
+                category = menuTab.children[1].textContent.toLowerCase();
+                loadMoreButton.classList.remove('invisible');
+                menuContainer.classList.remove('load-more-mode')
+                update();
             }
         }
     }
@@ -108,7 +109,7 @@ menuTabs.addEventListener('click', (ev) => {
 
 //load more
 
-loadMoreButton.addEventListener('click',()=>{
+loadMoreButton.addEventListener('click', () => {
     loadMoreButton.classList.add('invisible');
     menuContainer.classList.add('load-more-mode')
 })
@@ -119,11 +120,11 @@ window.onresize = () => {
 }
 
 //popup
-function openPopup(){
+function openPopup() {
     popup.classList.add('show_popup');
     overlay.classList.add('body_background');
     document.body.classList.add('lock');
-    size='s';
+    sizeActive = 's';
 
 }
 
@@ -131,7 +132,7 @@ function showPopup(products) {
     menuContainer.addEventListener('click', (e) => {
         getProductName(e);
         e.stopPropagation();
-        findProduct(getProductName(e),products);
+        findProduct(getProductName(e), products);
         openPopup();
     })
 }
@@ -141,26 +142,28 @@ function outsideEvtListener(event) {
         popup.classList.remove('show_popup');
         overlay.classList.remove('body_background');
         document.body.classList.remove('lock');
-        size='s';
+        sizeActive = 's';
+        sumOfAdditives = 0;
 
 
     }
 }
 
 //закрытие модального окна вне щелчка по попапу
-document.addEventListener('click',outsideEvtListener);
-popup.addEventListener('click',(ev)=>{
+document.addEventListener('click', outsideEvtListener);
+popup.addEventListener('click', (ev) => {
     ev.stopPropagation();
 })
 
 //закрытие модального окна по кнопке
 const popupButton = document.querySelector('.popup__button');
-popupButton.addEventListener('click', (ev)=>{
+popupButton.addEventListener('click', (ev) => {
     ev.stopPropagation();
     popup.classList.remove('show_popup');
     overlay.classList.remove('body_background');
     document.body.classList.remove('lock');
-  ;
+    sumOfAdditives = 0;
+
 })
 
 
@@ -169,72 +172,106 @@ function getProductName(e) {
     let productName;
     let target = e.target;
     for (let i = 0; i < menuContainer.children.length; i++) {
-         if (target.classList.contains('menu-item')) {
-            clickedItem=target;
-            console.log('clickedItem1=', clickedItem);
+        if (target.classList.contains('menu-item')) {
+            clickedItem = target;
             break;
         }
-        if(target.parentElement.classList.contains('menu-item')) {
-            clickedItem=target.parentElement;
-            console.log('clickedItem2=', clickedItem);
+        if (target.parentElement.classList.contains('menu-item')) {
+            clickedItem = target.parentElement;
             break;
         }
-        if(menuContainer.children[i].contains(target)) {
-            clickedItem=menuContainer.children[i];
-            console.log('clickedItem3=', clickedItem);
+        if (menuContainer.children[i].contains(target)) {
+            clickedItem = menuContainer.children[i];
             break;
         }
 
 
     }
     productName = clickedItem.children[1].children[0].textContent;
-    console.log(productName,'=productName is');
-    return productName;
+     return productName;
 }
 
-function findProduct(productName,products){
+function findProduct(productName, products) {
     const popupImage = document.querySelector('.popup__image');
     const popupHeading = document.querySelector('.popup__heading');
     const popupDescription = document.querySelector('.popup__description');
     const popupSum = document.querySelector('.popup-price_sum');
-    for(let i=0; i < products.length;i++) {
+    const additives = document.querySelector('.additive-tabs');
+    for (let i = 0; i < products.length; i++) {
         if (productName === products[i].name) {
             popupImage.style.background = `url("${products[i].img}") no-repeat`;
-            popupHeading.textContent=products[i].name;
-             popupDescription.textContent=products[i].description;
-           popupSum.textContent=`$${products[i].price}`;
-            for (let popupSizeTab of popupSizeTabs.children) {
+            popupHeading.textContent = products[i].name;
+            popupDescription.textContent = products[i].description;
+            popupSum.textContent = `$${products[i].price}`;
+            for (let j = 0; j < 3; j += 1) {
+                additives.children[j].children[1].textContent = products[i].additives[j].name;
+                additives.children[j].children[1].textContent = products[i].additives[j].name;
+                additives.children[j].children[1].textContent = products[i].additives[j].name;
+            }
+            for (let popupSizeTab of popupSizeTabs.children) {   //перенести?
                 popupSizeTab.classList.remove('size-tab_active');
-        }
+            }
+            for (let k = 0; k < 3; k += 1) {
+                additives.children[k].classList.remove('additive-tab_active');
+            }
             popupSizeTabs.children[0].classList.add('size-tab_active');
         }
 
     }
 }
 
-//popup switching
+//popup-size-tab switching
+popupSizeTabs.addEventListener('click', (ev) => {
+        for (let popupSizeTab of popupSizeTabs.children) {
+            popupSizeTab.classList.remove('size-tab_active');
+            if (popupSizeTab.contains(ev.target)) {
+                popupSizeTab.classList.add('size-tab_active');
+                sizeActive = popupSizeTab.children[0].textContent.toLowerCase();
+            }
+        }
+        showTotalSum(countTotalSum(initProducts, ev));
+    }
+)
 
-// popupSizeTabs.addEventListener('click', (ev) => {
-//     let currentprice = document.querySelector('.popup-price_sum')
-//   let currentpriceNumber = Number(currentprice.textContent.slice(1));
-//     console.log(currentpriceNumber);
-//         for (let popupSizeTab of popupSizeTabs.children) {
-//             popupSizeTab.classList.remove('size-tab_active');
-//             if (popupSizeTab.contains(ev.target)) {
-//                 popupSizeTab.classList.add('size-tab_active');
-//                 size = popupSizeTab.children[0].textContent.toLowerCase();
-//                 switch(size) {
-//                     case 's': currentprice.textContent =`$${currentpriceNumber}`;
-//                     break;
-//                     case 'm': currentprice.textContent =`$${currentpriceNumber+0.5}`;
-//                     break;
-//                     case 's';
-//                                  }
-//
-//             }
-//         }
-//     }
-// )
+//popup additives switching
+const additives = document.querySelectorAll('.additive-tab');
+
+for (let k = 0; k < additives.length; k += 1) {
+    additives[k].addEventListener('click', (ev) => {
+            additives[k].classList.toggle('additive-tab_active');
+        }
+    )
+
+}
+additiveTabs.addEventListener('click', (ev) => {
+    sumOfAdditives = 0;
+    for (let additiveTab of additiveTabs.children) {
+        if (additiveTab.classList.contains('additive-tab_active')) {
+            sumOfAdditives += 1;
+        }
+        showTotalSum(countTotalSum(initProducts, ev));
+    }
+})
+
+
+function countTotalSum(arrayProducts, event) {
+    const popupHeading = document.querySelector('.popup__heading');
+    let sum;
+    for (let i = 0; i < arrayProducts.length; i += 1) {
+        if (popupHeading.textContent === arrayProducts[i].name) {
+            const productsPriceToNumber = +arrayProducts[i].price;
+            let priceForSize = (sizeActive === 'm') ? 0.5 : (sizeActive === 'l') ? 1 : 0;
+            sum = productsPriceToNumber + priceForSize + sumOfAdditives * 0.5;
+
+        }
+    }
+    return sum
+}
+
+function showTotalSum(number) {
+    const popupSum = document.querySelector('.popup-price_sum');
+    popupSum.textContent = `$${number}`
+}
 
 
 initSlider();
