@@ -203,12 +203,14 @@ function findProduct(productName, products) {
             popupHeading.textContent = products[i].name;
             popupDescription.textContent = products[i].description;
             popupSum.textContent = `$${products[i].price}`;
+            popupSizeTabs.children[0].children[1].textContent=products[i].sizes.s.size ;
+            popupSizeTabs.children[1].children[1].textContent=products[i].sizes.m.size ;
+            popupSizeTabs.children[2].children[1].textContent=products[i].sizes.l.size ;
             for (let j = 0; j < 3; j += 1) {
                 additives.children[j].children[1].textContent = products[i].additives[j].name;
-                additives.children[j].children[1].textContent = products[i].additives[j].name;
-                additives.children[j].children[1].textContent = products[i].additives[j].name;
+
             }
-            for (let popupSizeTab of popupSizeTabs.children) {   //перенести?
+            for (let popupSizeTab of popupSizeTabs.children) {
                 popupSizeTab.classList.remove('size-tab_active');
             }
             for (let k = 0; k < 3; k += 1) {
@@ -216,7 +218,6 @@ function findProduct(productName, products) {
             }
             popupSizeTabs.children[0].classList.add('size-tab_active');
         }
-
     }
 }
 
