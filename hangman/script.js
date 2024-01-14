@@ -67,3 +67,20 @@ function getRandomQuestionNum() {
 getRandomQuestionNum();
 getQuestionsData();
 showQuestion();
+
+let answer;
+
+async function makeWord() {
+    const data = await getQuestionsData();
+    const ans = data[questionNum].answer.join('');
+    answer = ans;
+    console.log('Ответ на вопрос:',ans);
+    const answerLength = ans.length;
+    for (let i = 0; i < answerLength; i += 1) {
+        const letterBox = document.createElement('span');
+        letterBox.className = 'letter-box';
+        secretWord.append(letterBox);
+    }
+}
+
+makeWord();
