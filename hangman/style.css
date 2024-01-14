@@ -52,22 +52,40 @@
   width: 100%;
 }
 
-.secret__word {
+.secret {
   margin-bottom: 40px;
-}
-
-.keyboard {
-  width: 20px;
-  height: 20px;
-  background: #70d6ff;
 }
 
 .letter-box {
   display: inline-block;
+  color: #000000;
   margin: 0 2px;
   border-bottom: 1px solid gray;
   width: 14px;
-  height: 20px;
+}
+
+.keyboard {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.keyboard__keys {
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.keyboard__key {
+  height: 60px;
+  width: 10%;
+  max-width: 60px;
+  margin: 3px;
+  border-radius: 4px;
+  border: 1px solid gray;
+  background: rgba(255, 255, 255, 0.5);
+  color: #000000;
+  font-size: 1.05rem;
+  outline: none;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

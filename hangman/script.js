@@ -69,6 +69,7 @@ getQuestionsData();
 showQuestion();
 
 let answer;
+let spanArray;
 
 async function makeWord() {
     const data = await getQuestionsData();
@@ -79,8 +80,90 @@ async function makeWord() {
     for (let i = 0; i < answerLength; i += 1) {
         const letterBox = document.createElement('span');
         letterBox.className = 'letter-box';
+        letterBox.textContent = ' ';
         secretWord.append(letterBox);
     }
+    spanArray = document.querySelectorAll('.letter-box');
 }
 
 makeWord();
+
+const Keyboard = {
+    elements: {
+        main: null,
+        keysContainer: null,
+        keys: [],
+    },
+    init() {
+        this.elements.main = document.createElement('div');
+        this.elements.keysContainer = document.createElement('div');
+        this.elements.main.classList.add('keyboard');
+        this.elements.keysContainer.classList.add('keyboard__keys');
+        this.elements.keysContainer.append(this.createKeys());
+        this.elements.keys = this.elements.keysContainer.querySelectorAll('.keyboard__key');
+        this.elements.main.append(this.elements.keysContainer);
+        secretWordContainer.after(this.elements.main);
+    },
+
+    createKeys() {
+        const fragment = document.createDocumentFragment();
+        const keyLayout = [
+            { eng: 'q', rus: 'й', code: 'KeyQ' },
+            { eng: 'w', rus: 'ц', code: 'KeyW' },
+            { eng: 'e', rus: 'у', code: 'KeyE' },
+            { eng: 'r', rus: 'к', code: 'KeyR' },
+            { eng: 't', rus: 'е', code: 'KeyT' },
+            { eng: 'y', rus: 'н', code: 'KeyY' },
+            { eng: 'u', rus: 'г', code: 'KeyU' },
+            { eng: 'i', rus: 'ш', code: 'KeyI' },
+            { eng: 'o', rus: 'щ', code: 'KeyO' },
+            { eng: 'p', rus: 'з', code: 'KeyP' },
+            { eng: 'a', rus: 'ф', code: 'KeyA' },
+            { eng: 's', rus: 'ы', code: 'KeyS' },
+            { eng: 'd', rus: 'в', code: 'KeyD' },
+            { eng: 'f', rus: 'а', code: 'KeyF' },
+            { eng: 'g', rus: 'п', code: 'KeyG' },
+            { eng: 'h', rus: 'р', code: 'KeyH' },
+            { eng: 'j', rus: 'о', code: 'KeyJ' },
+            { eng: 'k', rus: 'л', code: 'KeyK' },
+            { eng: 'l', rus: 'д', code: 'KeyL' },
+            { eng: 'z', rus: 'я', code: 'KeyZ' },
+            { eng: 'x', rus: 'ч', code: 'KeyX' },
+            { eng: 'c', rus: 'с', code: 'KeyC' },
+            { eng: 'v', rus: 'м', code: 'KeyV' },
+            { eng: 'b', rus: 'и', code: 'KeyB' },
+            { eng: 'n', rus: 'т', code: 'KeyN' },
+            { eng: 'm', rus: 'ь', code: 'KeyM' },
+        ];
+
+        keyLayout.forEach((key) => {
+            const keyElement = document.createElement('button');
+            keyElement.setAttribute('type', 'button');
+            keyElement.classList.add('keyboard__key', `${key.code}`);
+            keyElement.textContent = key["eng"].toLowerCase();
+            keyElement.addEventListener('click', () => {
+                if(answer.includes(key["eng"].toLowerCase())) {
+                   for (let i = 0; i < answer.length; i +=1) {
+                        if (answer[i] === key['eng']) {
+                            spanArray[i].textContent = key['eng'].toUpperCase();
+                            spanArray[i].style.borderBottom = 'none';
+                        }
+                    }
+                }
+                else {
+                    gallowsImage.innerHTML = '';
+                    gallowsImage.append(hangmanImages[clickCounter+1]);
+                    clickCounter++;
+                };
+
+            })
+            fragment.appendChild(keyElement);
+            })
+
+        return fragment;
+   }
+}
+
+    document.addEventListener('DOMContentLoaded', () => {
+        Keyboard.init();
+    });
