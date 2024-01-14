@@ -33,3 +33,37 @@ let clickCounter = 0;
 gallowsImage.append(hangmanImages[clickCounter]);
 
 
+const question = document.createElement('div');
+question.className = 'quizPart__question question';
+quizPart.append(question);
+
+const secretWordContainer = document.createElement('div');
+secretWordContainer.className = 'container secret'
+quizPart.append(secretWordContainer);
+
+const secretWord = document.createElement('div');
+secretWord.className = 'secret__word';
+secretWordContainer.append(secretWord);
+
+
+let questionNum;
+
+async function getQuestionsData(){
+    const questions = 'hangman-questions.json';
+    const res = await fetch(questions);
+    const data = await res.json();
+    return data;
+}
+
+async function showQuestion() {
+    const data = await getQuestionsData();
+    question.textContent = data[questionNum].text;
+}
+
+function getRandomQuestionNum() {
+    questionNum = Math.floor(Math.random() * 10);
+}
+
+getRandomQuestionNum();
+getQuestionsData();
+showQuestion();
