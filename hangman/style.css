@@ -1,3 +1,73 @@
+.wrapper {
+  max-width: 1440px;
+  margin: auto;
+  border: 1px solid gray;
+}
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-container {
+  height: 500px;
+  max-height: 500px;
+}
+
+.gallows-part {
+  display: flex;
+  height: 100%;
+  width: 40%;
+  flex-shrink: 0;
+}
+
+.quiz-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 60%;
+  padding: 20px;
+}
+
+.gallows-part__image {
+  position: relative;
+  min-width: 360px;
+  width: 360px;
+  height: 100%;
+}
+
+.quizPart__question {
+  text-align: center;
+  margin: 10px auto;
+  align-self: center;
+  margin-bottom: 40px;
+}
+
+.question {
+  color: black;
+  font: Arial;
+  font-size: 20px;
+  width: 100%;
+}
+
+.secret__word {
+  margin-bottom: 40px;
+}
+
+.keyboard {
+  width: 20px;
+  height: 20px;
+  background: #70d6ff;
+}
+
+.letter-box {
+  display: inline-block;
+  margin: 0 2px;
+  border-bottom: 1px solid gray;
+  width: 14px;
+  height: 20px;
+}
 
 /*# sourceMappingURL=style.css.map */
