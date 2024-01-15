@@ -110,7 +110,12 @@ html {
 }
 @media (max-width: 640px) {
   .question {
-    font-size: 22px;
+    font-size: 21px;
+  }
+}
+@media (max-width: 640px) {
+  .question {
+    font-size: 19px;
   }
 }
 

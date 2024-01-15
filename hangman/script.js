@@ -32,6 +32,16 @@ for (let i = 0; i < 7; i += 1) {
     hangmanImages.push(hangmanImage);
 }
 
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
 const quizPart = document.createElement('div');
 quizPart.className = 'quiz-part';
 gameContainer.append(quizPart);
@@ -83,9 +93,34 @@ async function showQuestion() {
     question.textContent = data[questionNum].text;
 }
 
+let index = 0;
+
+const range = (start, stop, step) =>
+    Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
+const newArr = range(0,9,1);
+const shuffledArr = shuffle(newArr);
+console.log(shuffledArr);
+
+// function setLocalStorage() {
+//     localStorage.setItem('numb', questionNum);
+//     }
+
+
+let newValue;
 function getRandomQuestionNum() {
-    questionNum = Math.floor(Math.random() * 10);
-}
+    newValue = localStorage.getItem('numb');
+     if (Number(newValue) === shuffledArr[index]) {
+           questionNum = shuffledArr[index + 1];
+    } else {
+         questionNum = shuffledArr[index];
+         localStorage.setItem('numb', questionNum);
+     }
+        if (index < 9) {
+            index++;
+        } else {
+            index = 0;
+        }
+    }
 
 getRandomQuestionNum();
 getQuestionsData();
@@ -135,7 +170,7 @@ const messageButton = document.createElement('button');
 messageButton.className = 'message__button button';
 messageButton.textContent = 'Play again';
 messageButton.addEventListener('click', () => {
-    console.clear();
+    // console.clear();
     gallowsImage.innerHTML = '';
     quizPart.innerHTML = '';
     secretWord.innerHTML = '';
