@@ -96,31 +96,26 @@ async function showQuestion() {
 let index = 0;
 
 const range = (start, stop, step) =>
-    Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
-const newArr = range(0,9,1);
+    Array.from({length: (stop - start) / step + 1}, (_, i) => start + i * step);
+const newArr = range(0, 9, 1);
 const shuffledArr = shuffle(newArr);
-console.log(shuffledArr);
-
-// function setLocalStorage() {
-//     localStorage.setItem('numb', questionNum);
-//     }
-
 
 let newValue;
+
 function getRandomQuestionNum() {
     newValue = localStorage.getItem('numb');
-     if (Number(newValue) === shuffledArr[index]) {
-           questionNum = shuffledArr[index + 1];
+    if (Number(newValue) === shuffledArr[index]) {
+        questionNum = shuffledArr[index + 1];
     } else {
-         questionNum = shuffledArr[index];
-         localStorage.setItem('numb', questionNum);
-     }
-        if (index < 9) {
-            index++;
-        } else {
-            index = 0;
-        }
+        questionNum = shuffledArr[index];
+        localStorage.setItem('numb', questionNum);
     }
+    if (index < 9) {
+        index++;
+    } else {
+        index = 0;
+    }
+}
 
 getRandomQuestionNum();
 getQuestionsData();
@@ -135,7 +130,7 @@ async function makeWord() {
     const ans = data[questionNum].answer.join('');
     answer = ans;
     word.textContent = `The correct answer is ${answer.toUpperCase()}`;
-   console.log('Ответ на вопрос:', ans);
+    console.log('Ответ на вопрос:', ans);
     const answerLength = ans.length;
     for (let i = 0; i < answerLength; i += 1) {
         const letterBox = document.createElement('span');
@@ -257,23 +252,25 @@ const Keyboard = {
             keyElement.setAttribute('type', 'button');
             keyElement.classList.add('keyboard__key', `${key.code}`);
             keyElement.textContent = key["eng"].toLowerCase();
+
             keyElement.addEventListener('click', () => {
                 keyElement.setAttribute('disabled', 'disabled');
                 keyElement.classList.add('disabled');
+
                 if (answer.includes(key["eng"].toLowerCase())) {
                     for (let i = 0; i < answer.length; i += 1) {
                         if (answer[i] === key['eng']) {
                             spanArray[i].textContent = key['eng'].toUpperCase();
                             spanArray[i].style.borderBottom = 'none';
                             letterArray.push(spanArray[i].textContent);
+
                             if (letterArray.length === answer.length) {
                                 messageHeading.textContent = 'Congratulations!';
                                 const keyboardKeys = document.querySelectorAll('.keyboard__key');
                                 keyboardKeys.forEach((key) => {
                                     key.setAttribute('disabled', 'disabled');
-                                    setTimeout(showMessage,300);
+                                    setTimeout(showMessage, 300);
                                 });
-
                             }
                         }
                     }
@@ -289,13 +286,13 @@ const Keyboard = {
                         keyboardKeys.forEach((key) => {
                             key.setAttribute('disabled', 'disabled')
                         });
-                        setTimeout(showMessage,500);
+                        setTimeout(showMessage, 500);
                     }
                 }
                 ;
-
             })
             fragment.appendChild(keyElement);
+
         })
         return fragment;
     }

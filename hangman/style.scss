@@ -22,7 +22,6 @@ html {
 .game-container {
     @media(max-width: 1000px) {
         flex-direction: column;
-
     }
 }
 
@@ -82,7 +81,6 @@ html {
 
 .quizPart__question {
     text-align: center;
-    //margin: 10px auto;
     align-self: center;
     margin-bottom: 40px;
     @media(max-width: 1000px) {
