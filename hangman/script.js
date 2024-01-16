@@ -6,7 +6,6 @@ const wrapper = document.createElement('div');
 wrapper.className = 'wrapper';
 document.body.append(wrapper);
 
-
 const gameContainer = document.createElement('div');
 gameContainer.className = 'container game-container';
 wrapper.append(gameContainer);
@@ -162,10 +161,10 @@ message.append(messageHeading);
 const word = document.createElement('h2');
 word.className = 'message__word';
 const messageButton = document.createElement('button');
+messageButton.setAttribute('autofocus', 'autofocus');
 messageButton.className = 'message__button button';
 messageButton.textContent = 'Play again';
 messageButton.addEventListener('click', () => {
-    // console.clear();
     gallowsImage.innerHTML = '';
     quizPart.innerHTML = '';
     secretWord.innerHTML = '';
@@ -197,6 +196,12 @@ function showMessage() {
 
 function closeMessage() {
     message.classList.add('message_disabled');
+}
+
+
+function makeKeyUnable(node) {
+    node.setAttribute('disabled', 'disabled');
+    node.classList.add('disabled');
 }
 
 const Keyboard = {
@@ -254,9 +259,7 @@ const Keyboard = {
             keyElement.textContent = key["eng"].toLowerCase();
 
             keyElement.addEventListener('click', () => {
-                keyElement.setAttribute('disabled', 'disabled');
-                keyElement.classList.add('disabled');
-
+                makeKeyUnable(keyElement);
                 if (answer.includes(key["eng"].toLowerCase())) {
                     for (let i = 0; i < answer.length; i += 1) {
                         if (answer[i] === key['eng']) {
@@ -302,4 +305,46 @@ document.addEventListener('DOMContentLoaded', () => {
     Keyboard.init();
     Keyboard.elements.main.prepend(guesses);
     document.body.append(message);
+
 });
+
+document.addEventListener('keydown', (ev) => {
+    Keyboard.elements.keys.forEach((key) => {
+            if (key.classList.contains(ev.code) && !(key.hasAttribute('disabled'))) {
+                makeKeyUnable(key);
+                if (answer.includes(ev.key)) {
+                    for (let i = 0; i < answer.length; i += 1) {
+                        if (answer[i] === ev.key) {
+                            spanArray[i].textContent = ev.key.toUpperCase();
+                            spanArray[i].style.borderBottom = 'none';
+                            letterArray.push(spanArray[i].textContent);
+                        }
+                    }
+                    if (letterArray.length === answer.length) {
+                        messageHeading.textContent = 'Congratulations!';
+                        Keyboard.elements.keys.forEach((key) => {
+                            key.setAttribute('disabled', 'disabled')
+                        })
+                        setTimeout(showMessage, 300);
+                    }
+                } else {
+                    const wrongGuesses = document.querySelector('.incorrectGuesses');
+                    gallowsImage.innerHTML = '';
+                    gallowsImage.append(hangmanImages[clickCounter + 1]);
+                    clickCounter++;
+                    wrongGuesses.textContent = clickCounter;
+                    if (clickCounter === maxWrongAnswers) {
+                        messageHeading.textContent = "You lost!";
+                        const keyboardKeys = document.querySelectorAll('.keyboard__key');
+                        keyboardKeys.forEach((key) => {
+                            key.setAttribute('disabled', 'disabled')
+                        });
+                        setTimeout(showMessage, 500);
+                    }
+                }
+            } else {
+                return;
+            }
+        }
+    )
+})
