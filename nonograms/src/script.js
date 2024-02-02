@@ -1,54 +1,73 @@
-const wrapper = document.createElement("div");
-wrapper.className = "wrapper";
-document.body.prepend(wrapper);
+import { addWrapper,addMessage,addTopButtonsContainer,
+    addLevelButtonContainer,addLevelButton,addLevelDropdownList,addTimerContainer,addContinueButton,
+    addDropDownListitem, addGameListAccordingToSize,elements,setLeftAndMaxWidth,setClassname,addGameListAccordingToSizeItem } from "./generating.js";
 
-const message = document.createElement("div");
-message.className = "message message__disabled";
-wrapper.append(message);
+import {getSpecificTopClues, getLevels} from "./counting.js"
 
-const topButtonsContainer = document.createElement("div");
-topButtonsContainer.className = "top-buttons";
-wrapper.append(topButtonsContainer);
 
-const levelButtonContainer = document.createElement("div");
-levelButtonContainer.className = "select-wrapper";
-topButtonsContainer.append(levelButtonContainer);
 
-const levelButton = document.createElement("button");
-levelButton.className = "level-button button";
-levelButton.textContent = "Level";
-levelButtonContainer.append(levelButton);
+async function getData() {
+    const nonogramsDataSrc = 'data.json';
+    const res = await fetch(nonogramsDataSrc);
+    const nonogramsData = await res.json();
+    return [...nonogramsData];
+}
 
-const levelDropdownList = document.createElement("div");
-levelDropdownList.className = "dropdown__list dropdown__list_hidden";
-levelButtonContainer.append(levelDropdownList);
+let nonogramsIndex = 0;
 
-const gameSize = ["small","medium","large"];
+getData().then((nonograms)=> {
+    const topCluesValues = getSpecificTopClues(nonograms, nonogramsIndex);
+    const levelArray = getLevels(nonograms);
+    addWrapper();
+    addMessage();
+    addTopButtonsContainer();
+    addLevelButtonContainer();
+    addLevelButton();
+    addLevelDropdownList();
+    addTimerContainer();
+    addContinueButton();
+    addDropDownListitem(levelArray,renderGameListAccordingToSize,nonograms);
+    addGameListAccordingToSize();
+    // console.log(nonograms.filter((value)=> value.level === 'small'));
+});
 
-for (let i = 0; i < gameSize.length; i += 1) {
-    const dropDownListitem = document.createElement("button");
-    dropDownListitem.className = "dropdown__list-item";
-    dropDownListitem.setAttribute("data-value",gameSize[i]);
-    dropDownListitem.textContent = gameSize[i];
-    levelDropdownList.append(dropDownListitem);
-    dropDownListitem.addEventListener('click', (ev)=> {
-        const gameListAccordingToSize = document.createElement("div");
-        // дописать функцию создания списка с играми...........
-        console.log(ev.target.dataset.value);
-    })
+
+
+
+
+
+
+
+//eventFunction for dropdown-list-item
+function renderGameListAccordingToSize(event,nonograms) {
+    setClassname(elements.gameListAccordingToSize, "game-list-according-to-size");
+    setLeftAndMaxWidth();
+    const gamesOfClickedSized = nonograms.filter((value) => value.level === event.target.dataset.value);
+    addGameListAccordingToSizeItem(gamesOfClickedSized);
 }
 
 
 
-const timerContainer = document.createElement("div");
-timerContainer.className = "timer-container";
-timerContainer.textContent = "123";
-topButtonsContainer.append(timerContainer);
 
-const continueButton = document.createElement("button");
-continueButton.className = "continue-button button disabled";
-continueButton.textContent = "Continue last game";
-topButtonsContainer.append(continueButton);
+
+//         let d = document.querySelector(".game-list-according-to-size_disabled");
+//         console.log(JSON.stringify(d));
+    // const dropDownListItem = document.querySelector(".dropdown__list-item");
+    // console.log(dropDownListItem);
+    // const levelButtonContainer = document.querySelector(".select-wrapper");
+    // const levelDropdownList = document.querySelector(".dropdown__list");
+    // // дописать функцию создания списка с играми...........
+    // dropDownListItem.addEventListener('click', (ev)=> {
+    //     const propForList = getComputedStyle(levelButtonContainer);
+    //     gameListAccordingToSize.style.left = parseFloat(propForList.width) + "px";
+    //     gameListAccordingToSize.style.maxWidth = parseFloat(propForList.width) + "px";
+    //
+    //     console.log(ev.target.dataset.value);
+    // })
+
+
+
+
 
 
 
@@ -58,16 +77,16 @@ topButtonsContainer.append(continueButton);
 
 
 //открытие меню с выбором уровня
-levelButton.addEventListener("click",(event)=>{
-    levelDropdownList.classList.toggle("dropdown__list_hidden");
-})
+// levelButton.addEventListener("click",(event)=>{
+//     levelDropdownList.classList.toggle("dropdown__list_hidden");
+// })
 
 //закрытие меню с выбором уровня по клику вне кнопки
-document.addEventListener("click", (event)=>{
-    if (event.target !== levelButton && event.target !==levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
-        levelDropdownList.classList.add("dropdown__list_hidden");
-    }
-})
+// document.addEventListener("click", (event)=>{
+//     if (event.target !== levelButton && event.target !==levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
+//         levelDropdownList.classList.add("dropdown__list_hidden");
+//     }
+// })
 
 
 
@@ -122,6 +141,10 @@ document.addEventListener("click", (event)=>{
 // });
 //
 // let nonograms;
+
+
+
+
 //
 // async function fillClues() {
 //     const nonogramsData = 'data.json';

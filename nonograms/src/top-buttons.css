@@ -50,9 +50,24 @@
     margin-bottom: 6px;
 }
 
-.dropdown__list-item:hover {
+.dropdown__list-item:hover,.dropdown__list-item:active {
     color: var(--button-text-color);
     border-bottom: 1px solid var(--button-text-color);
+}
+
+.game-list-according-to-size {
+    position: absolute;
+    background: #3fcc59;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 50px 24px 20px;
+    border-left: 1px solid lightgray;
+    background: var(--select-background_active);
+}
+
+.game-list-according-to-size_disabled {
+    display: none;
 }
 
 
@@ -138,10 +153,12 @@
     .timer-container {
         width: calc(385px - (((1300px) - 100vw) * 185 / 500));
     }
+
     .continue-button {
         padding-left: calc(97px - (((1300px) - 100vw) * 77 / 500));
         padding-right: calc(98px - (((1300px) - 100vw) * 93 / 500));
     }
+
     .top-buttons {
         margin-bottom: calc(50px - (((1300px) - 100vw) * 30 / 500));;
     }
@@ -152,12 +169,14 @@
     .top-buttons {
         margin-bottom: 20px;
     }
+
     .timer-container {
         padding-top: 13px;
         width: 200px;
         margin-left: 30px;
         margin-right: 30px;
     }
+
     .continue-button {
         padding-left: 20px;
         padding-right: 5px;
