@@ -13,7 +13,9 @@ import {
     setLeftAndMaxWidth,
     setClassname,
     addGameListAccordingToSizeItem,
-    closeLevelMenu
+    closeLevelMenu,
+    addGameContainer,addGame, addEmptySpace,addTopCluesField,addTopCluesRowsAndTiles,fillTopClues,addLeftCluesField,
+    addLeftCluesRowsAndTiles,fillLeftClues
 } from "./generating.js";
 
 import {getSpecificLeftClues,getSpecificTopClues, getLevels} from "./counting.js"
@@ -27,7 +29,7 @@ async function getData() {
     return [...nonogramsData];
 }
 
-let nonogramsIndex = 0;
+let nonogramsIndex = 13;
 
 getData().then((nonograms)=> {
     const leftCluesValues = getSpecificLeftClues(nonograms, nonogramsIndex);//массив левых подсказок
@@ -45,6 +47,15 @@ getData().then((nonograms)=> {
     addContinueButton();
     addDropDownListitem(levelArray,renderGameListAccordingToSize,nonograms);
     addGameListAccordingToSize();
+    addGameContainer();
+    addGame();
+    addEmptySpace();
+    addTopCluesField();
+    addTopCluesRowsAndTiles(topCluesValues);
+    fillTopClues(topCluesValues);
+    addLeftCluesField();
+    addLeftCluesRowsAndTiles(leftCluesValues);
+    fillLeftClues(leftCluesValues);
 });
 
 

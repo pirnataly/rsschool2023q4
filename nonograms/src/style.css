@@ -39,7 +39,6 @@ body {
 
 .empty-space {
     grid-area: empty-space-area;
-
 }
 
 .topClue {
@@ -56,12 +55,13 @@ body {
     border-left: 3px solid black;
 }
 
-.leftClue__row:nth-last-of-type(5n), .gameField__row .tail:nth-last-of-type(5n) {
+.leftClue__row:nth-last-of-type(5n), .gameField__row .tile:nth-last-of-type(5n) {
     border-top: 3px solid black;
 }
 
-.tail {
+.tile {
     text-align: center;
+    font-size: 12px;
     width: 15px;
     height: 15px;
     outline: 1px solid black;
