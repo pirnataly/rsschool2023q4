@@ -1,3 +1,6 @@
+import {getAnswers} from "./counting.js";
+
+
 export function setClassname(el, val) {
     el.className = val;
 }
@@ -27,6 +30,7 @@ export const elements = {
     emptySpace: create("div"),
     topClueField: create("div"),
     leftClueField: create("div"),
+    gameField: create("div"),
 }
 
 export function addWrapper() {
@@ -193,6 +197,40 @@ export function fillLeftClues(arr) {
 }
 
 
+//игровое поле
+export function addGameField(arr,index) {
+    setClassname(elements.gameField, "gameField");
+    appending(elements.game,elements.gameField);
+  }
+
+export function addGameRowsAndTiles(arr,index) {
+    const gameBoard = [];
+    const answersForIndexedGame = getAnswers(arr)[index];
+    const solutionPositions = getSolutionPositions(answersForIndexedGame);
+     for(let x = 0; x < answersForIndexedGame.length; x += 1) {
+        const row = [];
+        const gameFieldRow = create("div");
+        setClassname(gameFieldRow,"gameField__row");
+        appending(elements.gameField,gameFieldRow);
+        for(let y = 0; y < answersForIndexedGame.length; y += 1) {
+            const element = create("div");
+            element.dataset.status = "hidden";
+            // element.addEventListener('click',clickTile);
+            setClassname(element,"tile");
+            appending(gameFieldRow,element);
+            const tile = {
+                element,
+                x,
+                y,
+                isSolution: solutionPositions.some(positionMatch.bind(null, { x, y })),
+            };
+           row.push(tile)
+        }
+        gameBoard.push(row);
+    }
+    return gameBoard;
+}
+
 
 
 //вспомогательные функции
@@ -223,3 +261,54 @@ export function setLeftAndMaxWidth() {
     setPropAccordingToParentWidth(elements.levelButtonContainer, "maxWidth");
 }
 
+function positionMatch(a, b) {
+    return a.x === b.x && a.y === b.y;
+}
+
+function getSolutionPositions (arr) {
+    const solutionPositions = [];
+    for (let i = 0; i < arr.length; i += 1) {
+        for(let j = 0; j < arr[i].length; j += 1) {
+            if(arr[i][j]===1){
+                solutionPositions.push({x:j,y:i})
+            }
+        }
+    }
+    return solutionPositions;
+}
+
+//main function for cell
+
+export function clickTile(ev) {
+    console.log('click')
+    const clickedTile = ev.target;
+    setDataSet(clickedTile);
+
+}
+
+
+
+function setDataSet(el) {
+    if(el.dataset.status!=="hidden") {
+        el.dataset.status = "hidden";
+    }
+    else {
+        el.dataset.status = "open";
+    }
+
+}
+
+export function checkWin(arr) {
+    for(let i = 0; i < arr.length; i += 1) {
+        for(let j = 0; j < arr.length; j += 1) {
+            if((arr[i][j].element.dataset.status === "hidden" && arr[i][j].element.isSolution === true)){
+                console.log(true)
+            return true
+            }
+        }
+
+        }
+
+    console.log(false)
+    return false;
+    }

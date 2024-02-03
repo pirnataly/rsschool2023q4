@@ -60,14 +60,14 @@ function getTopClues(arr) {
     return resultArr;
 }
 
-function getAnswers(arr) {
+export function getAnswers(arr) {
     return arr.map((value)=>(value.answer));
 }
 
 export function getSpecificLeftClues(arr,index) {
     const answersForTop = getAnswers(arr);
     const answersForTopIndexed = answersForTop[index];
-    return getTopClues(answersForTopIndexed);
+    return getLeftClues(answersForTopIndexed);
 }
 
 export function getSpecificTopClues(arr,index) {

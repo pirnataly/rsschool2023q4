@@ -14,12 +14,20 @@ import {
     setClassname,
     addGameListAccordingToSizeItem,
     closeLevelMenu,
-    addGameContainer,addGame, addEmptySpace,addTopCluesField,addTopCluesRowsAndTiles,fillTopClues,addLeftCluesField,
-    addLeftCluesRowsAndTiles,fillLeftClues
+    addGameContainer,
+    addGame,
+    addEmptySpace,
+    addTopCluesField,
+    addTopCluesRowsAndTiles,
+    fillTopClues,
+    addLeftCluesField,
+    addLeftCluesRowsAndTiles,
+    fillLeftClues,
+    addGameField,
+    addGameRowsAndTiles, clickTile,
 } from "./generating.js";
 
-import {getSpecificLeftClues,getSpecificTopClues, getLevels} from "./counting.js"
-
+import { getSpecificLeftClues, getSpecificTopClues, getLevels } from "./counting.js"
 
 
 async function getData() {
@@ -29,13 +37,13 @@ async function getData() {
     return [...nonogramsData];
 }
 
-let nonogramsIndex = 13;
+let nonogramsIndex = 9;
+let game;
 
-getData().then((nonograms)=> {
+
+getData().then((nonograms) => {
     const leftCluesValues = getSpecificLeftClues(nonograms, nonogramsIndex);//массив левых подсказок
-    console.log('left',leftCluesValues)
     const topCluesValues = getSpecificTopClues(nonograms, nonogramsIndex);//массив верхних подсказок
-    console.log('top',topCluesValues)
     const levelArray = getLevels(nonograms);
     addWrapper();
     addMessage();
@@ -45,7 +53,7 @@ getData().then((nonograms)=> {
     addLevelDropdownList();
     addTimerContainer();
     addContinueButton();
-    addDropDownListitem(levelArray,renderGameListAccordingToSize,nonograms);
+    addDropDownListitem(levelArray, renderGameListAccordingToSize, nonograms);
     addGameListAccordingToSize();
     addGameContainer();
     addGame();
@@ -56,18 +64,37 @@ getData().then((nonograms)=> {
     addLeftCluesField();
     addLeftCluesRowsAndTiles(leftCluesValues);
     fillLeftClues(leftCluesValues);
-});
+    addGameField(nonograms, nonogramsIndex);
+    game = addGameRowsAndTiles(nonograms, nonogramsIndex);
+    console.log(game);
+    game.forEach((row) => {
+        row.forEach((tile) => {
+            tile.element.addEventListener("click", (ev) => {
+                let arr = [];
+                clickTile(ev);
+                for (let i = 0; i < game.length; i += 1) {
+                    let sum = 0;
+                    for (let j = 0; j < game.length; j += 1) {
+                        if ((game[i][j].element.dataset.status === "hidden" && game[i][j].isSolution === true)) {
+                            sum += 1;
+                           arr.push(sum)
+                        }
+                    }
+                }
+           if(arr.length===0) {
+               //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
+               alert('Победа!')
+           }
 
+            })
 
-
-
-
-
-
+        })
+    });
+})
 
 //eventFunction for dropdown-list-item
-function renderGameListAccordingToSize(event,nonograms) {
-    elements.gameListAccordingToSize.innerText="";
+function renderGameListAccordingToSize(event, nonograms) {
+    elements.gameListAccordingToSize.innerText = "";
     setClassname(elements.gameListAccordingToSize, "game-list-according-to-size");
     setLeftAndMaxWidth();
     const gamesOfClickedSized = nonograms.filter((value) => value.level === event.target.dataset.value);
@@ -77,8 +104,8 @@ function renderGameListAccordingToSize(event,nonograms) {
 
 //Add event listeners
 //закрытие меню с выбором уровня по клику вне кнопки
-document.addEventListener("click", (event)=>{
-    if (event.target !== elements.levelButton && event.target !==elements.levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
+document.addEventListener("click", (event) => {
+    if (event.target !== elements.levelButton && event.target !== elements.levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
         closeLevelMenu();
         elements.levelButton.classList.remove("level-button_active");
     }
@@ -88,16 +115,10 @@ document.addEventListener("click", (event)=>{
 //закрытие меню по клику escape
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Tab' || e.key === 'Escape') {
-       closeLevelMenu();
+        closeLevelMenu();
         elements.levelButton.classList.remove("level-button_active");
     }
 })
-
-
-
-
-
-
 
 
 // const timerContainer = document.querySelector('.timer-container');
@@ -133,30 +154,9 @@ document.addEventListener('keydown', function (e) {
 //         setTimer();
 //     }
 // });
-//
-// let nonograms;
 
 
 
 
-//
-// async function fillClues() {
-//     const nonogramsData = 'data.json';
-//     const res = await fetch(nonogramsData);
-//     const data = await res.json();
-//     nonograms = [...data];
-//     //заполнение верхних подсказок
-//     for (let childrenRow = 0; childrenRow < topClue.children.length; childrenRow += 1) {
-//         for (let tailInChildrenRow = 0; tailInChildrenRow < topClue.children[childrenRow].children.length; tailInChildrenRow += 1) {
-//             topClue.children[childrenRow].children[tailInChildrenRow].textContent = nonograms[0].topClue[childrenRow][tailInChildrenRow];
-//         }
-//         //заполнение левых подсказок
-//         for (let tailInChildrenRow = 0; tailInChildrenRow < leftClue.children[childrenRow].children.length; tailInChildrenRow += 1) {
-//             leftClue.children[childrenRow].children[tailInChildrenRow].textContent = nonograms[0].leftClue[childrenRow][tailInChildrenRow];
-//         }
-//     }
-//
-// }
-//
-// fillClues();
+
 

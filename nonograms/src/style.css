@@ -82,6 +82,11 @@ body {
     display: flex;
 }
 
+[data-status="open"] {
+    background:black;
+}
+
+
 @media (max-width: 1300px) and (min-width: 500px) {
     .wrapper {
         padding-top: calc(40px - (((1300px) - 100vw) * 30 / 800));;
