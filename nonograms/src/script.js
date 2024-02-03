@@ -1,8 +1,22 @@
-import { addWrapper,addMessage,addTopButtonsContainer,
-    addLevelButtonContainer,addLevelButton,addLevelDropdownList,addTimerContainer,addContinueButton,
-    addDropDownListitem, addGameListAccordingToSize,elements,setLeftAndMaxWidth,setClassname,addGameListAccordingToSizeItem } from "./generating.js";
+import {
+    addWrapper,
+    addMessage,
+    addTopButtonsContainer,
+    addLevelButtonContainer,
+    addLevelButton,
+    addLevelDropdownList,
+    addTimerContainer,
+    addContinueButton,
+    addDropDownListitem,
+    addGameListAccordingToSize,
+    elements,
+    setLeftAndMaxWidth,
+    setClassname,
+    addGameListAccordingToSizeItem,
+    closeLevelMenu
+} from "./generating.js";
 
-import {getSpecificTopClues, getLevels} from "./counting.js"
+import {getSpecificLeftClues,getSpecificTopClues, getLevels} from "./counting.js"
 
 
 
@@ -16,7 +30,10 @@ async function getData() {
 let nonogramsIndex = 0;
 
 getData().then((nonograms)=> {
-    const topCluesValues = getSpecificTopClues(nonograms, nonogramsIndex);
+    const leftCluesValues = getSpecificLeftClues(nonograms, nonogramsIndex);//массив левых подсказок
+    console.log('left',leftCluesValues)
+    const topCluesValues = getSpecificTopClues(nonograms, nonogramsIndex);//массив верхних подсказок
+    console.log('top',topCluesValues)
     const levelArray = getLevels(nonograms);
     addWrapper();
     addMessage();
@@ -28,7 +45,6 @@ getData().then((nonograms)=> {
     addContinueButton();
     addDropDownListitem(levelArray,renderGameListAccordingToSize,nonograms);
     addGameListAccordingToSize();
-    // console.log(nonograms.filter((value)=> value.level === 'small'));
 });
 
 
@@ -40,6 +56,7 @@ getData().then((nonograms)=> {
 
 //eventFunction for dropdown-list-item
 function renderGameListAccordingToSize(event,nonograms) {
+    elements.gameListAccordingToSize.innerText="";
     setClassname(elements.gameListAccordingToSize, "game-list-according-to-size");
     setLeftAndMaxWidth();
     const gamesOfClickedSized = nonograms.filter((value) => value.level === event.target.dataset.value);
@@ -47,57 +64,23 @@ function renderGameListAccordingToSize(event,nonograms) {
 }
 
 
-
-
-
-//         let d = document.querySelector(".game-list-according-to-size_disabled");
-//         console.log(JSON.stringify(d));
-    // const dropDownListItem = document.querySelector(".dropdown__list-item");
-    // console.log(dropDownListItem);
-    // const levelButtonContainer = document.querySelector(".select-wrapper");
-    // const levelDropdownList = document.querySelector(".dropdown__list");
-    // // дописать функцию создания списка с играми...........
-    // dropDownListItem.addEventListener('click', (ev)=> {
-    //     const propForList = getComputedStyle(levelButtonContainer);
-    //     gameListAccordingToSize.style.left = parseFloat(propForList.width) + "px";
-    //     gameListAccordingToSize.style.maxWidth = parseFloat(propForList.width) + "px";
-    //
-    //     console.log(ev.target.dataset.value);
-    // })
-
-
-
-
-
-
-
-
-
-
-
-
-//открытие меню с выбором уровня
-// levelButton.addEventListener("click",(event)=>{
-//     levelDropdownList.classList.toggle("dropdown__list_hidden");
-// })
-
+//Add event listeners
 //закрытие меню с выбором уровня по клику вне кнопки
-// document.addEventListener("click", (event)=>{
-//     if (event.target !== levelButton && event.target !==levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
-//         levelDropdownList.classList.add("dropdown__list_hidden");
-//     }
-// })
+document.addEventListener("click", (event)=>{
+    if (event.target !== elements.levelButton && event.target !==elements.levelDropdownList && !event.target.classList.contains("dropdown__list-item")) {
+        closeLevelMenu();
+        elements.levelButton.classList.remove("level-button_active");
+    }
+})
 
 
-
-
-
-
-
-
-
-
-
+//закрытие меню по клику escape
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab' || e.key === 'Escape') {
+       closeLevelMenu();
+        elements.levelButton.classList.remove("level-button_active");
+    }
+})
 
 
 

@@ -11,6 +11,7 @@ function create(tagname) {
 }
 
 
+
 //page blocks
 export const elements = {
     wrapper:create("div"),
@@ -52,6 +53,8 @@ export function addLevelButton() {
     appending(elements.levelButtonContainer, elements.levelButton);
     //открытие меню с выбором уровня
  elements.levelButton.addEventListener("click",(event)=>{
+     elements.levelButton.classList.add("level-button_active");
+      gameListClearAndHide();
      elements.levelDropdownList.classList.toggle("dropdown__list_hidden");
 })
 }
@@ -85,6 +88,7 @@ export function addDropDownListitem(arr,eventFunction,...arg) {
     for (let i = 0; i < arr.length; i += 1) {
         const dropDownListItem = create("button");
         setClassname(dropDownListItem, "dropdown__list-item");
+
         dropDownListItem.setAttribute("data-value", arr[i]);
         dropDownListItem.textContent = arr[i];
         appending(elements.levelDropdownList, dropDownListItem);
@@ -94,6 +98,7 @@ export function addDropDownListitem(arr,eventFunction,...arg) {
 }
 
 export function addGameListAccordingToSizeItem(arr) {
+    const audio = new Audio("./assets/clicking-sound.mp3");
     for (let i = 0; i < arr.length; i += 1) {
         const accordingToSizeGameItem = create("button");
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
@@ -101,9 +106,11 @@ export function addGameListAccordingToSizeItem(arr) {
         accordingToSizeGameItem.textContent = arr[i].name;
         appending(elements.gameListAccordingToSize, accordingToSizeGameItem);
         accordingToSizeGameItem.addEventListener('click',(ev)=> {
-            elements.gameListAccordingToSize.innerText="";
-            elements.gameListAccordingToSize.classList.add("game-list-according-to-size_disabled");
-            elements.levelDropdownList.classList.add("dropdown__list_hidden");
+
+            elements.levelButton.classList.remove("level-button_active");
+            elements.levelButton.textContent = ev.target.textContent;
+           closeLevelMenu();
+           audio.play();
             //добавить функцию отрисовки выбранной игры
             console.log(ev.target.textContent);
         });
@@ -112,6 +119,21 @@ export function addGameListAccordingToSizeItem(arr) {
 }
 
 
+export  function closeLevelMenu() {
+    gameListClearAndHide();
+    levelListHide();
+}
+
+
+
+function gameListClearAndHide() {
+    elements.gameListAccordingToSize.innerText="";
+    elements.gameListAccordingToSize.classList.add("game-list-according-to-size_disabled");
+}
+
+function levelListHide() {
+    elements.levelDropdownList.classList.add("dropdown__list_hidden");
+}
 
 
 function getProperties(element) {
@@ -126,3 +148,4 @@ export function setLeftAndMaxWidth() {
     setPropAccordingToParentWidth(elements.levelButtonContainer,"left");
     setPropAccordingToParentWidth(elements.levelButtonContainer,"maxWidth");
 }
+

@@ -34,6 +34,7 @@
 }
 
 .dropdown__list-item {
+    white-space: nowrap;
     width: 100%;
     display: block;
     padding: 0;
@@ -104,6 +105,12 @@
     pointer-events: none;
 }
 
+.level-button_active::before {
+    background: url("./assets/select_ico_active.svg") no-repeat;
+}
+
+
+
 .level-button_active, .level-button:focus {
     background: var(--select-background_active);
     border: 1px solid var(--select-background_active);
@@ -173,8 +180,8 @@
     .timer-container {
         padding-top: 13px;
         width: 200px;
-        margin-left: 30px;
-        margin-right: 30px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .continue-button {
