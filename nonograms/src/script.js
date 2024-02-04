@@ -69,25 +69,31 @@ getData().then((nonograms) => {
     game.forEach((row) => {
         row.forEach((tile) => {
             tile.element.addEventListener("click", (ev) => {
-                let arr = [];
+                let arrOfSolutions = [];
+                let arrOfIncorrectOpenTiles = [];
                 changeTileView(ev);
                 playClickMusic(tile);
                 for (let i = 0; i < game.length; i += 1) {
-                    let sum = 0;
+                    let sumOfRestSolutions = 0;
+                    let sumOfIncorrectOpenTilse = 0;
                     for (let j = 0; j < game.length; j += 1) {
-                        if ((game[i][j].element.dataset.status === "hidden" && game[i][j].isSolution === true)) {
-                            sum += 1;
-                            arr.push(sum)
+                        if (game[i][j].element.dataset.status === "hidden" && game[i][j].isSolution === true) {
+                            sumOfRestSolutions += 1;
+                            arrOfSolutions.push(sumOfRestSolutions);
+                        }
+                        if (game[i][j].element.dataset.status === "open" && game[i][j].isSolution === false){
+                            sumOfIncorrectOpenTilse += 1;
+                            arrOfIncorrectOpenTiles.push(sumOfIncorrectOpenTilse);
                         }
                     }
                 }
-                if (arr.length === 0) {
+                if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length===0) {
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
                     setTimeout(() => {
                             playWin();
                             alert("Great! You have solved the nonogram!")
                         }
-                        , 500);
+                        , 1);
                     clearInterval(timerProperties.timer);
 
                 }
