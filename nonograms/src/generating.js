@@ -1,4 +1,4 @@
-import {getAnswers} from "./counting.js";
+import { getAnswers } from "./counting.js";
 
 
 export function setClassname(el, val) {
@@ -32,6 +32,22 @@ export const elements = {
     leftClueField: create("div"),
     gameField: create("div"),
 }
+
+export const timerProperties =
+    {
+        number: 0,
+        gameFieldClick: 0,
+        timer:0,
+    }
+
+export const musicProperties = {
+    audioclick: new Audio("./assets/clicking-sound.mp3"),
+    audioEvenClick: new Audio("./assets/evenclick.wav"),
+    audioRightClick: new Audio("./assets/rightClick.wav"),
+    audioWinning: new Audio("./assets/win.wav"),
+}
+
+
 
 export function addWrapper() {
     setClassname(elements.wrapper, "wrapper");
@@ -75,7 +91,7 @@ export function addLevelDropdownList() {
 
 export function addTimerContainer() {
     setClassname(elements.timerContainer, "timer-container");
-    elements.timerContainer.textContent = "123";
+    elements.timerContainer.textContent = "00:00";
     appending(elements.topButtonsContainer, elements.timerContainer);
 }
 
@@ -106,7 +122,7 @@ export function addDropDownListitem(arr, eventFunction, ...arg) {
 }
 
 export function addGameListAccordingToSizeItem(arr) {
-    const audio = new Audio("./assets/clicking-sound.mp3");
+
     for (let i = 0; i < arr.length; i += 1) {
         const accordingToSizeGameItem = create("button");
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
@@ -114,12 +130,11 @@ export function addGameListAccordingToSizeItem(arr) {
         accordingToSizeGameItem.textContent = arr[i].name;
         appending(elements.gameListAccordingToSize, accordingToSizeGameItem);
         accordingToSizeGameItem.addEventListener('click', (ev) => {
-
             elements.levelButton.classList.remove("level-button_active");
             elements.levelButton.textContent = ev.target.textContent;
             closeLevelMenu();
-            audio.play();
-            //добавить функцию отрисовки выбранной игры
+
+           //добавить функцию отрисовки выбранной игры
             console.log(ev.target.textContent);
         });
     }
@@ -134,6 +149,9 @@ export function addGameContainer() {
 export function addGame() {
     setClassname(elements.game, "game");
     appending(elements.gameContainer, elements.game);
+    elements.game.addEventListener("click", setTimerAfterFirstClick);
+    elements.game.addEventListener("contextmenu",setTimerAfterFirstClick)
+
 }
 
 export function addEmptySpace() {
@@ -151,12 +169,15 @@ export function addTopCluesField() {
 export function addTopCluesRowsAndTiles(arr) {
     for (let i = 0; i < arr.length; i += 1) {
         let topRow = create("div");
-        setClassname(topRow,"topClue__row");
-        appending(elements.topClueField,topRow);
-        for(let j = 0; j < arr[0].length; j += 1) {
+        setClassname(topRow, "topClue__row");
+        appending(elements.topClueField, topRow);
+        for (let j = 0; j < arr[0].length; j += 1) {
             let rowTile = create("div");
             setClassname(rowTile, "tile");
-            appending(topRow,rowTile);
+            appending(topRow, rowTile);
+            rowTile.addEventListener("contextmenu",(event)=>{
+                event.preventDefault();
+            })
         }
     }
 }
@@ -171,19 +192,22 @@ export function fillTopClues(arr) {
 
 //левые подсказки
 export function addLeftCluesField() {
-    setClassname(elements.leftClueField,"leftClue");
-    appending(elements.game,elements.leftClueField);
-}
+    setClassname(elements.leftClueField, "leftClue");
+    appending(elements.game, elements.leftClueField);
+    }
 
 export function addLeftCluesRowsAndTiles(arr) {
     for (let i = 0; i < arr.length; i += 1) {
         let leftRow = create("div");
-        setClassname(leftRow,"leftClue__row");
-        appending(elements.leftClueField,leftRow);
-        for(let j = 0; j < arr[0].length; j += 1) {
+        setClassname(leftRow, "leftClue__row");
+        appending(elements.leftClueField, leftRow);
+        for (let j = 0; j < arr[0].length; j += 1) {
             let rowTile = create("div");
             setClassname(rowTile, "tile");
-            appending(leftRow,rowTile);
+            appending(leftRow, rowTile);
+            rowTile.addEventListener("contextmenu",(event)=>{
+                event.preventDefault();
+            })
         }
     }
 }
@@ -198,39 +222,38 @@ export function fillLeftClues(arr) {
 
 
 //игровое поле
-export function addGameField(arr,index) {
+export function addGameField(arr, index) {
     setClassname(elements.gameField, "gameField");
-    appending(elements.game,elements.gameField);
-  }
+    appending(elements.game, elements.gameField);
+}
 
-export function addGameRowsAndTiles(arr,index) {
+export function addGameRowsAndTiles(arr, index) {
     const gameBoard = [];
     const answersForIndexedGame = getAnswers(arr)[index];
     const solutionPositions = getSolutionPositions(answersForIndexedGame);
-     for(let x = 0; x < answersForIndexedGame.length; x += 1) {
+    for (let x = 0; x < answersForIndexedGame.length; x += 1) {
         const row = [];
         const gameFieldRow = create("div");
-        setClassname(gameFieldRow,"gameField__row");
-        appending(elements.gameField,gameFieldRow);
-        for(let y = 0; y < answersForIndexedGame.length; y += 1) {
+        setClassname(gameFieldRow, "gameField__row");
+        appending(elements.gameField, gameFieldRow);
+        for (let y = 0; y < answersForIndexedGame.length; y += 1) {
             const element = create("div");
             element.dataset.status = "hidden";
             // element.addEventListener('click',clickTile);
-            setClassname(element,"tile");
-            appending(gameFieldRow,element);
+            setClassname(element, "tile");
+            appending(gameFieldRow, element);
             const tile = {
                 element,
                 x,
                 y,
-                isSolution: solutionPositions.some(positionMatch.bind(null, { x, y })),
+                isSolution: solutionPositions.some(positionMatch.bind(null, {x, y})),
             };
-           row.push(tile)
+            row.push(tile)
         }
         gameBoard.push(row);
     }
     return gameBoard;
 }
-
 
 
 //вспомогательные функции
@@ -265,50 +288,94 @@ function positionMatch(a, b) {
     return a.x === b.x && a.y === b.y;
 }
 
-function getSolutionPositions (arr) {
+function getSolutionPositions(arr) {
     const solutionPositions = [];
     for (let i = 0; i < arr.length; i += 1) {
-        for(let j = 0; j < arr[i].length; j += 1) {
-            if(arr[i][j]===1){
-                solutionPositions.push({x:j,y:i})
+        for (let j = 0; j < arr[i].length; j += 1) {
+            if (arr[i][j] === 1) {
+                solutionPositions.push({x: j, y: i})
             }
         }
     }
     return solutionPositions;
 }
 
+//установка таймера по клику на поле
+function setTimer() {
+    timerProperties.timer = setInterval(function () {
+        let date = new Date(0);
+        timerProperties.number += 1;
+        date.setSeconds(timerProperties.number); // specify value for SECONDS here
+        let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
+        // elements.timerContainer.textContent = "";
+        elements.timerContainer.textContent = timeString;
+
+    }, 1000);
+}
+
+function setTimerAfterFirstClick(event){
+    if (elements.gameField.contains(event.target)) {
+        timerProperties.gameFieldClick += 1;
+    }
+    if (timerProperties.gameFieldClick === 1) {
+        setTimer();
+    }
+}
+
 //main function for cell
 
-export function clickTile(ev) {
-    console.log('click')
+export function changeTileView(ev) {
     const clickedTile = ev.target;
+    clickedTile.textContent = "";
     setDataSet(clickedTile);
 
 }
 
-
-
 function setDataSet(el) {
-    if(el.dataset.status!=="hidden") {
+    if (el.dataset.status !== "hidden") {
         el.dataset.status = "hidden";
-    }
-    else {
+        } else {
         el.dataset.status = "open";
+
     }
 
 }
 
 export function checkWin(arr) {
-    for(let i = 0; i < arr.length; i += 1) {
-        for(let j = 0; j < arr.length; j += 1) {
-            if((arr[i][j].element.dataset.status === "hidden" && arr[i][j].element.isSolution === true)){
+    for (let i = 0; i < arr.length; i += 1) {
+        for (let j = 0; j < arr.length; j += 1) {
+            if ((arr[i][j].element.dataset.status === "hidden" && arr[i][j].element.isSolution === true)) {
                 console.log(true)
-            return true
+                return true
             }
         }
 
-        }
+    }
 
     console.log(false)
     return false;
+}
+
+
+//music
+export function playClickMusic(el){
+    if(el.element.dataset.status !== "hidden"){
+        musicProperties.audioclick.play();
     }
+    else {
+        musicProperties.audioEvenClick.play()
+    }
+}
+
+export function playRightClickMusic(el) {
+    if(el.element.textContent === "x"){
+        musicProperties.audioRightClick.play();
+    }
+    else {
+        musicProperties.audioEvenClick.play()
+    }
+}
+
+export function playWin() {
+    musicProperties.audioWinning.play();
+}

@@ -9,7 +9,7 @@ import {
     addContinueButton,
     addDropDownListitem,
     addGameListAccordingToSize,
-    elements,
+    elements, timerProperties, musicProperties,
     setLeftAndMaxWidth,
     setClassname,
     addGameListAccordingToSizeItem,
@@ -24,11 +24,10 @@ import {
     addLeftCluesRowsAndTiles,
     fillLeftClues,
     addGameField,
-    addGameRowsAndTiles, clickTile,
+    addGameRowsAndTiles, changeTileView, playClickMusic,playRightClickMusic,playWin
 } from "./generating.js";
 
 import { getSpecificLeftClues, getSpecificTopClues, getLevels } from "./counting.js"
-
 
 async function getData() {
     const nonogramsDataSrc = 'data.json';
@@ -37,7 +36,7 @@ async function getData() {
     return [...nonogramsData];
 }
 
-let nonogramsIndex = 9;
+let nonogramsIndex = 0;
 let game;
 
 
@@ -71,25 +70,39 @@ getData().then((nonograms) => {
         row.forEach((tile) => {
             tile.element.addEventListener("click", (ev) => {
                 let arr = [];
-                clickTile(ev);
+                changeTileView(ev);
+                playClickMusic(tile);
                 for (let i = 0; i < game.length; i += 1) {
                     let sum = 0;
                     for (let j = 0; j < game.length; j += 1) {
                         if ((game[i][j].element.dataset.status === "hidden" && game[i][j].isSolution === true)) {
                             sum += 1;
-                           arr.push(sum)
+                            arr.push(sum)
                         }
                     }
                 }
-           if(arr.length===0) {
-               //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
-               alert('Победа!')
-           }
+                if (arr.length === 0) {
+                    //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
+                    setTimeout(() => {
+                            playWin();
+                            alert("Great! You have solved the nonogram!")
+                        }
+                        , 500);
+                    clearInterval(timerProperties.timer);
 
+                }
+
+            });
+            tile.element.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                tile.element.dataset.status = "hidden";
+                tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
+                playRightClickMusic(tile);
             })
 
         })
-    });
+    });//действия по кликам на ячейки
+
 })
 
 //eventFunction for dropdown-list-item
@@ -123,21 +136,9 @@ document.addEventListener('keydown', function (e) {
 
 // const timerContainer = document.querySelector('.timer-container');
 //
-// const timerProperties =
-//     {
-//         number: 0,
-//         gameFieldClick: 0,
-//     }
+
 //
-// function setTimer() {
-//     let timer = setInterval(function () {
-//         let date = new Date(0);
-//         timerProperties.number += 1;
-//         date.setSeconds(timerProperties.number); // specify value for SECONDS here
-//         let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
-//         timerContainer.textContent = timeString;
-//
-//     }, 1000);
+
 //
 // }
 //
