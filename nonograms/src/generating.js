@@ -1,6 +1,7 @@
-import { getAnswers, getSpecificLeftClues, getSpecificTopClues } from "./counting.js";
+import { getAnswers, getSpecificLeftClues, getSpecificTopClues,shuffleByTime } from "./counting.js";
 import { changeGameIndex, game } from "./script.js";
 
+const newArray =[];
 
 export function setClassname(el, val) {
     el.className = val;
@@ -38,7 +39,7 @@ export const timerProperties =
     {
         number: 0,
         gameFieldClick: 0,
-        timer:0,
+        timer: 0,
     }
 
 export const musicProperties = {
@@ -47,7 +48,6 @@ export const musicProperties = {
     audioRightClick: new Audio("./assets/rightClick.wav"),
     audioWinning: new Audio("./assets/win.wav"),
 }
-
 
 
 export function addWrapper() {
@@ -122,7 +122,7 @@ export function addDropDownListitem(arr, eventFunction, ...arg) {
     }
 }
 
-export function addGameListAccordingToSizeItem(arr,array) {
+export function addGameListAccordingToSizeItem(arr, array) {
     for (let i = 0; i < arr.length; i += 1) {
         const accordingToSizeGameItem = create("button");
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
@@ -136,17 +136,16 @@ export function addGameListAccordingToSizeItem(arr,array) {
             //добавить функцию отрисовки выбранной игры
             for (let i = 0; i < array.length; i += 1) {
                 if (ev.target.textContent === array[i].name) {
-                    console.log(i);
                     changeGameIndex(i);
-                    elements.topClueField.innerText="";
-                    elements.leftClueField.innerText="";
-                    elements.gameField.innerText="";
+                    elements.topClueField.innerText = "";
+                    elements.leftClueField.innerText = "";
+                    elements.gameField.innerText = "";
                     resetToZeroTimerProperties();
                     elements.game.addEventListener("click", setTimerAfterFirstClick);
-                    elements.game.addEventListener("contextmenu",setTimerAfterFirstClick);
+                    elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
 
                     //в одну функцию
-                    renderNewGame(array,i);
+                    renderNewGame(array, i);
                 }
             }
             ;
@@ -154,6 +153,7 @@ export function addGameListAccordingToSizeItem(arr,array) {
 
     }
 }
+
 export function addGameContainer() {
     setClassname(elements.gameContainer, "game-container");
     appending(elements.wrapper, elements.gameContainer);
@@ -163,7 +163,7 @@ export function addGame() {
     setClassname(elements.game, "game");
     appending(elements.gameContainer, elements.game);
     elements.game.addEventListener("click", setTimerAfterFirstClick);
-    elements.game.addEventListener("contextmenu",setTimerAfterFirstClick)
+    elements.game.addEventListener("contextmenu", setTimerAfterFirstClick)
 
 }
 
@@ -188,7 +188,7 @@ export function addTopCluesRowsAndTiles(arr) {
             let rowTile = create("div");
             setClassname(rowTile, "tile");
             appending(topRow, rowTile);
-            rowTile.addEventListener("contextmenu",(event)=>{
+            rowTile.addEventListener("contextmenu", (event) => {
                 event.preventDefault();
             })
         }
@@ -207,7 +207,7 @@ export function fillTopClues(arr) {
 export function addLeftCluesField() {
     setClassname(elements.leftClueField, "leftClue");
     appending(elements.game, elements.leftClueField);
-    }
+}
 
 export function addLeftCluesRowsAndTiles(arr) {
     for (let i = 0; i < arr.length; i += 1) {
@@ -218,7 +218,7 @@ export function addLeftCluesRowsAndTiles(arr) {
             let rowTile = create("div");
             setClassname(rowTile, "tile");
             appending(leftRow, rowTile);
-            rowTile.addEventListener("contextmenu",(event)=>{
+            rowTile.addEventListener("contextmenu", (event) => {
                 event.preventDefault();
             })
         }
@@ -281,13 +281,29 @@ export function addGameRowsAndTiles(arr, index) {
                             sumOfRestSolutions += 1;
                             arrOfSolutions.push(sumOfRestSolutions);
                         }
-                        if (gameBoard[i][j].element.dataset.status === "open" && gameBoard[i][j].isSolution === false){
+                        if (gameBoard[i][j].element.dataset.status === "open" && gameBoard[i][j].isSolution === false) {
                             sumOfIncorrectOpenTilse += 1;
                             arrOfIncorrectOpenTiles.push(sumOfIncorrectOpenTilse);
                         }
                     }
                 }
-                if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length===0) {
+                if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length === 0) {
+                    const resultOfGame = [];
+                    resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
+
+                  newArray.push(resultOfGame);
+
+                if(newArray.length===6) {
+                      newArray.shift()
+                  }
+
+                localStorage.setItem('ar',JSON.stringify(newArray));
+            const newarray1 = JSON.parse(localStorage.getItem("ar")||"[]");
+            if (newarray1.length) {
+                const copyNewArray=[...newarray1]
+                shuffleByTime(copyNewArray);
+            }
+
                     playWin();
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
                     // resetToZeroTimerProperties();
@@ -364,15 +380,13 @@ function setTimer() {
         let date = new Date(0);
         timerProperties.number += 1;
         date.setSeconds(timerProperties.number); // specify value for SECONDS here
-        console.log(date.setSeconds(timerProperties.number));
-        let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
-        // elements.timerContainer.textContent = "";
-        elements.timerContainer.textContent = timeString;
+         let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
+         elements.timerContainer.textContent = timeString;
 
     }, 1000);
 }
 
-function setTimerAfterFirstClick(event){
+function setTimerAfterFirstClick(event) {
     if (elements.gameField.contains(event.target)) {
         timerProperties.gameFieldClick += 1;
     }
@@ -381,8 +395,8 @@ function setTimerAfterFirstClick(event){
     }
 }
 
-function resetToZeroTimerProperties(){
-    timerProperties.number=0;
+function resetToZeroTimerProperties() {
+    timerProperties.number = 0;
     elements.timerContainer.textContent = "00:00";
     timerProperties.gameFieldClick = 0;
     clearInterval(timerProperties.timer);
@@ -400,11 +414,9 @@ export function changeTileView(ev) {
 function setDataSet(el) {
     if (el.dataset.status !== "hidden") {
         el.dataset.status = "hidden";
-        } else {
+    } else {
         el.dataset.status = "open";
-
     }
-
 }
 
 export function checkWin(arr) {
@@ -424,20 +436,18 @@ export function checkWin(arr) {
 
 
 //music
-export function playClickMusic(el){
-    if(el.element.dataset.status !== "hidden"){
+export function playClickMusic(el) {
+    if (el.element.dataset.status !== "hidden") {
         musicProperties.audioclick.play();
-    }
-    else {
+    } else {
         musicProperties.audioEvenClick.play()
     }
 }
 
 export function playRightClickMusic(el) {
-    if(el.element.textContent === "x"){
+    if (el.element.textContent === "x") {
         musicProperties.audioRightClick.play();
-    }
-    else {
+    } else {
         musicProperties.audioEvenClick.play()
     }
 }
@@ -446,12 +456,12 @@ export function playWin() {
     musicProperties.audioWinning.play();
 }
 
-export function renderNewGame(gameArray,indexOfGameArray){
+export function renderNewGame(gameArray, indexOfGameArray) {
     const leftCluesValues = getSpecificLeftClues(gameArray, indexOfGameArray);//массив левых подсказок
     const topCluesValues = getSpecificTopClues(gameArray, indexOfGameArray);//массив верхних подсказок
     addTopCluesRowsAndTiles(topCluesValues);
     fillTopClues(topCluesValues);
     addLeftCluesRowsAndTiles(leftCluesValues);
     fillLeftClues(leftCluesValues);
-    addGameRowsAndTiles(gameArray,indexOfGameArray);
+    addGameRowsAndTiles(gameArray, indexOfGameArray);
 }

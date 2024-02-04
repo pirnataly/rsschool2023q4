@@ -80,4 +80,14 @@ export function getLevels(arr) {
     return Array.from(new Set(arr.map((value)=>value.level)));
 }
 
+export function shuffleByTime (arr) {
+    console.log(arr.sort(compareNumeric));
+      return arr.sort(compareNumeric);
+}
+
+function compareNumeric(a, b) {
+    if (a[2] > b[2]) return 1;
+    if (a[2] === b[2]) return 0;
+    if (a[2] < b[2]) return -1;
+}
 

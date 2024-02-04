@@ -23,7 +23,10 @@ import {
     renderNewGame
 } from "./generating.js";
 
-import { getSpecificLeftClues, getSpecificTopClues, getLevels } from "./counting.js"
+import {  getLevels } from "./counting.js"
+
+// const arrayForFiveLastResults = [];
+// console.log(arrayForFiveLastResults.length);
 
 async function getData() {
     const nonogramsDataSrc = 'data.json';
@@ -56,8 +59,7 @@ getData().then((nonograms) => {
     addLeftCluesField();
     addGameField(nonograms, nonogramsIndex);
     renderNewGame(nonograms,nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
-
-})
+    })
 
 //eventFunction for dropdown-list-item
 function renderGameListAccordingToSize(event, nonograms) {
@@ -90,7 +92,6 @@ document.addEventListener('keydown', function (e) {
 
 export function changeGameIndex(index) {
     nonogramsIndex=index;
-
 }
 
 
