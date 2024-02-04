@@ -81,8 +81,7 @@ export function getLevels(arr) {
 }
 
 export function shuffleByTime (arr) {
-    console.log(arr.sort(compareNumeric));
-      return arr.sort(compareNumeric);
+       return arr.sort(compareNumeric);
 }
 
 function compareNumeric(a, b) {

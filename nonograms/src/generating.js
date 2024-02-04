@@ -1,5 +1,5 @@
 import { getAnswers, getSpecificLeftClues, getSpecificTopClues,shuffleByTime } from "./counting.js";
-import { changeGameIndex, game } from "./script.js";
+import { changeGameIndex, game, nonogramsIndex } from "./script.js";
 
 const newArray =[];
 
@@ -33,6 +33,11 @@ export const elements = {
     topClueField: create("div"),
     leftClueField: create("div"),
     gameField: create("div"),
+    bottomButtons: create("div"),
+    resetButton: create("button"),
+    saveButton: create("button"),
+    randomButton: create("button"),
+    solutionButton: create("button"),
 }
 
 export const timerProperties =
@@ -113,7 +118,6 @@ export function addDropDownListitem(arr, eventFunction, ...arg) {
     for (let i = 0; i < arr.length; i += 1) {
         const dropDownListItem = create("button");
         setClassname(dropDownListItem, "dropdown__list-item");
-
         dropDownListItem.setAttribute("data-value", arr[i]);
         dropDownListItem.textContent = arr[i];
         appending(elements.levelDropdownList, dropDownListItem);
@@ -133,17 +137,14 @@ export function addGameListAccordingToSizeItem(arr, array) {
             elements.levelButton.classList.remove("level-button_active");
             elements.levelButton.textContent = ev.target.textContent;
             closeLevelMenu();
-            //добавить функцию отрисовки выбранной игры
+            //функция отрисовки выбранной игры
             for (let i = 0; i < array.length; i += 1) {
                 if (ev.target.textContent === array[i].name) {
                     changeGameIndex(i);
-                    elements.topClueField.innerText = "";
-                    elements.leftClueField.innerText = "";
-                    elements.gameField.innerText = "";
+                    clearCluesAndGameField();
                     resetToZeroTimerProperties();
                     elements.game.addEventListener("click", setTimerAfterFirstClick);
                     elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
-
                     //в одну функцию
                     renderNewGame(array, i);
                 }
@@ -240,7 +241,8 @@ export function addGameField(arr, index) {
     appending(elements.game, elements.gameField);
 }
 
-export function addGameRowsAndTiles(arr, index) {
+export function addGameRowsAndTiles(arr, index,...args) {
+    console.log(args);
     const gameBoard = [];
     const answersForIndexedGame = getAnswers(arr)[index];
     const solutionPositions = getSolutionPositions(answersForIndexedGame);
@@ -297,8 +299,8 @@ export function addGameRowsAndTiles(arr, index) {
                       newArray.shift()
                   }
 
-                localStorage.setItem('ar',JSON.stringify(newArray));
-            const newarray1 = JSON.parse(localStorage.getItem("ar")||"[]");
+                localStorage.setItem('arr5',JSON.stringify(newArray));
+            const newarray1 = JSON.parse(localStorage.getItem("arr5")||"[]");
             if (newarray1.length) {
                 const copyNewArray=[...newarray1]
                 shuffleByTime(copyNewArray);
@@ -328,6 +330,52 @@ export function addGameRowsAndTiles(arr, index) {
     })
     return gameBoard;
 }
+
+export function addBottomButtons(){
+    setClassname(elements.bottomButtons,"bottom-buttons");
+    appending(elements.wrapper,elements.bottomButtons);
+    addSolutionButton();
+    addResetButton();
+    addSaveButton();
+    addRandomButton();
+}
+
+function addResetButton(){
+    setClassname(elements.resetButton,"bottoms-buttons__button bottom-buttons__reset reset-button button");
+    elements.resetButton.textContent = "Reset game";
+    appending(elements.bottomButtons,elements.resetButton);
+}
+
+function addSolutionButton(ind) {
+    setClassname(elements.solutionButton, "bottoms-buttons__button bottom-buttons__solution solution-button button");
+    elements.solutionButton.textContent = "Show solution";
+    appending(elements.bottomButtons, elements.solutionButton);
+    elements.solutionButton.addEventListener("mousedown", () => {
+        //сохранение в LS showedGame,отрисовка игры, isShown=true,
+    })
+    elements.solutionButton.addEventListener("mouseup", () => {
+        //загрузка showedGame из LS, недобавление в массив результатов
+    })
+}
+
+//     elements.solutionButton.addEventListener("click", ()=>)
+// }
+
+function addSaveButton() {
+    setClassname(elements.saveButton,"bottoms-buttons__button bottom-buttons__save save-button button");
+    elements.saveButton.textContent = "Save game";
+    appending(elements.bottomButtons,elements.saveButton);
+}
+
+function addRandomButton(){
+    setClassname(elements.randomButton,"bottoms-buttons__button bottom-buttons__random random-button button");
+    elements.randomButton.textContent = "Random game";
+    appending(elements.bottomButtons,elements.randomButton);
+}
+
+
+
+
 
 
 //вспомогательные функции
@@ -372,6 +420,12 @@ function getSolutionPositions(arr) {
         }
     }
     return solutionPositions;
+}
+
+function clearCluesAndGameField() {
+    elements.topClueField.innerText = "";
+    elements.leftClueField.innerText = "";
+    elements.gameField.innerText = "";
 }
 
 //установка таймера по клику на поле
@@ -465,3 +519,30 @@ export function renderNewGame(gameArray, indexOfGameArray) {
     fillLeftClues(leftCluesValues);
     addGameRowsAndTiles(gameArray, indexOfGameArray);
 }
+
+export function setLocalStorage(item,value) {
+    localStorage.setItem(item,value)
+}
+
+export function getLocalStorage() {
+    if(localStorage.getItem("shownGameArray")) {
+        return  JSON.parse(localStorage.getItem("shownGameArray"));
+
+    }
+}
+
+//    if (localStorage.getItem('name')) {
+//         name.value = localStorage.getItem('name');
+//     }
+//     if (localStorage.getItem('city')) {
+//         city.value = localStorage.getItem('city');
+//     } else {
+//         city.value = greetingTranslation['ru'][8];
+//     }
+//
+//     const strSavedConfig = localStorage.getItem('config')
+//
+//     if (strSavedConfig) {
+//         const savedConfig = JSON.parse(strSavedConfig)
+//         Object.assign(config, savedConfig)
+//     }

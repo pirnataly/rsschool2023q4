@@ -20,10 +20,10 @@ import {
     addTopCluesField,
     addLeftCluesField,
     addGameField,
-    renderNewGame
+    renderNewGame, addBottomButtons, setLocalStorage, getLocalStorage, addGameRowsAndTiles
 } from "./generating.js";
 
-import {  getLevels } from "./counting.js"
+import { getLevels } from "./counting.js"
 
 // const arrayForFiveLastResults = [];
 // console.log(arrayForFiveLastResults.length);
@@ -36,8 +36,8 @@ async function getData() {
 }
 
 
- export let nonogramsIndex = 1;
- export let game;
+export let nonogramsIndex = 1;
+export let game;
 
 
 getData().then((nonograms) => {
@@ -58,8 +58,33 @@ getData().then((nonograms) => {
     addTopCluesField();
     addLeftCluesField();
     addGameField(nonograms, nonogramsIndex);
-    renderNewGame(nonograms,nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
+    renderNewGame(nonograms, nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
+    addBottomButtons();
+    elements.solutionButton.addEventListener('click', () => {
+        // console.log(nonogramsIndex);
+        const shownGame = [];
+        const currentGame = document.querySelectorAll(".gameField__row");
+        // console.log(currentGame.length);
+        for (let i = 0; i < currentGame.length; i += 1) {
+            const rowShowed = [];
+            const row = currentGame[i];
+            for (let child = 0; child < row.children.length; child += 1) {
+                const tile = row.children[child];
+                rowShowed.push([tile.dataset.status, tile.textContent]);
+                console.log(tile.textContent, 'tile');
+            }
+            shownGame.push(rowShowed);
+            setLocalStorage("shownGameArray", JSON.stringify(shownGame));
+        }
+
+    });
+
+    elements.resetButton.addEventListener("click",()=> {
+       const shownGameArr = getLocalStorage();
+       console.log(shownGameArr);
+       // addGameRowsAndTiles(nonograms,nonogramsIndex,shownGameArr)
     })
+})
 
 //eventFunction for dropdown-list-item
 function renderGameListAccordingToSize(event, nonograms) {
@@ -67,7 +92,7 @@ function renderGameListAccordingToSize(event, nonograms) {
     setClassname(elements.gameListAccordingToSize, "game-list-according-to-size");
     setLeftAndMaxWidth();
     const gamesOfClickedSized = nonograms.filter((value) => value.level === event.target.dataset.value);
-    addGameListAccordingToSizeItem(gamesOfClickedSized,nonograms);
+    addGameListAccordingToSizeItem(gamesOfClickedSized, nonograms);
 }
 
 
@@ -91,7 +116,7 @@ document.addEventListener('keydown', function (e) {
 
 
 export function changeGameIndex(index) {
-    nonogramsIndex=index;
+    nonogramsIndex = index;
 }
 
 
