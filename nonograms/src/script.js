@@ -18,13 +18,9 @@ import {
     addGame,
     addEmptySpace,
     addTopCluesField,
-    addTopCluesRowsAndTiles,
-    fillTopClues,
     addLeftCluesField,
-    addLeftCluesRowsAndTiles,
-    fillLeftClues,
     addGameField,
-    addGameRowsAndTiles, changeTileView, playClickMusic,playRightClickMusic,playWin
+    renderNewGame
 } from "./generating.js";
 
 import { getSpecificLeftClues, getSpecificTopClues, getLevels } from "./counting.js"
@@ -36,13 +32,12 @@ async function getData() {
     return [...nonogramsData];
 }
 
-let nonogramsIndex = 0;
-let game;
+
+ export let nonogramsIndex = 1;
+ export let game;
 
 
 getData().then((nonograms) => {
-    const leftCluesValues = getSpecificLeftClues(nonograms, nonogramsIndex);//массив левых подсказок
-    const topCluesValues = getSpecificTopClues(nonograms, nonogramsIndex);//массив верхних подсказок
     const levelArray = getLevels(nonograms);
     addWrapper();
     addMessage();
@@ -58,56 +53,9 @@ getData().then((nonograms) => {
     addGame();
     addEmptySpace();
     addTopCluesField();
-    addTopCluesRowsAndTiles(topCluesValues);
-    fillTopClues(topCluesValues);
     addLeftCluesField();
-    addLeftCluesRowsAndTiles(leftCluesValues);
-    fillLeftClues(leftCluesValues);
     addGameField(nonograms, nonogramsIndex);
-    game = addGameRowsAndTiles(nonograms, nonogramsIndex);
-    console.log(game);
-    game.forEach((row) => {
-        row.forEach((tile) => {
-            tile.element.addEventListener("click", (ev) => {
-                let arrOfSolutions = [];
-                let arrOfIncorrectOpenTiles = [];
-                changeTileView(ev);
-                playClickMusic(tile);
-                for (let i = 0; i < game.length; i += 1) {
-                    let sumOfRestSolutions = 0;
-                    let sumOfIncorrectOpenTilse = 0;
-                    for (let j = 0; j < game.length; j += 1) {
-                        if (game[i][j].element.dataset.status === "hidden" && game[i][j].isSolution === true) {
-                            sumOfRestSolutions += 1;
-                            arrOfSolutions.push(sumOfRestSolutions);
-                        }
-                        if (game[i][j].element.dataset.status === "open" && game[i][j].isSolution === false){
-                            sumOfIncorrectOpenTilse += 1;
-                            arrOfIncorrectOpenTiles.push(sumOfIncorrectOpenTilse);
-                        }
-                    }
-                }
-                if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length===0) {
-                    //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
-                    setTimeout(() => {
-                            playWin();
-                            alert("Great! You have solved the nonogram!")
-                        }
-                        , 1);
-                    clearInterval(timerProperties.timer);
-
-                }
-
-            });
-            tile.element.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                tile.element.dataset.status = "hidden";
-                tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
-                playRightClickMusic(tile);
-            })
-
-        })
-    });//действия по кликам на ячейки
+    renderNewGame(nonograms,nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
 
 })
 
@@ -117,7 +65,7 @@ function renderGameListAccordingToSize(event, nonograms) {
     setClassname(elements.gameListAccordingToSize, "game-list-according-to-size");
     setLeftAndMaxWidth();
     const gamesOfClickedSized = nonograms.filter((value) => value.level === event.target.dataset.value);
-    addGameListAccordingToSizeItem(gamesOfClickedSized);
+    addGameListAccordingToSizeItem(gamesOfClickedSized,nonograms);
 }
 
 
@@ -140,27 +88,12 @@ document.addEventListener('keydown', function (e) {
 })
 
 
-// const timerContainer = document.querySelector('.timer-container');
-//
+export function changeGameIndex(index) {
+    nonogramsIndex=index;
 
-//
+}
 
-//
-// }
-//
-// const game = document.querySelector('.game');
-// const gameField = document.querySelector('.gameField');
-// const leftClue = document.querySelector('.leftClue');
-// const topClue = document.querySelector('.topClue');
-//
-// game.addEventListener('click', (event) => {
-//     if (gameField.contains(event.target)) {
-//         timerProperties.gameFieldClick += 1;
-//     }
-//     if (timerProperties.gameFieldClick === 1) {
-//         setTimer();
-//     }
-// });
+
 
 
 

@@ -1,4 +1,5 @@
-import { getAnswers } from "./counting.js";
+import { getAnswers, getSpecificLeftClues, getSpecificTopClues } from "./counting.js";
+import { changeGameIndex, game } from "./script.js";
 
 
 export function setClassname(el, val) {
@@ -121,8 +122,7 @@ export function addDropDownListitem(arr, eventFunction, ...arg) {
     }
 }
 
-export function addGameListAccordingToSizeItem(arr) {
-
+export function addGameListAccordingToSizeItem(arr,array) {
     for (let i = 0; i < arr.length; i += 1) {
         const accordingToSizeGameItem = create("button");
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
@@ -133,14 +133,27 @@ export function addGameListAccordingToSizeItem(arr) {
             elements.levelButton.classList.remove("level-button_active");
             elements.levelButton.textContent = ev.target.textContent;
             closeLevelMenu();
+            //добавить функцию отрисовки выбранной игры
+            for (let i = 0; i < array.length; i += 1) {
+                if (ev.target.textContent === array[i].name) {
+                    console.log(i);
+                    changeGameIndex(i);
+                    elements.topClueField.innerText="";
+                    elements.leftClueField.innerText="";
+                    elements.gameField.innerText="";
+                    resetToZeroTimerProperties();
+                    elements.game.addEventListener("click", setTimerAfterFirstClick);
+                    elements.game.addEventListener("contextmenu",setTimerAfterFirstClick);
 
-           //добавить функцию отрисовки выбранной игры
-            console.log(ev.target.textContent);
-        });
+                    //в одну функцию
+                    renderNewGame(array,i);
+                }
+            }
+            ;
+        })
+
     }
-
 }
-
 export function addGameContainer() {
     setClassname(elements.gameContainer, "game-container");
     appending(elements.wrapper, elements.gameContainer);
@@ -248,10 +261,55 @@ export function addGameRowsAndTiles(arr, index) {
                 y,
                 isSolution: solutionPositions.some(positionMatch.bind(null, {x, y})),
             };
+
             row.push(tile)
         }
         gameBoard.push(row);
     }
+    gameBoard.forEach((row) => {
+        row.forEach((tile) => {
+            tile.element.addEventListener("click", (ev) => {
+                let arrOfSolutions = [];
+                let arrOfIncorrectOpenTiles = [];
+                changeTileView(ev);
+                playClickMusic(tile);
+                for (let i = 0; i < gameBoard.length; i += 1) {
+                    let sumOfRestSolutions = 0;
+                    let sumOfIncorrectOpenTilse = 0;
+                    for (let j = 0; j < gameBoard.length; j += 1) {
+                        if (gameBoard[i][j].element.dataset.status === "hidden" && gameBoard[i][j].isSolution === true) {
+                            sumOfRestSolutions += 1;
+                            arrOfSolutions.push(sumOfRestSolutions);
+                        }
+                        if (gameBoard[i][j].element.dataset.status === "open" && gameBoard[i][j].isSolution === false){
+                            sumOfIncorrectOpenTilse += 1;
+                            arrOfIncorrectOpenTiles.push(sumOfIncorrectOpenTilse);
+                        }
+                    }
+                }
+                if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length===0) {
+                    playWin();
+                    //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
+                    // resetToZeroTimerProperties();
+                    setTimeout(() => {
+
+                            alert(`Great! You have solved the nonogram in ${timerProperties.number} seconds!`)
+                        }
+                        , 1);
+                    clearInterval(timerProperties.timer);
+
+                }
+
+            });
+            tile.element.addEventListener("contextmenu", (event) => {
+                event.preventDefault();
+                tile.element.dataset.status = "hidden";
+                tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
+                playRightClickMusic(tile);
+            })
+
+        })
+    })
     return gameBoard;
 }
 
@@ -306,6 +364,7 @@ function setTimer() {
         let date = new Date(0);
         timerProperties.number += 1;
         date.setSeconds(timerProperties.number); // specify value for SECONDS here
+        console.log(date.setSeconds(timerProperties.number));
         let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
         // elements.timerContainer.textContent = "";
         elements.timerContainer.textContent = timeString;
@@ -320,6 +379,13 @@ function setTimerAfterFirstClick(event){
     if (timerProperties.gameFieldClick === 1) {
         setTimer();
     }
+}
+
+function resetToZeroTimerProperties(){
+    timerProperties.number=0;
+    elements.timerContainer.textContent = "00:00";
+    timerProperties.gameFieldClick = 0;
+    clearInterval(timerProperties.timer);
 }
 
 //main function for cell
@@ -378,4 +444,14 @@ export function playRightClickMusic(el) {
 
 export function playWin() {
     musicProperties.audioWinning.play();
+}
+
+export function renderNewGame(gameArray,indexOfGameArray){
+    const leftCluesValues = getSpecificLeftClues(gameArray, indexOfGameArray);//массив левых подсказок
+    const topCluesValues = getSpecificTopClues(gameArray, indexOfGameArray);//массив верхних подсказок
+    addTopCluesRowsAndTiles(topCluesValues);
+    fillTopClues(topCluesValues);
+    addLeftCluesRowsAndTiles(leftCluesValues);
+    fillLeftClues(leftCluesValues);
+    addGameRowsAndTiles(gameArray,indexOfGameArray);
 }
