@@ -132,11 +132,9 @@ export function addGameListAccordingToSizeItem(arr, array) {
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
         accordingToSizeGameItem.setAttribute("data-name", arr[i]);
         accordingToSizeGameItem.textContent = arr[i].name;
-
         appending(elements.gameListAccordingToSize, accordingToSizeGameItem);
-        console.log(array)
-
         accordingToSizeGameItem.addEventListener('click', (ev) => {
+            elements.saveButton.classList.remove("disabled");
             localStorage.setItem("numberOfCurrentGame",nonogramsIndex);
                   localStorage.setItem("isShown", "false");
                  elements.levelButton.classList.remove("level-button_active");
@@ -310,10 +308,15 @@ export function addGameRowsAndTiles(arr, index, args) {
                 }
                 if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length === 0) {
                     const resultOfGame = [];
-                    resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
+                    const isShown = (localStorage.getItem("isShown"))?JSON.parse(localStorage.getItem("isShown")):false;
+                    console.log(typeof !!isShown);
+                     if((Boolean(isShown))=== false) {
+                         resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
+                     }
 
-                    newArray.push(resultOfGame);
-
+                    if((Boolean(isShown)) === false) {
+                        newArray.push(resultOfGame);
+                    }
                     if (newArray.length === 6) {
                         newArray.shift()
                     }
@@ -326,6 +329,8 @@ export function addGameRowsAndTiles(arr, index, args) {
                     }
 
                     playWin();
+                    clearInterval(timerProperties.timer);
+                    elements.saveButton.classList.add("disabled");
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
                     // resetToZeroTimerProperties();
                     setTimeout(() => {
@@ -438,7 +443,7 @@ function getSolutionPositions(arr) {
     return solutionPositions;
 }
 
-function clearCluesAndGameField() {
+export function clearCluesAndGameField() {
     elements.topClueField.innerText = "";
     elements.leftClueField.innerText = "";
     clearGameField();
@@ -467,6 +472,7 @@ function setTimerAfterFirstClick(event) {
     if (timerProperties.gameFieldClick === 1) {
         setTimer();
     }
+
 }
 
 export function resetToZeroTimerProperties() {
@@ -530,14 +536,14 @@ export function playWin() {
     musicProperties.audioWinning.play();
 }
 
-export function renderNewGame(gameArray, indexOfGameArray) {
+export function renderNewGame(gameArray, indexOfGameArray,args) {
     const leftCluesValues = getSpecificLeftClues(gameArray, indexOfGameArray);//массив левых подсказок
     const topCluesValues = getSpecificTopClues(gameArray, indexOfGameArray);//массив верхних подсказок
     addTopCluesRowsAndTiles(topCluesValues);
     fillTopClues(topCluesValues);
     addLeftCluesRowsAndTiles(leftCluesValues);
     fillLeftClues(leftCluesValues);
-    addGameRowsAndTiles(gameArray, indexOfGameArray);
+    addGameRowsAndTiles(gameArray, indexOfGameArray,args);
 }
 
 export function setLocalStorage(item, value) {
@@ -597,4 +603,14 @@ export function setGameEventListeneres(condition){
         elements.game.addEventListener("click", setTimerAfterFirstClick);
         elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
     }
+}
+
+export function setGameByCurrentNumber(array) {
+    elements.saveButton.classList.remove("disabled");
+    const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
+    const gameListeneresDenied = localStorage.getItem("isShown");
+    resetToZeroTimerProperties();
+    clearGameField();
+    addGameRowsAndTiles(array, currentGameNumber);
+    setGameEventListeneres(gameListeneresDenied);
 }

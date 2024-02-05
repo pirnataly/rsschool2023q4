@@ -18,7 +18,7 @@ function getLeftClues(arr) {
         for (let j = 0; j < arr.length; j += 1) {
             if (arr[i][j] === 1) {
                 sum += 1;
-                if( j + 1 === arr.length){
+                if (j + 1 === arr.length) {
                     rowArr.push(sum);
                 }
             } else {
@@ -43,7 +43,7 @@ function getTopClues(arr) {
         for (let j = 0; j < arr.length; j += 1) {
             if (arr[j][i] === 1) {
                 sum += 1;
-                if( j + 1 === arr[0].length){
+                if (j + 1 === arr[0].length) {
                     columnArr.push(sum);
                 }
             } else {
@@ -61,32 +61,50 @@ function getTopClues(arr) {
 }
 
 export function getAnswers(arr) {
-    return arr.map((value)=>(value.answer));
+    return arr.map((value) => (value.answer));
 }
 
-export function getSpecificLeftClues(arr,index) {
+export function getSpecificLeftClues(arr, index) {
     const answersForTop = getAnswers(arr);
     const answersForTopIndexed = answersForTop[index];
     return getLeftClues(answersForTopIndexed);
 }
 
-export function getSpecificTopClues(arr,index) {
+export function getSpecificTopClues(arr, index) {
     const answersForTop = getAnswers(arr);
     const answersForTopIndexed = answersForTop[index];
     return getTopClues(answersForTopIndexed);
 }
 
 export function getLevels(arr) {
-    return Array.from(new Set(arr.map((value)=>value.level)));
+    return Array.from(new Set(arr.map((value) => value.level)));
 }
 
-export function shuffleByTime (arr) {
-       return arr.sort(compareNumeric);
+export function shuffleByTime(arr) {
+    return arr.sort(compareNumeric);
 }
 
 function compareNumeric(a, b) {
     if (a[2] > b[2]) return 1;
     if (a[2] === b[2]) return 0;
     if (a[2] < b[2]) return -1;
+}
+
+
+function setArrForShuffle(arr) {
+    const numbers = [];
+    for (let i = 0; i < arr.length; i += 1) {
+        numbers.push(i);
+    }
+    return numbers;
+}
+
+export function shuffle(arrayOfGames) {
+  const array =  setArrForShuffle(arrayOfGames);
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 

@@ -29,10 +29,10 @@ import {
     addGameRowsAndTiles,
     resetToZeroTimerProperties,
     clearGameField,
-    showAnswers, setTimer, setGameEventListeneres
+    showAnswers, setTimer, setGameEventListeneres,clearCluesAndGameField,setGameByCurrentNumber
 } from "./generating.js";
 
-import { getLevels } from "./counting.js"
+import { getLevels,shuffle } from "./counting.js"
 
 // const arrayForFiveLastResults = [];
 // console.log(arrayForFiveLastResults.length);
@@ -46,9 +46,9 @@ async function getData() {
 
 
 export let nonogramsIndex = 0;
-localStorage.setItem("numberOfCurrentGame",nonogramsIndex);
+localStorage.setItem("numberOfCurrentGame", nonogramsIndex);
 export let game;
-let isShown = (localStorage.getItem("isShown"))?localStorage.getItem("isShown"):false;
+let isShown = (localStorage.getItem("isShown")) ? JSON.parse(localStorage.getItem("isShown")): false;
 console.log(isShown, 'isshown');
 
 
@@ -74,9 +74,12 @@ getData().then((nonograms) => {
     addBottomButtons();
     //Кнопка показать решение
     elements.solutionButton.addEventListener('click', () => {
-        localStorage.setItem('shownGameNumber',nonogramsIndex);
+        elements.saveButton.classList.add("disabled");
+        localStorage.setItem('shownGameNumber', nonogramsIndex);
+        localStorage.setItem('savedGameNumber',nonogramsIndex);
+        const numberCurrent  = localStorage.getItem("numberOfCurrentGame");
         isShown = true;
-        localStorage.setItem("isShown",isShown);
+        localStorage.setItem("isShown", isShown);
         elements.continueButton.classList.remove("disabled");
         localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
         clearInterval(timerProperties.timer);
@@ -94,36 +97,74 @@ getData().then((nonograms) => {
             setLocalStorage("savedGameArray", JSON.stringify(savedGame));
             clearGameField();
         }
-        showAnswers(nonograms, nonogramsIndex);
+        showAnswers(nonograms, numberCurrent);
     });
 
     //кнопка продолжить игру
     elements.continueButton.addEventListener("click", () => {
         const savedGameArr = getLocalStorage();
-      clearInterval(timerProperties.timer);
-        clearGameField();
-        addGameRowsAndTiles(nonograms, nonogramsIndex, savedGameArr);
+        const numberOfSavedGame = localStorage.getItem("savedGameNumber");
+        localStorage.setItem("numberOfCurrentGame", numberOfSavedGame);
+        const savedTimerProperties = JSON.parse(localStorage.getItem("lastGameTime"));
+         clearInterval(timerProperties.timer);
+         elements.levelButton.textContent = nonograms[numberOfSavedGame].name;
+        timerProperties.number = savedTimerProperties.number;
+        timerProperties.gameFieldClick=1;
+
+        clearCluesAndGameField();
+        renderNewGame(nonograms, numberOfSavedGame, savedGameArr);
+        // addGameRowsAndTiles(nonograms, nonogramsIndex, savedGameArr);
         setTimer();
     });
 
 //кнопка начать игру заново
-    elements.resetButton.addEventListener("click", () => {
-        const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
-        const gameListeneresDenied = localStorage.getItem("isShown");
-        console.log(gameListeneresDenied,'gamelisteneresDenied');
-        console.log(currentGameNumber);
-        resetToZeroTimerProperties();
-        clearGameField();
-        addGameRowsAndTiles(nonograms,currentGameNumber);
-   setGameEventListeneres(gameListeneresDenied);
-    });
+    elements.resetButton.addEventListener("click",()=>{ setGameByCurrentNumber(nonograms)});
 
     //кнопка случайная игра
-    elements.randomButton.addEventListener("click",()=>{
-        //в зависимости от текущей игры поставить в локал сторидж(смотреть в item of dropdown list according...)
+    elements.randomButton.addEventListener("click", () => {
+        resetToZeroTimerProperties();
+        const gameListeneresDenied = localStorage.getItem("isShown");
+        setGameEventListeneres(gameListeneresDenied);
+        elements.saveButton.classList.remove("disabled");
+        const randomGameNumber = shuffle(nonograms)[0];
+        console.log(randomGameNumber);
+        localStorage.setItem("numberOfCurrentGame", randomGameNumber);
+        const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
+        clearInterval(timerProperties.timer);
+        elements.levelButton.textContent = nonograms[currentGameNumber].name;
+        clearCluesAndGameField();
+        renderNewGame(nonograms, currentGameNumber);
+        // addGameRowsAndTiles(nonograms, nonogramsIndex, savedGameArr);
+        // setTimer();
+         //в зависимости от текущей игры поставить в локал сторидж(смотреть в item of dropdown list according...)
+
         localStorage.setItem("isShown", "false");
     })
 
+//кнопка сохранить игру
+    elements.saveButton.addEventListener("click",()=>{
+        const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
+        localStorage.setItem('savedGameNumber',currentGameNumber);
+        elements.continueButton.classList.remove("disabled");
+        localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
+        clearInterval(timerProperties.timer);
+        // resetToZeroTimerProperties();
+        timerProperties.gameFieldClick=0;
+        setGameEventListeneres(true);
+        const savedGame = [];
+        const currentGame = document.querySelectorAll(".gameField__row");
+        for (let i = 0; i < currentGame.length; i += 1) {
+            const rowShowed = [];
+            const row = currentGame[i];
+            for (let child = 0; child < row.children.length; child += 1) {
+                const tile = row.children[child];
+                rowShowed.push([tile.dataset.status, tile.textContent]);
+            }
+            savedGame.push(rowShowed);
+            setLocalStorage("savedGameArray", JSON.stringify(savedGame));
+
+        }
+    })
 })
 
 //eventFunction for dropdown-list-item
