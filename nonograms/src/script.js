@@ -34,9 +34,6 @@ import {
 
 import { getLevels,shuffle } from "./counting.js"
 
-// const arrayForFiveLastResults = [];
-// console.log(arrayForFiveLastResults.length);
-
 async function getData() {
     const nonogramsDataSrc = 'data.json';
     const res = await fetch(nonogramsDataSrc);
@@ -49,8 +46,6 @@ export let nonogramsIndex = 0;
 localStorage.setItem("numberOfCurrentGame", nonogramsIndex);
 export let game;
 let isShown = (localStorage.getItem("isShown")) ? JSON.parse(localStorage.getItem("isShown")): false;
-console.log(isShown, 'isshown');
-
 
 getData().then((nonograms) => {
     const levelArray = getLevels(nonograms);
@@ -127,17 +122,12 @@ getData().then((nonograms) => {
         setGameEventListeneres(gameListeneresDenied);
         elements.saveButton.classList.remove("disabled");
         const randomGameNumber = shuffle(nonograms)[0];
-        console.log(randomGameNumber);
-        localStorage.setItem("numberOfCurrentGame", randomGameNumber);
+         localStorage.setItem("numberOfCurrentGame", randomGameNumber);
         const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
         clearInterval(timerProperties.timer);
         elements.levelButton.textContent = nonograms[currentGameNumber].name;
         clearCluesAndGameField();
         renderNewGame(nonograms, currentGameNumber);
-        // addGameRowsAndTiles(nonograms, nonogramsIndex, savedGameArr);
-        // setTimer();
-         //в зависимости от текущей игры поставить в локал сторидж(смотреть в item of dropdown list according...)
-
         localStorage.setItem("isShown", "false");
     })
 
@@ -148,7 +138,6 @@ getData().then((nonograms) => {
         elements.continueButton.classList.remove("disabled");
         localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
         clearInterval(timerProperties.timer);
-        // resetToZeroTimerProperties();
         timerProperties.gameFieldClick=0;
         setGameEventListeneres(true);
         const savedGame = [];
@@ -176,7 +165,6 @@ function renderGameListAccordingToSize(event, nonograms) {
     addGameListAccordingToSizeItem(gamesOfClickedSized, nonograms);
 }
 
-
 //Add event listeners
 //закрытие меню с выбором уровня по клику вне кнопки
 document.addEventListener("click", (event) => {
@@ -186,7 +174,6 @@ document.addEventListener("click", (event) => {
     }
 })
 
-
 //закрытие меню по клику escape
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Tab' || e.key === 'Escape') {
@@ -194,7 +181,6 @@ document.addEventListener('keydown', function (e) {
         elements.levelButton.classList.remove("level-button_active");
     }
 })
-
 
 export function changeGameIndex(index) {
     nonogramsIndex = index;

@@ -13,6 +13,7 @@ module.exports = {
   entry: {
     main: './src/script.js',
   },
+
   mode: 'development',
   plugins: [new HtmlWebpackPlugin({ title: 'Hello World' })],
   module: {

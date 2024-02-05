@@ -113,7 +113,6 @@ export function addGameListAccordingToSize() {
     appending(elements.levelDropdownList, elements.gameListAccordingToSize);
 }
 
-
 export function addDropDownListitem(arr, eventFunction, ...arg) {
     for (let i = 0; i < arr.length; i += 1) {
         const dropDownListItem = create("button");
@@ -309,8 +308,7 @@ export function addGameRowsAndTiles(arr, index, args) {
                 if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length === 0) {
                     const resultOfGame = [];
                     const isShown = (localStorage.getItem("isShown"))?JSON.parse(localStorage.getItem("isShown")):false;
-                    console.log(typeof !!isShown);
-                     if((Boolean(isShown))=== false) {
+                    if((Boolean(isShown))=== false) {
                          resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
                      }
 
@@ -382,9 +380,6 @@ function addSolutionButton(ind) {
         //загрузка showedGame из LS, недобавление в массив результатов
     })
 }
-
-//     elements.solutionButton.addEventListener("click", ()=>)
-// }
 
 function addSaveButton() {
     setClassname(elements.saveButton, "bottoms-buttons__button bottom-buttons__save save-button button");
@@ -503,15 +498,12 @@ export function checkWin(arr) {
     for (let i = 0; i < arr.length; i += 1) {
         for (let j = 0; j < arr.length; j += 1) {
             if ((arr[i][j].element.dataset.status === "hidden" && arr[i][j].element.isSolution === true)) {
-                console.log(true)
-                return true
+              return true
             }
         }
 
     }
-
-    console.log(false)
-    return false;
+      return false;
 }
 
 
