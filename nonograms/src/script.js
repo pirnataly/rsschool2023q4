@@ -9,7 +9,9 @@ import {
     addContinueButton,
     addDropDownListitem,
     addGameListAccordingToSize,
-    elements, timerProperties, musicProperties,
+    elements,
+    timerProperties,
+    musicProperties,
     setLeftAndMaxWidth,
     setClassname,
     addGameListAccordingToSizeItem,
@@ -20,7 +22,14 @@ import {
     addTopCluesField,
     addLeftCluesField,
     addGameField,
-    renderNewGame, addBottomButtons, setLocalStorage, getLocalStorage, addGameRowsAndTiles
+    renderNewGame,
+    addBottomButtons,
+    setLocalStorage,
+    getLocalStorage,
+    addGameRowsAndTiles,
+    resetToZeroTimerProperties,
+    clearGameField,
+    showAnswers, setTimer, setGameEventListeneres
 } from "./generating.js";
 
 import { getLevels } from "./counting.js"
@@ -36,8 +45,11 @@ async function getData() {
 }
 
 
-export let nonogramsIndex = 1;
+export let nonogramsIndex = 0;
+localStorage.setItem("numberOfCurrentGame",nonogramsIndex);
 export let game;
+let isShown = (localStorage.getItem("isShown"))?localStorage.getItem("isShown"):false;
+console.log(isShown, 'isshown');
 
 
 getData().then((nonograms) => {
@@ -60,30 +72,58 @@ getData().then((nonograms) => {
     addGameField(nonograms, nonogramsIndex);
     renderNewGame(nonograms, nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
     addBottomButtons();
+    //Кнопка показать решение
     elements.solutionButton.addEventListener('click', () => {
-        // console.log(nonogramsIndex);
-        const shownGame = [];
+        localStorage.setItem('shownGameNumber',nonogramsIndex);
+        isShown = true;
+        localStorage.setItem("isShown",isShown);
+        elements.continueButton.classList.remove("disabled");
+        localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
+        clearInterval(timerProperties.timer);
+        // resetToZeroTimerProperties();
+        const savedGame = [];
         const currentGame = document.querySelectorAll(".gameField__row");
-        // console.log(currentGame.length);
         for (let i = 0; i < currentGame.length; i += 1) {
             const rowShowed = [];
             const row = currentGame[i];
             for (let child = 0; child < row.children.length; child += 1) {
                 const tile = row.children[child];
                 rowShowed.push([tile.dataset.status, tile.textContent]);
-                console.log(tile.textContent, 'tile');
             }
-            shownGame.push(rowShowed);
-            setLocalStorage("shownGameArray", JSON.stringify(shownGame));
+            savedGame.push(rowShowed);
+            setLocalStorage("savedGameArray", JSON.stringify(savedGame));
+            clearGameField();
         }
-
+        showAnswers(nonograms, nonogramsIndex);
     });
 
-    elements.resetButton.addEventListener("click",()=> {
-       const shownGameArr = getLocalStorage();
-       console.log(shownGameArr);
-       // addGameRowsAndTiles(nonograms,nonogramsIndex,shownGameArr)
+    //кнопка продолжить игру
+    elements.continueButton.addEventListener("click", () => {
+        const savedGameArr = getLocalStorage();
+      clearInterval(timerProperties.timer);
+        clearGameField();
+        addGameRowsAndTiles(nonograms, nonogramsIndex, savedGameArr);
+        setTimer();
+    });
+
+//кнопка начать игру заново
+    elements.resetButton.addEventListener("click", () => {
+        const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
+        const gameListeneresDenied = localStorage.getItem("isShown");
+        console.log(gameListeneresDenied,'gamelisteneresDenied');
+        console.log(currentGameNumber);
+        resetToZeroTimerProperties();
+        clearGameField();
+        addGameRowsAndTiles(nonograms,currentGameNumber);
+   setGameEventListeneres(gameListeneresDenied);
+    });
+
+    //кнопка случайная игра
+    elements.randomButton.addEventListener("click",()=>{
+        //в зависимости от текущей игры поставить в локал сторидж(смотреть в item of dropdown list according...)
+        localStorage.setItem("isShown", "false");
     })
+
 })
 
 //eventFunction for dropdown-list-item

@@ -1,7 +1,7 @@
-import { getAnswers, getSpecificLeftClues, getSpecificTopClues,shuffleByTime } from "./counting.js";
+import { getAnswers, getSpecificLeftClues, getSpecificTopClues, shuffleByTime } from "./counting.js";
 import { changeGameIndex, game, nonogramsIndex } from "./script.js";
 
-const newArray =[];
+const newArray = [];
 
 export function setClassname(el, val) {
     el.className = val;
@@ -132,15 +132,26 @@ export function addGameListAccordingToSizeItem(arr, array) {
         setClassname(accordingToSizeGameItem, "dropdown__list-item");
         accordingToSizeGameItem.setAttribute("data-name", arr[i]);
         accordingToSizeGameItem.textContent = arr[i].name;
+
         appending(elements.gameListAccordingToSize, accordingToSizeGameItem);
+        console.log(array)
+
         accordingToSizeGameItem.addEventListener('click', (ev) => {
-            elements.levelButton.classList.remove("level-button_active");
+            localStorage.setItem("numberOfCurrentGame",nonogramsIndex);
+                  localStorage.setItem("isShown", "false");
+                 elements.levelButton.classList.remove("level-button_active");
             elements.levelButton.textContent = ev.target.textContent;
             closeLevelMenu();
             //функция отрисовки выбранной игры
             for (let i = 0; i < array.length; i += 1) {
                 if (ev.target.textContent === array[i].name) {
-                    changeGameIndex(i);
+                    localStorage.setItem("numberOfCurrentGame",i);
+                    const l=localStorage.getItem("shownGameNumber");
+
+                    if((Number(localStorage.getItem("shownGameNumber"))=== Number(localStorage.getItem("numberOfCurrentGame")))){
+                        localStorage.setItem("isShown","true");
+                    }
+                     changeGameIndex(i);
                     clearCluesAndGameField();
                     resetToZeroTimerProperties();
                     elements.game.addEventListener("click", setTimerAfterFirstClick);
@@ -241,20 +252,23 @@ export function addGameField(arr, index) {
     appending(elements.game, elements.gameField);
 }
 
-export function addGameRowsAndTiles(arr, index,...args) {
-    console.log(args);
+
+//функция по отрисовке
+export function addGameRowsAndTiles(arr, index, args) {
+    const notEndedGame = args || [];
+    const cgangedDirectionArray =  changeDirection(notEndedGame)
     const gameBoard = [];
     const answersForIndexedGame = getAnswers(arr)[index];
     const solutionPositions = getSolutionPositions(answersForIndexedGame);
     for (let x = 0; x < answersForIndexedGame.length; x += 1) {
-        const row = [];
+         const row = [];
         const gameFieldRow = create("div");
         setClassname(gameFieldRow, "gameField__row");
         appending(elements.gameField, gameFieldRow);
         for (let y = 0; y < answersForIndexedGame.length; y += 1) {
             const element = create("div");
             element.dataset.status = "hidden";
-            // element.addEventListener('click',clickTile);
+                // element.addEventListener('click',clickTile);
             setClassname(element, "tile");
             appending(gameFieldRow, element);
             const tile = {
@@ -263,7 +277,11 @@ export function addGameRowsAndTiles(arr, index,...args) {
                 y,
                 isSolution: solutionPositions.some(positionMatch.bind(null, {x, y})),
             };
+        if (notEndedGame.length !== 0) {
 
+            tile.element.dataset.status = cgangedDirectionArray[y][x][0];
+            tile.element.textContent = cgangedDirectionArray[y][x][1];
+         }
             row.push(tile)
         }
         gameBoard.push(row);
@@ -278,6 +296,7 @@ export function addGameRowsAndTiles(arr, index,...args) {
                 for (let i = 0; i < gameBoard.length; i += 1) {
                     let sumOfRestSolutions = 0;
                     let sumOfIncorrectOpenTilse = 0;
+                    //проверка победы
                     for (let j = 0; j < gameBoard.length; j += 1) {
                         if (gameBoard[i][j].element.dataset.status === "hidden" && gameBoard[i][j].isSolution === true) {
                             sumOfRestSolutions += 1;
@@ -293,18 +312,18 @@ export function addGameRowsAndTiles(arr, index,...args) {
                     const resultOfGame = [];
                     resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
 
-                  newArray.push(resultOfGame);
+                    newArray.push(resultOfGame);
 
-                if(newArray.length===6) {
-                      newArray.shift()
-                  }
+                    if (newArray.length === 6) {
+                        newArray.shift()
+                    }
 
-                localStorage.setItem('arr5',JSON.stringify(newArray));
-            const newarray1 = JSON.parse(localStorage.getItem("arr5")||"[]");
-            if (newarray1.length) {
-                const copyNewArray=[...newarray1]
-                shuffleByTime(copyNewArray);
-            }
+                    localStorage.setItem('arr5', JSON.stringify(newArray));
+                    const newarray1 = JSON.parse(localStorage.getItem("arr5") || "[]");
+                    if (newarray1.length) {
+                        const copyNewArray = [...newarray1]
+                        shuffleByTime(copyNewArray);
+                    }
 
                     playWin();
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
@@ -325,25 +344,24 @@ export function addGameRowsAndTiles(arr, index,...args) {
                 tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
                 playRightClickMusic(tile);
             })
-
         })
     })
     return gameBoard;
 }
 
-export function addBottomButtons(){
-    setClassname(elements.bottomButtons,"bottom-buttons");
-    appending(elements.wrapper,elements.bottomButtons);
+export function addBottomButtons() {
+    setClassname(elements.bottomButtons, "bottom-buttons");
+    appending(elements.wrapper, elements.bottomButtons);
     addSolutionButton();
     addResetButton();
     addSaveButton();
     addRandomButton();
 }
 
-function addResetButton(){
-    setClassname(elements.resetButton,"bottoms-buttons__button bottom-buttons__reset reset-button button");
+function addResetButton() {
+    setClassname(elements.resetButton, "bottoms-buttons__button bottom-buttons__reset reset-button button");
     elements.resetButton.textContent = "Reset game";
-    appending(elements.bottomButtons,elements.resetButton);
+    appending(elements.bottomButtons, elements.resetButton);
 }
 
 function addSolutionButton(ind) {
@@ -352,6 +370,8 @@ function addSolutionButton(ind) {
     appending(elements.bottomButtons, elements.solutionButton);
     elements.solutionButton.addEventListener("mousedown", () => {
         //сохранение в LS showedGame,отрисовка игры, isShown=true,
+
+
     })
     elements.solutionButton.addEventListener("mouseup", () => {
         //загрузка showedGame из LS, недобавление в массив результатов
@@ -362,20 +382,16 @@ function addSolutionButton(ind) {
 // }
 
 function addSaveButton() {
-    setClassname(elements.saveButton,"bottoms-buttons__button bottom-buttons__save save-button button");
+    setClassname(elements.saveButton, "bottoms-buttons__button bottom-buttons__save save-button button");
     elements.saveButton.textContent = "Save game";
-    appending(elements.bottomButtons,elements.saveButton);
+    appending(elements.bottomButtons, elements.saveButton);
 }
 
-function addRandomButton(){
-    setClassname(elements.randomButton,"bottoms-buttons__button bottom-buttons__random random-button button");
+function addRandomButton() {
+    setClassname(elements.randomButton, "bottoms-buttons__button bottom-buttons__random random-button button");
     elements.randomButton.textContent = "Random game";
-    appending(elements.bottomButtons,elements.randomButton);
+    appending(elements.bottomButtons, elements.randomButton);
 }
-
-
-
-
 
 
 //вспомогательные функции
@@ -425,17 +441,21 @@ function getSolutionPositions(arr) {
 function clearCluesAndGameField() {
     elements.topClueField.innerText = "";
     elements.leftClueField.innerText = "";
+    clearGameField();
+}
+
+export function clearGameField() {
     elements.gameField.innerText = "";
 }
 
 //установка таймера по клику на поле
-function setTimer() {
+export function setTimer() {
     timerProperties.timer = setInterval(function () {
         let date = new Date(0);
         timerProperties.number += 1;
         date.setSeconds(timerProperties.number); // specify value for SECONDS here
-         let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
-         elements.timerContainer.textContent = timeString;
+        let timeString = timerProperties.number > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
+        elements.timerContainer.textContent = timeString;
 
     }, 1000);
 }
@@ -449,7 +469,7 @@ function setTimerAfterFirstClick(event) {
     }
 }
 
-function resetToZeroTimerProperties() {
+export function resetToZeroTimerProperties() {
     timerProperties.number = 0;
     elements.timerContainer.textContent = "00:00";
     timerProperties.gameFieldClick = 0;
@@ -520,29 +540,61 @@ export function renderNewGame(gameArray, indexOfGameArray) {
     addGameRowsAndTiles(gameArray, indexOfGameArray);
 }
 
-export function setLocalStorage(item,value) {
-    localStorage.setItem(item,value)
+export function setLocalStorage(item, value) {
+    localStorage.setItem(item, value)
 }
 
 export function getLocalStorage() {
-    if(localStorage.getItem("shownGameArray")) {
-        return  JSON.parse(localStorage.getItem("shownGameArray"));
-
+    if (localStorage.getItem("savedGameArray")) {
+        return JSON.parse(localStorage.getItem("savedGameArray"));
     }
 }
 
-//    if (localStorage.getItem('name')) {
-//         name.value = localStorage.getItem('name');
-//     }
-//     if (localStorage.getItem('city')) {
-//         city.value = localStorage.getItem('city');
-//     } else {
-//         city.value = greetingTranslation['ru'][8];
-//     }
-//
-//     const strSavedConfig = localStorage.getItem('config')
-//
-//     if (strSavedConfig) {
-//         const savedConfig = JSON.parse(strSavedConfig)
-//         Object.assign(config, savedConfig)
-//     }
+export function showAnswers(arr, index) {
+    const gameBoard = [];
+    const answersForIndexedGame = getAnswers(arr)[index];
+    const solutionPositions = getSolutionPositions(answersForIndexedGame);
+    for (let x = 0; x < answersForIndexedGame.length; x += 1) {
+        const row = [];
+        const gameFieldRow = create("div");
+        setClassname(gameFieldRow, "gameField__row");
+        appending(elements.gameField, gameFieldRow);
+        for (let y = 0; y < answersForIndexedGame.length; y += 1) {
+            const element = create("div");
+             setClassname(element, "tile");
+            appending(gameFieldRow, element);
+            const tile = {
+                element,
+                x,
+                y,
+                isSolution: solutionPositions.some(positionMatch.bind(null, {x, y})),
+            };
+            tile.isSolution === true ? tile.element.dataset.status = "open" : tile.element.dataset.status = "hidden";
+            row.push(tile)
+        }
+        gameBoard.push(row);
+    }
+    elements.game.removeEventListener("click", setTimerAfterFirstClick);
+    elements.game.removeEventListener("contextmenu", setTimerAfterFirstClick);
+    return gameBoard;
+}
+
+
+function changeDirection(arr) {
+    let newarr=[];
+    for (let i=0; i < arr.length; i += 1) {
+        const newarrRow=[];
+        for (let j=0; j < arr.length; j += 1){
+            newarrRow.push(arr[j][i])
+        }
+        newarr.push(newarrRow);
+    }
+    return newarr;
+}
+
+export function setGameEventListeneres(condition){
+    if (condition) {
+        elements.game.addEventListener("click", setTimerAfterFirstClick);
+        elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
+    }
+}
