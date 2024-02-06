@@ -1,4 +1,4 @@
-import { getAnswers, getSpecificLeftClues, getSpecificTopClues, shuffleByTime } from "./counting.js";
+import { getAnswers, getSpecificLeftClues, getSpecificTopClues, shuffleByTime,setTimeOnCorrectFormat } from "./counting.js";
 import { changeGameIndex, game, nonogramsIndex } from "./script.js";
 
 const newArray = [];
@@ -637,10 +637,11 @@ export function setShuffledresults() {
     if (newarray1.length) {
         const copyNewArray = [...newarray1]
         const shuffledByTime = shuffleByTime(copyNewArray);
-        for (let i = 0; i < shuffledByTime.length; i += 1) {
+        const shuffledArrayOfCorrectFormat = setTimeOnCorrectFormat(shuffledByTime)
+        for (let i = 0; i < shuffledArrayOfCorrectFormat.length; i += 1) {
             for (let j = 0; j < 3; j += 1) {
                 elements.blockForResultRows.children[i].children[j].textContent = "";
-                elements.blockForResultRows.children[i].children[j].textContent = shuffledByTime[i][j];
+                elements.blockForResultRows.children[i].children[j].textContent = shuffledArrayOfCorrectFormat[i][j];
             }
         }
     }

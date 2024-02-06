@@ -81,7 +81,7 @@ export function getLevels(arr) {
 }
 
 export function shuffleByTime(arr) {
-    return arr.sort(compareNumeric);
+        return arr.sort(compareNumeric);
 }
 
 function compareNumeric(a, b) {
@@ -108,3 +108,22 @@ export function shuffle(arrayOfGames) {
     return array;
 }
 
+export function setTimeOnCorrectFormat(arraySorted) {
+    const resultArray = [];
+    for (let i = 0; i < arraySorted.length; i += 1) {
+        let resultRow = [];
+        for(let j = 0; j < arraySorted[i].length; j +=1) {
+            const resultCell = ((typeof(arraySorted[i][j]))=== "number")? toDateStingXXXX(arraySorted[i][j]):arraySorted[i][j];
+            resultRow.push(resultCell);
+        }
+        resultArray.push(resultRow);
+    }
+    return resultArray;
+}
+
+function toDateStingXXXX(num){
+    let date = new Date(0);
+    date.setSeconds(num); // specify value for SECONDS here
+    let timeString = num > 3599 ? date.toISOString().substring(11, 19) : date.toISOString().substring(14, 19);
+    return timeString;
+}
