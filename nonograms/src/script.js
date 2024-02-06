@@ -45,7 +45,8 @@ async function getData() {
 export let nonogramsIndex = 0;
 localStorage.setItem("numberOfCurrentGame", nonogramsIndex);
 export let game;
-let isShown = (localStorage.getItem("isShown")) ? JSON.parse(localStorage.getItem("isShown")): false;
+let isShown = false;
+localStorage.setItem("isShown", isShown);
 
 getData().then((nonograms) => {
     const levelArray = getLevels(nonograms);
@@ -76,11 +77,11 @@ getData().then((nonograms) => {
         elements.saveButton.classList.add("disabled");
         elements.saveButton.setAttribute("disabled","disabled");
         localStorage.setItem('shownGameNumber', nonogramsIndex);
-        localStorage.setItem('savedGameNumber',nonogramsIndex);
+        // localStorage.setItem('savedGameNumber',nonogramsIndex);
         const numberCurrent  = localStorage.getItem("numberOfCurrentGame");
-        localStorage.setItem("isShown", "true");
-        elements.continueButton.classList.remove("disabled");
-        elements.continueButton.removeAttribute("disabled");
+        // localStorage.setItem("isShown", "true");
+        // elements.continueButton.classList.remove("disabled");
+        // elements.continueButton.removeAttribute("disabled");
         localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
         clearInterval(timerProperties.timer);
         // resetToZeroTimerProperties();
