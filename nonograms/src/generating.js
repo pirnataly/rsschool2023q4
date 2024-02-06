@@ -158,9 +158,9 @@ export function addGameListAccordingToSizeItem(arr, array) {
             for (let i = 0; i < array.length; i += 1) {
                 if (ev.target.textContent === array[i].name) {
                     localStorage.setItem("numberOfCurrentGame", i);
-                    if ((Number(localStorage.getItem("shownGameNumber") || 16) === Number(localStorage.getItem("numberOfCurrentGame")))) {
-                        localStorage.setItem("isShown", "true");
-                    }
+                    // if ((Number(localStorage.getItem("shownGameNumber") || 16) === Number(localStorage.getItem("numberOfCurrentGame")))) {
+                    //     localStorage.setItem("isShown", "true");
+                    // }
                     changeGameIndex(i);
                     clearCluesAndGameField();
                     resetToZeroTimerProperties();
