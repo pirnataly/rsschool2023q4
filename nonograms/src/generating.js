@@ -44,11 +44,14 @@ export const elements = {
     soundsHeading: create("span"),
     labelForOn: create("label"),
     onSound: create("input"),
-    labelForOff:create("label"),
+    labelForOff: create("label"),
     offSound: create("input"),
-    themeSettings: create("span"),
-
-
+    themeSettings: create("form"),
+    themeHeading: create("span"),
+    labelForLight: create("label"),
+    light: create("input"),
+    labelForDark: create("label"),
+    dark: create("input"),
 }
 
 export const timerProperties =
@@ -296,7 +299,7 @@ export function addGameRowsAndTiles(arr, index, args) {
                 let arrOfSolutions = [];
                 let arrOfIncorrectOpenTiles = [];
                 changeTileView(ev);
-                if(elements.onSound.classList.contains("music-on")) {
+                if (elements.onSound.classList.contains("music-on")) {
                     playClickMusic(tile);
                 }
                 for (let i = 0; i < gameBoard.length; i += 1) {
@@ -330,15 +333,15 @@ export function addGameRowsAndTiles(arr, index, args) {
 
                     localStorage.setItem('arr5', JSON.stringify(newArray));
 
-                    setShuffledresults ();
-                    if(elements.onSound.classList.contains("music-on")) {
+                    setShuffledresults();
+                    if (elements.onSound.classList.contains("music-on")) {
                         playWin();
                     }
                     clearInterval(timerProperties.timer);
                     elements.saveButton.classList.add("disabled");
                     elements.saveButton.setAttribute("disabled", "disabled");
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
-                     setTimeout(() => {
+                    setTimeout(() => {
                             alert(`Great! You have solved the nonogram in ${timerProperties.number} seconds!`)
                         }
                         , 1);
@@ -351,7 +354,7 @@ export function addGameRowsAndTiles(arr, index, args) {
                 event.preventDefault();
                 tile.element.dataset.status = "hidden";
                 tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
-                if(elements.onSound.classList.contains("music-on")) {
+                if (elements.onSound.classList.contains("music-on")) {
                     playRightClickMusic(tile);
                 }
             })
@@ -379,7 +382,7 @@ function addSolutionButton(ind) {
     setClassname(elements.solutionButton, "bottoms-buttons__button bottom-buttons__solution solution-button button");
     elements.solutionButton.textContent = "Show solution";
     appending(elements.bottomButtons, elements.solutionButton);
-    }
+}
 
 function addSaveButton() {
     setClassname(elements.saveButton, "bottoms-buttons__button bottom-buttons__save save-button button");
@@ -629,15 +632,15 @@ export function addResultBlock() {
     }
 }
 
-export function setShuffledresults () {
+export function setShuffledresults() {
     const newarray1 = JSON.parse(localStorage.getItem("arr5") || "[]");
     if (newarray1.length) {
         const copyNewArray = [...newarray1]
         const shuffledByTime = shuffleByTime(copyNewArray);
         for (let i = 0; i < shuffledByTime.length; i += 1) {
-            for(let j = 0; j < 3; j += 1) {
-                elements.blockForResultRows.children[i].children[j].textContent="";
-                elements.blockForResultRows.children[i].children[j].textContent=shuffledByTime[i][j];
+            for (let j = 0; j < 3; j += 1) {
+                elements.blockForResultRows.children[i].children[j].textContent = "";
+                elements.blockForResultRows.children[i].children[j].textContent = shuffledByTime[i][j];
             }
         }
     }
@@ -647,69 +650,111 @@ export function clearResultsOfLocalStorage() {
     localStorage.removeItem("arr5");
 }
 
-export function clearResultsAfterRebooting(){
-    for(let i = 0; i < 5; i +=1 ) {
-         for(let i = 0; i < 3; i += 1) {
-            elements.blockForResultRows.children[i].children[i].textContent="";
+export function clearResultsAfterRebooting() {
+    for (let i = 0; i < 5; i += 1) {
+        for (let i = 0; i < 3; i += 1) {
+            elements.blockForResultRows.children[i].children[i].textContent = "";
         }
     }
 }
 
+//Настройки
 export function addSettingsBlock() {
     setClassname(elements.settings, "settings");
-    appending(elements.wrapper,elements.settings);
+    appending(elements.wrapper, elements.settings);
     addSoundsSettings();
     addThemeSettings();
-
-
 }
+
+//звук
 function addSoundsSettings() {
     setClassname(elements.soundSettings, "sound-settings");
     appending(elements.settings, elements.soundSettings);
     elements.soundsHeading.textContent = "Sounds";
-    setClassname(elements.soundsHeading,"sounds-heading");
-    appending(elements.soundSettings,elements.soundsHeading);
+    setClassname(elements.soundsHeading, "sounds-heading");
+    appending(elements.soundSettings, elements.soundsHeading);
     addOnSound();
     addOffSound();
 
 }
 
-function addThemeSettings() {
-    setClassname(elements.themeSettings, "theme-settings");
-    appending(elements.settings, elements.themeSettings);
-}
-
-
-
-
-function addOnSound(){
-    elements.labelForOn.setAttribute("for","on");
+function addOnSound() {
+    elements.labelForOn.setAttribute("for", "on");
     elements.labelForOn.textContent = "on";
-    appending(elements.soundSettings,elements.labelForOn);
-    elements.onSound.setAttribute("type","radio");
-    elements.onSound.setAttribute("checked","checked");
-    setClassname(elements.onSound,"music-on");
+    appending(elements.soundSettings, elements.labelForOn);
+    elements.onSound.setAttribute("type", "radio");
+    elements.onSound.setAttribute("checked", "checked");
+    setClassname(elements.onSound, "music-on");
     elements.onSound.name = "sound";
     elements.onSound.value = "on";
     elements.onSound.id = "on";
-    appending(elements.labelForOn,elements.onSound);
+    appending(elements.labelForOn, elements.onSound);
 
 }
 
 function addOffSound() {
-    elements.labelForOff.setAttribute("for","off");
+    elements.labelForOff.setAttribute("for", "off");
     elements.labelForOff.textContent = "off";
-    appending(elements.soundSettings,elements.labelForOff);
-    elements.offSound.setAttribute("type","radio");
-    elements.offSound.name="sound";
+    appending(elements.soundSettings, elements.labelForOff);
+    elements.offSound.setAttribute("type", "radio");
+    elements.offSound.name = "sound";
     elements.offSound.value = "off";
-    elements.offSound.id ="off";
-    appending(elements.labelForOff,elements.offSound);
+    elements.offSound.id = "off";
+    appending(elements.labelForOff, elements.offSound);
 }
 
-elements.onSound.addEventListener("input",()=>{
+elements.onSound.addEventListener("input", () => {
     elements.onSound.classList.add("music-on");
-    })
-elements.offSound.addEventListener("input",()=>{
+})
+elements.offSound.addEventListener("input", () => {
     elements.onSound.classList.remove('music-on');
 })
+
+//тема
+
+function addThemeSettings() {
+    setClassname(elements.themeSettings, "theme-settings");
+    elements.themeHeading.textContent = "Theme";
+    setClassname(elements.themeHeading, "theme-heading");
+    appending(elements.themeSettings, elements.themeHeading);
+    appending(elements.settings, elements.themeSettings);
+    addLightTheme();
+    addDarkTheme()
+}
+
+function addLightTheme() {
+    elements.labelForLight.setAttribute("for", "light");
+    elements.labelForLight.textContent = "light";
+    appending(elements.themeSettings, elements.labelForLight);
+    elements.light.setAttribute("type", "radio");
+    elements.light.setAttribute("checked", "checked");
+    // setClassname(elements.light, "light-on");
+    elements.light.name = "theme";
+    elements.light.value = "light";
+    elements.light.id = "light";
+    appending(elements.labelForLight, elements.light);
+}
+
+function addDarkTheme() {
+    elements.labelForDark.setAttribute("for", "dark");
+    elements.labelForDark.textContent = "dark";
+    appending(elements.themeSettings, elements.labelForDark);
+    elements.dark.setAttribute("type", "radio");
+    elements.dark.name = "theme";
+    elements.dark.value = "dark";
+    elements.dark.id = "dark";
+    appending(elements.labelForDark, elements.dark);
+}
+
+
+elements.light.addEventListener("input", () => {
+    document.body.classList.remove("dark-theme");
+})
+elements.dark.addEventListener("input", () => {
+    document.body.classList.add("dark-theme");
+})
+
+
+
+
+
