@@ -29,7 +29,7 @@ import {
     addGameRowsAndTiles,
     resetToZeroTimerProperties,
     clearGameField,
-    showAnswers, setTimer, setGameEventListeneres,clearCluesAndGameField,setGameByCurrentNumber
+    showAnswers, setTimer, setGameEventListeneres,clearCluesAndGameField,setGameByCurrentNumber,addResultBlock,setShuffledresults,clearResultsAfterRebooting,clearResultsOfLocalStorage
 } from "./generating.js";
 
 import { getLevels,shuffle } from "./counting.js"
@@ -67,15 +67,20 @@ getData().then((nonograms) => {
     addGameField(nonograms, nonogramsIndex);
     renderNewGame(nonograms, nonogramsIndex);//отрисовка подсказок и поля для игра по индексу
     addBottomButtons();
+    addResultBlock();
+    clearResultsAfterRebooting();
+    clearResultsOfLocalStorage();
+    // setShuffledresults ();
     //Кнопка показать решение
     elements.solutionButton.addEventListener('click', () => {
         elements.saveButton.classList.add("disabled");
+        elements.saveButton.setAttribute("disabled","disabled");
         localStorage.setItem('shownGameNumber', nonogramsIndex);
         localStorage.setItem('savedGameNumber',nonogramsIndex);
         const numberCurrent  = localStorage.getItem("numberOfCurrentGame");
-        isShown = true;
-        localStorage.setItem("isShown", isShown);
+        localStorage.setItem("isShown", "true");
         elements.continueButton.classList.remove("disabled");
+        elements.continueButton.removeAttribute("disabled");
         localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
         clearInterval(timerProperties.timer);
         // resetToZeroTimerProperties();
@@ -121,6 +126,7 @@ getData().then((nonograms) => {
         const gameListeneresDenied = localStorage.getItem("isShown");
         setGameEventListeneres(gameListeneresDenied);
         elements.saveButton.classList.remove("disabled");
+        elements.saveButton.removeAttribute("disabled");
         const randomGameNumber = shuffle(nonograms)[0];
          localStorage.setItem("numberOfCurrentGame", randomGameNumber);
         const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
@@ -136,6 +142,7 @@ getData().then((nonograms) => {
         const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
         localStorage.setItem('savedGameNumber',currentGameNumber);
         elements.continueButton.classList.remove("disabled");
+        elements.continueButton.removeAttribute("disabled");
         localStorage.setItem('lastGameTime', JSON.stringify(timerProperties));
         clearInterval(timerProperties.timer);
         timerProperties.gameFieldClick=0;

@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    margin:0;
+    margin: 0;
     font-family: Inter;
     font-size: 16px;
     color: black;
@@ -37,7 +37,7 @@ body {
 "left-clue-area game-field-area";
     background: white;
     border: 3px solid black;
-  }
+}
 
 .empty-space {
     grid-area: empty-space-area;
@@ -85,7 +85,7 @@ body {
 }
 
 [data-status="open"] {
-    background:black;
+    background: black;
 }
 
 
@@ -97,3 +97,44 @@ body {
     }
 }
 
+.result-block {
+    display: flex;
+    place-content: center;
+    margin: 0 auto;
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #717171;
+    border-radius: 10px;
+    color: var(--button-text-color);
+}
+
+.result-heading{
+    font-size: 20px;
+    font-weight: bold;
+    align-self: center;
+}
+
+
+.result-rows-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.result-row {
+    display:flex;
+    width:100%;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.result-column {
+    text-align: center;
+    flex-basis: 33%;
+    height: auto;
+    border-bottom: 1px solid #717171;
+}

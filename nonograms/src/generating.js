@@ -38,6 +38,7 @@ export const elements = {
     saveButton: create("button"),
     randomButton: create("button"),
     solutionButton: create("button"),
+    resultBlock: create("div"),
 }
 
 export const timerProperties =
@@ -82,13 +83,12 @@ export function addLevelButton() {
     elements.levelButton.textContent = "Level";
     appending(elements.levelButtonContainer, elements.levelButton);
     //открытие меню с выбором уровня
-    elements.levelButton.addEventListener("click", (event) => {
+    elements.levelButton.addEventListener("click", () => {
         elements.levelButton.classList.add("level-button_active");
         gameListClearAndHide();
         elements.levelDropdownList.classList.toggle("dropdown__list_hidden");
     })
 }
-
 
 export function addLevelDropdownList() {
     setClassname(elements.levelDropdownList, "dropdown__list dropdown__list_hidden");
@@ -104,6 +104,7 @@ export function addTimerContainer() {
 export function addContinueButton() {
     setClassname(elements.continueButton, "continue-button button disabled");
     elements.continueButton.textContent = "Continue last game";
+    elements.continueButton.setAttribute("disabled", "disabled");
     appending(elements.topButtonsContainer, elements.continueButton)
 }
 
@@ -134,26 +135,24 @@ export function addGameListAccordingToSizeItem(arr, array) {
         appending(elements.gameListAccordingToSize, accordingToSizeGameItem);
         accordingToSizeGameItem.addEventListener('click', (ev) => {
             elements.saveButton.classList.remove("disabled");
-            localStorage.setItem("numberOfCurrentGame",nonogramsIndex);
-                  localStorage.setItem("isShown", "false");
-                 elements.levelButton.classList.remove("level-button_active");
+            elements.saveButton.removeAttribute("disabled");
+            localStorage.setItem("numberOfCurrentGame", nonogramsIndex);
+            localStorage.setItem("isShown", "false");
+            elements.levelButton.classList.remove("level-button_active");
             elements.levelButton.textContent = ev.target.textContent;
             closeLevelMenu();
             //функция отрисовки выбранной игры
             for (let i = 0; i < array.length; i += 1) {
                 if (ev.target.textContent === array[i].name) {
-                    localStorage.setItem("numberOfCurrentGame",i);
-                    const l=localStorage.getItem("shownGameNumber");
-
-                    if((Number(localStorage.getItem("shownGameNumber"))=== Number(localStorage.getItem("numberOfCurrentGame")))){
-                        localStorage.setItem("isShown","true");
+                    localStorage.setItem("numberOfCurrentGame", i);
+                    if ((Number(localStorage.getItem("shownGameNumber") || 16) === Number(localStorage.getItem("numberOfCurrentGame")))) {
+                        localStorage.setItem("isShown", "true");
                     }
-                     changeGameIndex(i);
+                    changeGameIndex(i);
                     clearCluesAndGameField();
                     resetToZeroTimerProperties();
                     elements.game.addEventListener("click", setTimerAfterFirstClick);
                     elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
-                    //в одну функцию
                     renderNewGame(array, i);
                 }
             }
@@ -242,7 +241,6 @@ export function fillLeftClues(arr) {
     }
 }
 
-
 //игровое поле
 export function addGameField(arr, index) {
     setClassname(elements.gameField, "gameField");
@@ -253,19 +251,18 @@ export function addGameField(arr, index) {
 //функция по отрисовке
 export function addGameRowsAndTiles(arr, index, args) {
     const notEndedGame = args || [];
-    const cgangedDirectionArray =  changeDirection(notEndedGame)
+    const cgangedDirectionArray = changeDirection(notEndedGame)
     const gameBoard = [];
     const answersForIndexedGame = getAnswers(arr)[index];
     const solutionPositions = getSolutionPositions(answersForIndexedGame);
     for (let x = 0; x < answersForIndexedGame.length; x += 1) {
-         const row = [];
+        const row = [];
         const gameFieldRow = create("div");
         setClassname(gameFieldRow, "gameField__row");
         appending(elements.gameField, gameFieldRow);
         for (let y = 0; y < answersForIndexedGame.length; y += 1) {
             const element = create("div");
             element.dataset.status = "hidden";
-                // element.addEventListener('click',clickTile);
             setClassname(element, "tile");
             appending(gameFieldRow, element);
             const tile = {
@@ -274,11 +271,11 @@ export function addGameRowsAndTiles(arr, index, args) {
                 y,
                 isSolution: solutionPositions.some(positionMatch.bind(null, {x, y})),
             };
-        if (notEndedGame.length !== 0) {
+            if (notEndedGame.length !== 0) {
 
-            tile.element.dataset.status = cgangedDirectionArray[y][x][0];
-            tile.element.textContent = cgangedDirectionArray[y][x][1];
-         }
+                tile.element.dataset.status = cgangedDirectionArray[y][x][0];
+                tile.element.textContent = cgangedDirectionArray[y][x][1];
+            }
             row.push(tile)
         }
         gameBoard.push(row);
@@ -307,12 +304,12 @@ export function addGameRowsAndTiles(arr, index, args) {
                 }
                 if (arrOfSolutions.length === 0 && arrOfIncorrectOpenTiles.length === 0) {
                     const resultOfGame = [];
-                    const isShown = (localStorage.getItem("isShown"))?JSON.parse(localStorage.getItem("isShown")):false;
-                    if((Boolean(isShown))=== false) {
-                         resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
-                     }
+                    const isShown = (localStorage.getItem("isShown")) ? JSON.parse(localStorage.getItem("isShown")) : false;
+                    if ((Boolean(isShown)) === false) {
+                        resultOfGame.push(arr[index].name, arr[index].level, timerProperties.number);
+                    }
 
-                    if((Boolean(isShown)) === false) {
+                    if ((Boolean(isShown)) === false) {
                         newArray.push(resultOfGame);
                     }
                     if (newArray.length === 6) {
@@ -320,19 +317,14 @@ export function addGameRowsAndTiles(arr, index, args) {
                     }
 
                     localStorage.setItem('arr5', JSON.stringify(newArray));
-                    const newarray1 = JSON.parse(localStorage.getItem("arr5") || "[]");
-                    if (newarray1.length) {
-                        const copyNewArray = [...newarray1]
-                        shuffleByTime(copyNewArray);
-                    }
 
+                    setShuffledresults ();
                     playWin();
                     clearInterval(timerProperties.timer);
                     elements.saveButton.classList.add("disabled");
+                    elements.saveButton.setAttribute("disabled", "disabled");
                     //вставить функцию открытия сообщения о победе (с задержкой 0.5сек)
-                    // resetToZeroTimerProperties();
-                    setTimeout(() => {
-
+                     setTimeout(() => {
                             alert(`Great! You have solved the nonogram in ${timerProperties.number} seconds!`)
                         }
                         , 1);
@@ -371,15 +363,7 @@ function addSolutionButton(ind) {
     setClassname(elements.solutionButton, "bottoms-buttons__button bottom-buttons__solution solution-button button");
     elements.solutionButton.textContent = "Show solution";
     appending(elements.bottomButtons, elements.solutionButton);
-    elements.solutionButton.addEventListener("mousedown", () => {
-        //сохранение в LS showedGame,отрисовка игры, isShown=true,
-
-
-    })
-    elements.solutionButton.addEventListener("mouseup", () => {
-        //загрузка showedGame из LS, недобавление в массив результатов
-    })
-}
+    }
 
 function addSaveButton() {
     setClassname(elements.saveButton, "bottoms-buttons__button bottom-buttons__save save-button button");
@@ -392,7 +376,6 @@ function addRandomButton() {
     elements.randomButton.textContent = "Random game";
     appending(elements.bottomButtons, elements.randomButton);
 }
-
 
 //вспомогательные функции
 export function closeLevelMenu() {
@@ -498,12 +481,12 @@ export function checkWin(arr) {
     for (let i = 0; i < arr.length; i += 1) {
         for (let j = 0; j < arr.length; j += 1) {
             if ((arr[i][j].element.dataset.status === "hidden" && arr[i][j].element.isSolution === true)) {
-              return true
+                return true
             }
         }
 
     }
-      return false;
+    return false;
 }
 
 
@@ -528,14 +511,14 @@ export function playWin() {
     musicProperties.audioWinning.play();
 }
 
-export function renderNewGame(gameArray, indexOfGameArray,args) {
+export function renderNewGame(gameArray, indexOfGameArray, args) {
     const leftCluesValues = getSpecificLeftClues(gameArray, indexOfGameArray);//массив левых подсказок
     const topCluesValues = getSpecificTopClues(gameArray, indexOfGameArray);//массив верхних подсказок
     addTopCluesRowsAndTiles(topCluesValues);
     fillTopClues(topCluesValues);
     addLeftCluesRowsAndTiles(leftCluesValues);
     fillLeftClues(leftCluesValues);
-    addGameRowsAndTiles(gameArray, indexOfGameArray,args);
+    addGameRowsAndTiles(gameArray, indexOfGameArray, args);
 }
 
 export function setLocalStorage(item, value) {
@@ -559,7 +542,7 @@ export function showAnswers(arr, index) {
         appending(elements.gameField, gameFieldRow);
         for (let y = 0; y < answersForIndexedGame.length; y += 1) {
             const element = create("div");
-             setClassname(element, "tile");
+            setClassname(element, "tile");
             appending(gameFieldRow, element);
             const tile = {
                 element,
@@ -579,10 +562,10 @@ export function showAnswers(arr, index) {
 
 
 function changeDirection(arr) {
-    let newarr=[];
-    for (let i=0; i < arr.length; i += 1) {
-        const newarrRow=[];
-        for (let j=0; j < arr.length; j += 1){
+    let newarr = [];
+    for (let i = 0; i < arr.length; i += 1) {
+        const newarrRow = [];
+        for (let j = 0; j < arr.length; j += 1) {
             newarrRow.push(arr[j][i])
         }
         newarr.push(newarrRow);
@@ -590,7 +573,7 @@ function changeDirection(arr) {
     return newarr;
 }
 
-export function setGameEventListeneres(condition){
+export function setGameEventListeneres(condition) {
     if (condition) {
         elements.game.addEventListener("click", setTimerAfterFirstClick);
         elements.game.addEventListener("contextmenu", setTimerAfterFirstClick);
@@ -599,10 +582,60 @@ export function setGameEventListeneres(condition){
 
 export function setGameByCurrentNumber(array) {
     elements.saveButton.classList.remove("disabled");
+    elements.saveButton.removeAttribute("disabled");
     const currentGameNumber = localStorage.getItem("numberOfCurrentGame");
     const gameListeneresDenied = localStorage.getItem("isShown");
     resetToZeroTimerProperties();
     clearGameField();
     addGameRowsAndTiles(array, currentGameNumber);
     setGameEventListeneres(gameListeneresDenied);
+}
+
+export function addResultBlock() {
+    setClassname(elements.resultBlock, "result-block");
+    appending(elements.wrapper, elements.resultBlock);
+    elements.resultHeading = create("heading");
+    setClassname(elements.resultHeading, "result-heading")
+    elements.resultHeading.textContent = "Results";
+    appending(elements.resultBlock, elements.resultHeading);
+    elements.blockForResultRows = create("div");
+    setClassname(elements.blockForResultRows, "result-rows-container");
+    appending(elements.resultBlock, elements.blockForResultRows);
+    for (let i = 0; i < 5; i += 1) {
+        const resultRow = create("div");
+        setClassname(resultRow, "result-row");
+        appending(elements.blockForResultRows, resultRow);
+        for (let j = 0; j < 3; j += 1) {
+            const resultColumn = create("div");
+            setClassname(resultColumn, "result-column");
+            appending(resultRow, resultColumn);
+        }
+    }
+}
+
+export function setShuffledresults () {
+    const newarray1 = JSON.parse(localStorage.getItem("arr5") || "[]");
+    if (newarray1.length) {
+        const copyNewArray = [...newarray1]
+        const shuffledByTime = shuffleByTime(copyNewArray);
+        for (let i = 0; i < shuffledByTime.length; i += 1) {
+            for(let j = 0; j < 3; j += 1) {
+                elements.blockForResultRows.children[i].children[j].textContent="";
+                elements.blockForResultRows.children[i].children[j].textContent=shuffledByTime[i][j];
+            }
+        }
+    }
+}
+
+export function clearResultsOfLocalStorage() {
+    localStorage.removeItem("arr5");
+}
+
+export function clearResultsAfterRebooting(){
+    for(let i = 0; i < 5; i +=1 ) {
+         for(let i = 0; i < 3; i += 1) {
+            elements.blockForResultRows.children[i].children[i].textContent="";
+        }
+
+    }
 }

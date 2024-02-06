@@ -101,12 +101,12 @@
     display: block;
     width: 16px;
     height: 16px;
-    background: url("./assets/select_ico.svg") no-repeat;
+    background: url("assets/select_ico.svg") no-repeat;
     pointer-events: none;
 }
 
 .level-button_active::before {
-    background: url("./assets/select_ico_active.svg") no-repeat;
+    background: url("assets/select_ico_active.svg") no-repeat;
 }
 
 
@@ -128,7 +128,7 @@
     display: block;
     width: 16px;
     height: 16px;
-    background: url("./assets/select_ico_active.svg") no-repeat;
+    background: url("assets/select_ico_active.svg") no-repeat;
     pointer-events: none;
 }
 
