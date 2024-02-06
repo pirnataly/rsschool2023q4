@@ -100,13 +100,13 @@ body {
 .result-block {
     display: flex;
     place-content: center;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     flex-direction: column;
     width: 400px;
     height: auto;
     padding: 10px;
     border: 1px solid #717171;
-    border-radius: 10px;
+    border-radius: 5px;
     color: var(--button-text-color);
 }
 
@@ -137,4 +137,35 @@ body {
     flex-basis: 33%;
     height: auto;
     border-bottom: 1px solid #717171;
+}
+
+.settings{
+    display: flex;
+    margin: 0 auto;
+    place-content: center;
+    align-items: center;
+    max-width: 400px;
+    height: 50px;
+    /*border: 1px solid #717171;*/
+    border-radius: 5px;
+    font-size: 16px;
+    color: #717171;
+}
+.sound-settings {
+    border:1px solid #717171;
+    padding:5px;
+    border-radius: 5px;
+}
+
+
+.sounds-heading {
+    margin-right: 10px;
+}
+
+input[name = "sound"]{
+    accent-color:#717171;
+}
+
+.music-off{
+
 }

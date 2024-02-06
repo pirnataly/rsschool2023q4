@@ -39,6 +39,16 @@ export const elements = {
     randomButton: create("button"),
     solutionButton: create("button"),
     resultBlock: create("div"),
+    settings: create("div"),
+    soundSettings: create("form"),
+    soundsHeading: create("span"),
+    labelForOn: create("label"),
+    onSound: create("input"),
+    labelForOff:create("label"),
+    offSound: create("input"),
+    themeSettings: create("span"),
+
+
 }
 
 export const timerProperties =
@@ -286,7 +296,9 @@ export function addGameRowsAndTiles(arr, index, args) {
                 let arrOfSolutions = [];
                 let arrOfIncorrectOpenTiles = [];
                 changeTileView(ev);
-                playClickMusic(tile);
+                if(elements.onSound.classList.contains("music-on")) {
+                    playClickMusic(tile);
+                }
                 for (let i = 0; i < gameBoard.length; i += 1) {
                     let sumOfRestSolutions = 0;
                     let sumOfIncorrectOpenTilse = 0;
@@ -319,7 +331,9 @@ export function addGameRowsAndTiles(arr, index, args) {
                     localStorage.setItem('arr5', JSON.stringify(newArray));
 
                     setShuffledresults ();
-                    playWin();
+                    if(elements.onSound.classList.contains("music-on")) {
+                        playWin();
+                    }
                     clearInterval(timerProperties.timer);
                     elements.saveButton.classList.add("disabled");
                     elements.saveButton.setAttribute("disabled", "disabled");
@@ -337,7 +351,9 @@ export function addGameRowsAndTiles(arr, index, args) {
                 event.preventDefault();
                 tile.element.dataset.status = "hidden";
                 tile.element.textContent = (tile.element.textContent === "x") ? "" : "x";
-                playRightClickMusic(tile);
+                if(elements.onSound.classList.contains("music-on")) {
+                    playRightClickMusic(tile);
+                }
             })
         })
     })
@@ -636,6 +652,64 @@ export function clearResultsAfterRebooting(){
          for(let i = 0; i < 3; i += 1) {
             elements.blockForResultRows.children[i].children[i].textContent="";
         }
-
     }
 }
+
+export function addSettingsBlock() {
+    setClassname(elements.settings, "settings");
+    appending(elements.wrapper,elements.settings);
+    addSoundsSettings();
+    addThemeSettings();
+
+
+}
+function addSoundsSettings() {
+    setClassname(elements.soundSettings, "sound-settings");
+    appending(elements.settings, elements.soundSettings);
+    elements.soundsHeading.textContent = "Sounds";
+    setClassname(elements.soundsHeading,"sounds-heading");
+    appending(elements.soundSettings,elements.soundsHeading);
+    addOnSound();
+    addOffSound();
+
+}
+
+function addThemeSettings() {
+    setClassname(elements.themeSettings, "theme-settings");
+    appending(elements.settings, elements.themeSettings);
+}
+
+
+
+
+function addOnSound(){
+    elements.labelForOn.setAttribute("for","on");
+    elements.labelForOn.textContent = "on";
+    appending(elements.soundSettings,elements.labelForOn);
+    elements.onSound.setAttribute("type","radio");
+    elements.onSound.setAttribute("checked","checked");
+    setClassname(elements.onSound,"music-on");
+    elements.onSound.name = "sound";
+    elements.onSound.value = "on";
+    elements.onSound.id = "on";
+    appending(elements.labelForOn,elements.onSound);
+
+}
+
+function addOffSound() {
+    elements.labelForOff.setAttribute("for","off");
+    elements.labelForOff.textContent = "off";
+    appending(elements.soundSettings,elements.labelForOff);
+    elements.offSound.setAttribute("type","radio");
+    elements.offSound.name="sound";
+    elements.offSound.value = "off";
+    elements.offSound.id ="off";
+    appending(elements.labelForOff,elements.offSound);
+}
+
+elements.onSound.addEventListener("input",()=>{
+    elements.onSound.classList.add("music-on");
+    })
+elements.offSound.addEventListener("input",()=>{
+    elements.onSound.classList.remove('music-on');
+})
