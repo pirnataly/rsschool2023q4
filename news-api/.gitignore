@@ -1,0 +1,5 @@
+node_modules
+../.idea
+../nonograms
+package-lock.json
+dist
