@@ -1,5 +1,5 @@
 import './sources.css';
-import {SourceItem} from "../../app/app";
+import { SourceItem } from '../../app/app';
 
 class Sources {
     draw(data: SourceItem[]) {

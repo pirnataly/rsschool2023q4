@@ -5,7 +5,9 @@
     height: 120px;
     overflow: auto;
     align-items: center;
-    font: 300 1em 'Fira Sans', sans-serif;
+    font:
+        300 1em 'Fira Sans',
+        sans-serif;
 }
 
 .source__item {
@@ -24,7 +26,7 @@
 .source__item:focus {
     border-color: darkgray;
     color: darkgray;
-    box-shadow: 0 0.5em 0.5em -0.4em darkgray   ;
+    box-shadow: 0 0.5em 0.5em -0.4em darkgray;
     transform: translateY(-0.25em);
 }
 

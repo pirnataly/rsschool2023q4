@@ -46,7 +46,7 @@ footer {
     cursor: pointer;
 }
 
-.footer-link:hover{
+.footer-link:hover {
     opacity: 50%;
     transition: opacity 300ms ease;
 }

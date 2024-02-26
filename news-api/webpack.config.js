@@ -1,7 +1,7 @@
 const path = require('path');
-const {merge} = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 
 const baseConfig = {
@@ -20,8 +20,8 @@ const baseConfig = {
             },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
-                use:  'file-loader',
-            }
+                use: 'file-loader',
+            },
         ],
     },
     resolve: {
@@ -30,7 +30,6 @@ const baseConfig = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, './dist'),
-
     },
     plugins: [
         new DotenvWebpackPlugin(),
@@ -42,7 +41,7 @@ const baseConfig = {
     ],
 };
 
-module.exports = ({mode}) => {
+module.exports = ({ mode }) => {
     const isProductionMode = mode === 'prod';
     const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
     return merge(baseConfig, envConfig);

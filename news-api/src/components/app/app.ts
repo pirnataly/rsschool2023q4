@@ -1,7 +1,7 @@
 import AppController from '../controller/controller';
-import {AppView, NewsData} from '../view/appView';
+import { AppView, NewsData } from '../view/appView';
 
-export type SourceItem = {
+export interface SourceItem {
     id: string;
     name: string;
     description: string;
@@ -11,9 +11,9 @@ export type SourceItem = {
     country: string;
 }
 
-export type ResponseData = {
+export interface ResponseData {
     status: string;
-    sources: SourceItem [];
+    sources: SourceItem[];
 }
 
 class App {
@@ -26,9 +26,9 @@ class App {
     }
 
     start() {
-        (document
-            .querySelector('.sources') as HTMLElement)
-            .addEventListener('click', (e) => this.controller.getNews(e, (data: NewsData) => this.view.drawNews(data!)));
+        (document.querySelector('.sources') as HTMLElement).addEventListener('click', (e) =>
+            this.controller.getNews(e, (data: NewsData) => this.view.drawNews(data!))
+        );
         this.controller.getSources((data: ResponseData) => this.view.drawSources(data!));
     }
 }
