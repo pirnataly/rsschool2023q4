@@ -17,8 +17,9 @@
   },
   "plugins": [
     "@typescript-eslint"
-  ]
-//  "rules": {
-//    "no-implicit-any": 2
-//  }
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-var-requires": 0
+  }
 }

@@ -3,5 +3,4 @@ import './global.css';
 
 const app = new App();
 app.start();
-// console.log(document.querySelector('source'));
-//
+

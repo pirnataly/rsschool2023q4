@@ -1,12 +1,16 @@
 import AppLoader from './appLoader';
 
 export type Handler<T> = (data: T) => void;
+export enum EndpointValues {
+    sources = "sources",
+    everything = "everything"
+}
 
 class AppController extends AppLoader {
     getSources<T>(callback:Handler<T>) {
         super.getResp(
             {
-                endpoint: 'sources',
+                endpoint: EndpointValues.sources,
             },
             callback
         );
@@ -23,7 +27,7 @@ class AppController extends AppLoader {
                     newsContainer.setAttribute('data-source', sourceId);
                     super.getResp(
                                     {
-                            endpoint: 'everything',
+                            endpoint: EndpointValues.everything,
                             options: {
                                 sources: sourceId,
                             },
