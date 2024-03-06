@@ -13,7 +13,8 @@
   "rules": {
     "no-debugger": "off",
     "no-console": 0,
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "@typescript-eslint/no-explicit-any": "error"
   },
   "extends": [
     "eslint:recommended",
@@ -27,19 +28,4 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   }
-//  "overrides": [
-//    {
-//      "files": [
-//        "*.ts"
-//      ],
-//      "extends": [
-//        "plugin:@typescript-eslint/recommended"
-//      ],
-//      "parserOptions": {
-//        "project": [
-//          "./tsconfig.json"
-//        ]
-//      }
-//    }
-//  ]
 }

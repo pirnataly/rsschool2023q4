@@ -1,4 +1,5 @@
-import { EndpointValues, Handler } from './controller';
+import { Handler } from './controller';
+import { EndpointValues } from '../../interfaces/types';
 
 class Loader {
     private readonly baseLink: string;

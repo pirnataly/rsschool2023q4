@@ -1,5 +1,5 @@
 import './news.css';
-import { ArticleData } from '../appView';
+import { ArticleData } from '../../../interfaces/types';
 
 class News {
     draw(data: ArticleData[]) {

@@ -1,20 +1,6 @@
 import AppController from '../controller/controller';
-import { AppView, NewsData } from '../view/appView';
-
-export interface SourceItem {
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    category: string;
-    language: string;
-    country: string;
-}
-
-export interface ResponseData {
-    status: string;
-    sources: SourceItem[];
-}
+import { AppView } from '../view/appView';
+import { ResponseData, NewsData } from '../../interfaces/types';
 
 class App {
     private controller: AppController;

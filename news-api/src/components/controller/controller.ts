@@ -1,11 +1,7 @@
 import AppLoader from './appLoader';
+import { EndpointValues } from '../../interfaces/types';
 
 export type Handler<T> = (data: T) => void;
-
-export enum EndpointValues {
-    sources = 'sources',
-    everything = 'everything',
-}
 
 class AppController extends AppLoader {
     getSources<T>(callback: Handler<T>) {

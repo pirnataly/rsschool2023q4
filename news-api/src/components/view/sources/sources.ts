@@ -1,5 +1,5 @@
 import './sources.css';
-import { SourceItem } from '../../app/app';
+import { SourceItem } from '../../../interfaces/types';
 
 class Sources {
     draw(data: SourceItem[]) {
@@ -16,5 +16,4 @@ class Sources {
         document.querySelector('.sources')?.append(fragment);
     }
 }
-
 export default Sources;
