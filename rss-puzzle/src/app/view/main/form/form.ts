@@ -3,6 +3,7 @@ import { CssClasses } from '../../../../interfaces/types';
 import './form.css';
 import FormRow from './formRow';
 import { showError } from '../../../utils/validate-functions';
+import setLocalStorage from '../../../services/local-storage';
 
 export default class Form extends View {
   private formRowButton: HTMLElement | undefined;
@@ -11,13 +12,16 @@ export default class Form extends View {
 
   private formRowSurname: HTMLElement | undefined;
 
-  constructor() {
+  private login: () => void;
+
+  constructor(login: () => void) {
     const formParameters = {
       tag: 'form',
       classNames: [CssClasses.form],
     };
     super(formParameters);
     this.createForm();
+    this.login = login;
   }
 
   createForm() {
@@ -44,6 +48,12 @@ export default class Form extends View {
         const messageError = this.formRowSurname?.lastElementChild as HTMLSpanElement;
         ev.preventDefault();
         showError(surnameField, messageError);
+      }
+      if (surnameField.validity.valid && inputField.validity.valid) {
+        ev.preventDefault();
+        setLocalStorage('firstname', inputField.value);
+        setLocalStorage('surname', surnameField.value);
+        this.login();
       }
     };
   }
