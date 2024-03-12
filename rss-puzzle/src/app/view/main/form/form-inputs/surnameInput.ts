@@ -10,6 +10,8 @@ export default class FormSurnameInput extends View {
         ['type', 'text'],
         ['required', 'required'],
         ['id', 'surname'],
+        ['pattern', '^[A-Z][\\-a-zA-z]+$'],
+        ['minlength', '4'],
       ],
     };
     super(formInputParameters);
