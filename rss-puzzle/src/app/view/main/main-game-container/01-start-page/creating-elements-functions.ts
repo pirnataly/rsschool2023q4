@@ -9,6 +9,6 @@ export function createDescriptionText() {
   const gameDescription = document.createElement('p');
   gameDescription.className = 'description-text';
   gameDescription.textContent =
-    'Click on words, collect pgrases.Words can drag and drop. Select tooltips in the menu.';
+    'Click on words, collect phrases. Words can drag and drop. Select tooltips in the menu.';
   return gameDescription;
 }

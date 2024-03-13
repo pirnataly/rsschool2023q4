@@ -7,12 +7,10 @@
 
 .description {
   text-align: center;
-  /*background-color: #11abe9;*/
-  color: white;
 }
 
 .description-heading {
   margin-bottom: 40px;
-  font-size: 50px;
+  font-size: 48px;
   letter-spacing: 0.4rem;
 }

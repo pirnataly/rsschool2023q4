@@ -22,7 +22,7 @@ export default class Main extends View {
   }
 
   createMainBlock() {
-    const startPage = new MainGameContainer(this.login).getHtmlelement();
+    const startPage = new MainGameContainer().getHtmlelement();
     const form = new Form(this.login).getHtmlelement();
     const childElement = isLocalStorageGetItem() ? startPage : form;
 
