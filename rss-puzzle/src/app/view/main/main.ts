@@ -2,7 +2,7 @@ import Form from './form/form';
 import View from '../view';
 import { CssClasses } from '../../../interfaces/types';
 import { isLocalStorageGetItem } from '../../services/local-storage';
-import StartPage from './start-page/start-page';
+import MainGameContainer from './main-game-container/main-game-container';
 import changeBodyBackground, { changeLogoutButtonState } from '../../logic/logout-button-logic';
 
 export default class Main extends View {
@@ -22,9 +22,10 @@ export default class Main extends View {
   }
 
   createMainBlock() {
-    const startPage = new StartPage(this.login).getHtmlelement();
+    const startPage = new MainGameContainer(this.login).getHtmlelement();
     const form = new Form(this.login).getHtmlelement();
     const childElement = isLocalStorageGetItem() ? startPage : form;
+
     changeBodyBackground(childElement, form, startPage);
     changeLogoutButtonState(this.logoutButton, this.login);
     const mainContainer = this.getHtmlelement();

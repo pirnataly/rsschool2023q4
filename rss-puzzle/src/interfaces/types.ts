@@ -19,7 +19,11 @@ export enum CssClasses {
   input = 'input',
   inputName = 'input-name',
   inputSurname = 'input-surname',
+  mainGameContainer = 'main-game-container',
   startPage = 'start-page',
+  container = 'container',
+  gamePage = 'game-page',
+  description = 'description',
 }
 
 export type AttributeType = string[];

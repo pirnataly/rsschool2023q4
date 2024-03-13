@@ -1,0 +1,18 @@
+.start-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.description {
+  text-align: center;
+  /*background-color: #11abe9;*/
+  color: white;
+}
+
+.description-heading {
+  margin-bottom: 40px;
+  font-size: 50px;
+  letter-spacing: 0.4rem;
+}
