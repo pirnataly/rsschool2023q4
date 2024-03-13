@@ -3,16 +3,16 @@ import Header from './view/header/header';
 import Main from './view/main/main';
 
 export default class App {
-  private headerView: Header | null;
+  private headerView: Header;
 
   private wrapper: HTMLDivElement | null;
 
   private mainElement: HTMLElement | null;
 
   constructor() {
-    this.headerView = null;
     this.wrapper = null;
     this.mainElement = null;
+    this.headerView = new Header();
     this.createView();
   }
 
@@ -20,15 +20,24 @@ export default class App {
     this.wrapper = document.createElement('div');
     this.wrapper.className = 'wrapper';
     document.body.append(this.wrapper);
-    this.headerView = new Header();
     this.wrapper.append(this.headerView.getHtmlelement());
-    this.mainElement = new Main(this.toLogin.bind(this)).getHtmlelement();
-    this.wrapper.append(this.mainElement);
+
+    this.createMain(this.wrapper);
   }
 
-  toLogin() {
+  clearCreateMain() {
     if (this.mainElement) {
       this.mainElement.innerHTML = '';
     }
+    this.createMain(this.wrapper!);
+  }
+
+  createMain(wrapper: HTMLDivElement) {
+    const headerChild = this.headerView.getHtmlelement().children[0];
+    this.mainElement = new Main(
+      this.clearCreateMain.bind(this),
+      headerChild as HTMLButtonElement,
+    ).getHtmlelement();
+    wrapper.append(this.mainElement);
   }
 }

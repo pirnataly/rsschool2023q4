@@ -3,7 +3,7 @@ import { CssClasses } from '../../../../interfaces/types';
 import './form.css';
 import FormRow from './formRow';
 import { showError } from '../../../utils/validate-functions';
-import setLocalStorage from '../../../services/local-storage';
+import { setLocalStorage } from '../../../services/local-storage';
 
 export default class Form extends View {
   private formRowButton: HTMLElement | undefined;

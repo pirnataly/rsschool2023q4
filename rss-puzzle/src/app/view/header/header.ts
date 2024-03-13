@@ -13,11 +13,8 @@ export default class Header extends View {
     this.createHeaderButton();
   }
 
-  createHeaderButton() {
-    const headerButtonClass: string = CssClasses.headerButton;
+  createHeaderButton(): void {
     const headerButton = new Button().getHtmlelement();
-    headerButton.setAttribute('disabled', 'disabled');
-    headerButton.classList.add(`${headerButtonClass}`);
     headerButton.textContent = 'Logout';
     const headerElement = this.getHtmlelement();
     headerElement.append(headerButton);

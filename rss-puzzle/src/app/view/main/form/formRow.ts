@@ -1,7 +1,7 @@
 import View from '../../view';
 import './form.css';
 import { CssClasses } from '../../../../interfaces/types';
-import FormButton from '../../button/formButton';
+import FormButton from '../../button/form-button';
 import FormNameInput from './form-inputs/nameInput';
 import FirstNameLabel from './form-labels/formLabel';
 import SurnameLabel from './form-labels/surname';

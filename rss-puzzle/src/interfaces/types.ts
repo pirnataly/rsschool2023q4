@@ -19,6 +19,7 @@ export enum CssClasses {
   input = 'input',
   inputName = 'input-name',
   inputSurname = 'input-surname',
+  startPage = 'start-page',
 }
 
 export type AttributeType = string[];

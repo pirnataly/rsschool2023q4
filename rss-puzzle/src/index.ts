@@ -5,4 +5,6 @@ function runApp() {
   const app = new App();
   return app;
 }
-runApp();
+const application = runApp();
+
+export default application;
