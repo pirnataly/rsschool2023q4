@@ -12,3 +12,10 @@ export function createDescriptionText() {
     'Click on words, collect phrases. Words can drag and drop. Select tooltips in the menu.';
   return gameDescription;
 }
+
+export function createGreeting() {
+  const greeting = document.createElement('div');
+  greeting.className = 'greeting';
+  greeting.textContent = `Hello, ${localStorage.getItem('firstname')} ${localStorage.getItem('surname')}!`;
+  return greeting;
+}

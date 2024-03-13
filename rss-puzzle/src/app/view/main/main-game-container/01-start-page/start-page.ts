@@ -17,4 +17,3 @@ export default class StartPage extends View {
     this.getHtmlelement().append(new Description().getHtmlelement());
   }
 }
-

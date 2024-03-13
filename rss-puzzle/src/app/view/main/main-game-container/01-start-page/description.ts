@@ -1,7 +1,11 @@
 import './start-page.css';
 import View from '../../../view';
 import { CssClasses } from '../../../../../interfaces/types';
-import { createDescriptionText, createHeading } from './creating-elements-functions';
+import {
+  createDescriptionText,
+  createGreeting,
+  createHeading,
+} from './creating-elements-functions';
 
 export default class Description extends View {
   constructor() {
@@ -16,6 +20,7 @@ export default class Description extends View {
   createDescriptionBlock() {
     const heading = createHeading();
     const gameDescription = createDescriptionText();
-    this.getHtmlelement().append(heading, gameDescription);
+    const greeting = createGreeting();
+    this.getHtmlelement().append(heading, gameDescription, greeting);
   }
 }
