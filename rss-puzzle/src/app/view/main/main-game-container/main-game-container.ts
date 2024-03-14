@@ -16,8 +16,8 @@ export default class MainGameContainer extends View {
 
   createManeGameContainer(): void {
     const container = new Container();
-    const startpage = new StartPage();
-    container.getHtmlelement().append(startpage.getHtmlelement());
+    const startPage = new StartPage(container);
+    container.getHtmlelement().append(startPage.getHtmlelement());
     this.getHtmlelement()?.append(container.getHtmlelement());
   }
 }

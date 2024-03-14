@@ -24,6 +24,7 @@ export enum CssClasses {
   container = 'container',
   gamePage = 'game-page',
   description = 'description',
+  startButton = 'start-button',
 }
 
 export type AttributeType = string[];

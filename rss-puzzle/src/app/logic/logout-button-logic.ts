@@ -1,12 +1,16 @@
 import { clearLocalStorage, isLocalStorageGetItem } from '../services/local-storage';
 
+export function deleteBodyBackground() {
+  document.body.classList.remove('body');
+}
+
 export default function changeBodyBackground(
   variable: HTMLElement,
   elem1: HTMLElement,
   elem2: HTMLElement,
 ) {
   if (variable === elem1) {
-    document.body.classList.remove('body');
+    deleteBodyBackground();
   }
   if (variable === elem2) {
     document.body.classList.add('body');
