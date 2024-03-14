@@ -6,6 +6,7 @@ import StartButton from './start-button';
 import Container from '../container';
 import GamePage from '../02-game-page/game-page';
 import { deleteBodyBackground } from '../../../../logic/logout-button-logic';
+import { createGreeting } from './creating-elements-functions';
 
 export default class StartPage extends View {
   constructor(nodeElem: Container) {
@@ -24,6 +25,10 @@ export default class StartPage extends View {
       deleteBodyBackground();
       nodeElem.setContent(gamePage.getHtmlelement());
     };
-    this.getHtmlelement().append(new Description().getHtmlelement(), startPageButton);
+    this.getHtmlelement().append(
+      new Description().getHtmlelement(),
+      createGreeting(),
+      startPageButton,
+    );
   }
 }
