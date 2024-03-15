@@ -1,5 +1,38 @@
 .game-page {
-  width: 500px;
+  width: 100%;
   height: 250px;
-  background-color: #e9ecf1;
+}
+
+.result-block {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.result-block-row {
+  display: flex;
+  height: 40px;
+  width: 600px;
+  background-color: lightgrey;
+  border-bottom: 1px solid black;
+}
+
+.source-block {
+  display: flex;
+  height: 40px;
+  width: 600px;
+}
+
+.word-card,
+.result-word-container {
+  width: 60px;
+  height: 40px;
+  display: flex;
+  flex-grow: 2;
+  justify-content: center;
+  align-items: center;
+  background-color: #dfe1e0;
+  border: 1px solid gray;
+}
+.result-word-container {
 }

@@ -1,6 +1,4 @@
-{
-  "rounds": [
-    {
+const data6 = [{
       "levelData": {
         "id": "6_01",
         "name": "River in Winter",
@@ -2300,6 +2298,5 @@
         }
       ]
     }
-  ],
-  "roundsCount": 25
-}
+  ]
+export default data6;

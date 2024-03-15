@@ -1,6 +1,4 @@
-{
-  "rounds": [
-    {
+const data3 = [{
       "levelData": {
         "id": "3_01",
         "name": "Return from the Falcon Hunt",
@@ -3679,7 +3677,6 @@
           "wordTranslate": "воплощать в жизнь"
         }
       ]
-    }
-  ],
-  "roundsCount": 40
-}
+        }
+        ]
+export default data3;

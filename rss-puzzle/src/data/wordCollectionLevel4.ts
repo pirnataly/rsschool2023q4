@@ -1,6 +1,5 @@
-{
-  "rounds": [
-    {
+const data4 =[{
+
       "levelData": {
         "id": "4_01",
         "name": "The Korte Vijverberg at The Hague Seen from the Tournooiveld",
@@ -2668,6 +2667,5 @@
         }
       ]
     }
-  ],
-  "roundsCount": 29
-}
+  ]
+export default data4

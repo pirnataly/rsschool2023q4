@@ -1,6 +1,4 @@
-{
-  "rounds": [
-    {
+const data2 = [{
       "levelData": {
         "id": "2_01",
         "name": "Italianate Landscape With Travellers",
@@ -3771,7 +3769,5 @@
           "wordTranslate": "крюк"
         }
       ]
-    }
-  ],
-  "roundsCount": 41
-}
+    }]
+export default data2;

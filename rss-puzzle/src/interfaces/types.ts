@@ -25,6 +25,36 @@ export enum CssClasses {
   gamePage = 'game-page',
   description = 'description',
   startButton = 'start-button',
+  resultBlock = 'result-block',
+  gameContainerMain = 'game-container-main',
+  sourceBlock = 'source-block',
 }
 
 export type AttributeType = string[];
+
+export type Rounds = Round[];
+
+export type Round = {
+  levelData: {
+    id: string;
+    name: string;
+    imageSrc: string;
+    cutSrc: string;
+    author: string;
+    year: string;
+  };
+  words: {
+    audioExample: string;
+    textExample: string;
+    textExampleTranslate: string;
+    id: number;
+    word: string;
+    wordTranslate: string;
+  }[];
+};
+export type CountOfRow = 10;
+
+export type CurrentRound = {
+  currentRound: Round;
+  nextGame: number;
+};

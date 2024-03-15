@@ -1,6 +1,5 @@
-{
-  "rounds": [
-    {
+ const data5 = [{
+
       "levelData": {
         "id": "5_01",
         "name": "A Garden Party",
@@ -2668,6 +2667,5 @@
         }
       ]
     }
-  ],
-  "roundsCount": 29
-}
+  ]
+ export default data5;
