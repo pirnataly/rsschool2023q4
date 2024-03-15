@@ -28,7 +28,7 @@ export default class ResultBlock extends View {
   }
 
   divideRowsPerWordsContainers() {
-    const currentGame = getChosenGameObj(data, '2_03'); // объект игры
+    const currentGame = getChosenGameObj(data, '1_01'); // объект игры
     for (let i = 0; i < this.rows.length; i += 1) {
       const currentSentence = getCurrentSentence(currentGame, i);
       const row = this.rows[i];

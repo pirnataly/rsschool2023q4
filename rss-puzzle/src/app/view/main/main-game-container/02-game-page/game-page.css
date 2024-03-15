@@ -12,20 +12,22 @@
 .result-block-row {
   display: flex;
   height: 40px;
-  width: 600px;
+  width: 100%;
   background-color: lightgrey;
   border-bottom: 1px solid black;
 }
 
 .source-block {
+  border: 1px solid gray;
   display: flex;
   height: 40px;
-  width: 600px;
+  width: 100%;
 }
 
 .word-card,
 .result-word-container {
-  width: 60px;
+  min-width: 40px;
+  max-width: 150px;
   height: 40px;
   display: flex;
   flex-grow: 2;
@@ -33,6 +35,9 @@
   align-items: center;
   background-color: #dfe1e0;
   border: 1px solid gray;
+  padding: 5px;
 }
 .result-word-container {
+  border: 1px solid gray;
+  padding: 0;
 }

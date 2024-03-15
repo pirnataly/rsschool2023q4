@@ -28,7 +28,7 @@ export default class SourceBlock extends View {
   }
 
   createSourceBlock(): void {
-    const currentGame = getChosenGameObj(data, '1_28');
+    const currentGame = getChosenGameObj(data, '1_01');
     const currentSentenceAsArray = getCurrentSentence(currentGame) as Array<string>;
     shuffleSentence(currentSentenceAsArray);
     createWordCard(this.getHtmlelement(), currentSentenceAsArray);
