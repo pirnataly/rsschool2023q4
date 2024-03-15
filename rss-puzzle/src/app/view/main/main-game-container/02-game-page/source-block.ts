@@ -12,12 +12,14 @@ import {
   getCurrentSentence,
   shuffleSentence,
   createWordCard,
+  makeWordsContainer,
 } from './extra-functions';
 
 export const data = [...data1, ...data2, ...data3, ...data4, ...data5, ...data6];
 
 export default class SourceBlock extends View {
-  //
+  wordContainersBlock: HTMLCollection;
+
   constructor() {
     const SourceBlockParameters = {
       tag: 'div',
@@ -25,13 +27,16 @@ export default class SourceBlock extends View {
     };
     super(SourceBlockParameters);
     this.createSourceBlock();
+    this.wordContainersBlock = this.getHtmlelement().children;
   }
 
   createSourceBlock(): void {
     const currentGame = getChosenGameObj(data, '1_01');
     const currentSentenceAsArray = getCurrentSentence(currentGame) as Array<string>;
     shuffleSentence(currentSentenceAsArray);
-    createWordCard(this.getHtmlelement(), currentSentenceAsArray);
+    makeWordsContainer(this.getHtmlelement(), currentSentenceAsArray.length);
+    createWordCard(this.getHtmlelement().children, currentSentenceAsArray);
+    // console.log(wordCard.parentElement.parentElement);
   }
 
   clearSourceBlock(): void {

@@ -34,32 +34,40 @@ export function shuffleSentence(arr: string[]): void {
   }
 }
 
-export function createWordCard(node: HTMLElement, shuffledSentence: string[]) {
+export function createWordCard(nodeCollection: HTMLCollection, shuffledSentence: string[]) {
+  const nodeList = Array.from(nodeCollection);
   for (let i = 0; i < shuffledSentence.length; i += 1) {
     const wordCard = document.createElement('div');
     wordCard.classList.add('word-card');
     wordCard.textContent = shuffledSentence[i];
-    node.append(wordCard);
-  }
-}
 
-export function clickAppending(arr: Element[], arr2: Element[]) {
-  for (let i = 0; i < arr.length; i += 1) {
-    arr[i].addEventListener('click', () => {
-      for (let j = 0; j < arr2.length; j += 1) {
-        if (!arr2[j].firstElementChild) {
-          arr2[j].append(arr[i]);
-          break;
-        }
-      }
-    });
+    nodeList[i].append(wordCard);
   }
 }
 
 export function makeWordsContainer(node: Element, countOfWordsInSentence: number) {
   for (let i = 0; i < countOfWordsInSentence; i += 1) {
     const wordContainer = document.createElement('div');
-    wordContainer.classList.add('result-word-container');
+    wordContainer.classList.add('word-container');
     node.append(wordContainer);
+  }
+}
+
+export function clickAppend(e: Event, result: Element[], source: Element[]) {
+  const wordEl = e.currentTarget as HTMLElement;
+  if (wordEl.closest('.source-block')) {
+    for (let j = 0; j < result.length; j += 1) {
+      if (!result[j].firstElementChild) {
+        result[j].append(wordEl);
+        break;
+      }
+    }
+  } else {
+    for (let i = 0; i < source.length; i += 1) {
+      if (source[i] && !source[i].firstElementChild) {
+        source[i].append(wordEl);
+        break;
+      }
+    }
   }
 }

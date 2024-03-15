@@ -25,7 +25,7 @@
 }
 
 .word-card,
-.result-word-container {
+.word-container {
   min-width: 40px;
   max-width: 150px;
   height: 40px;
@@ -36,8 +36,16 @@
   background-color: #dfe1e0;
   border: 1px solid gray;
   padding: 5px;
+  transition: all ease-in 1s;
 }
-.result-word-container {
+
+.word-card:hover {
+  cursor: grab;
+  background-color: rgba(248, 248, 248, 0.7);
+  transition: all ease-in 0.3s;
+}
+
+.word-container {
   border: 1px solid gray;
   padding: 0;
 }

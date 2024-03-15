@@ -2,9 +2,10 @@ import View from '../../../view';
 import ResultBlock from './result-block';
 import { CssClasses } from '../../../../../interfaces/types';
 import SourceBlock from './source-block';
-import { clickAppending } from './extra-functions';
+import { clickAppend } from './extra-functions';
+import './game-page.css';
 
-// взаимодейтсвие двух блоков result и source
+// взаимодествие двух блоков result и source
 export default class GameContainerMain extends View {
   resultBlock: Element;
 
@@ -31,9 +32,15 @@ export default class GameContainerMain extends View {
   }
 
   addEventListeners(): void {
-    // вместо 0 передать номер текущего предложения
-    const array = Array.from(this.sourceBlock.children);
-    const array2 = Array.from(this.resultBlock.children[0].children); // rows
-    clickAppending(array, array2);
+    // вместо 0 передать номер текущего предложения в array2
+    const sourceArray = Array.from(this.sourceBlock.children);
+    const resultArray = Array.from(this.resultBlock.children[0].children); // rows[0]
+    const wordContainers = Array.from(this.sourceBlock.children);
+
+    wordContainers.forEach((wordContainer) => {
+      wordContainer.firstElementChild?.addEventListener('click', (e: Event) =>
+        clickAppend(e, resultArray, sourceArray),
+      );
+    });
   }
 }
