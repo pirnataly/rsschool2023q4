@@ -7,7 +7,7 @@ import { getChosenGameObj, getCurrentSentence, makeWordsContainer } from './extr
 export default class ResultBlock extends View {
   public rows: HTMLCollection;
 
-  constructor() {
+  constructor(levelId: string) {
     const ResultBlockParameters = {
       tag: 'div',
       classNames: [CssClasses.resultBlock],
@@ -15,7 +15,7 @@ export default class ResultBlock extends View {
     super(ResultBlockParameters);
     this.createResultBlock();
     this.rows = this.getHtmlelement().children;
-    this.divideRowsPerWordsContainers();
+    this.divideRowsPerWordsContainers(levelId);
   }
 
   createResultBlock(): void {
@@ -27,8 +27,8 @@ export default class ResultBlock extends View {
     }
   }
 
-  divideRowsPerWordsContainers() {
-    const currentGame = getChosenGameObj(data, '1_01'); // объект игры
+  divideRowsPerWordsContainers(levelId: string) {
+    const currentGame = getChosenGameObj(data, levelId); // объект игры:уровень, раунд
     for (let i = 0; i < this.rows.length; i += 1) {
       const currentSentence = getCurrentSentence(currentGame, i);
       const row = this.rows[i];

@@ -49,3 +49,12 @@
   border: 1px solid gray;
   padding: 0;
 }
+
+.continue-button {
+  display: block;
+  margin: 20px auto;
+}
+
+.continue-button[disabled='disabled'] {
+  cursor: not-allowed;
+}

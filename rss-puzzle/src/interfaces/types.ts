@@ -28,6 +28,7 @@ export enum CssClasses {
   resultBlock = 'result-block',
   gameContainerMain = 'game-container-main',
   sourceBlock = 'source-block',
+  continueCheckButton = 'continue-button',
 }
 
 export type AttributeType = string[];
@@ -54,7 +55,9 @@ export type Round = {
 };
 export type CountOfRow = 10;
 
+export type FirstGameLevelId = '1_01';
+
 export type CurrentRound = {
   currentRound: Round;
-  nextGame: number;
+  currentGameIndex: number;
 };

@@ -1,6 +1,6 @@
 import View from '../../../view';
 import './game-page.css';
-import { CssClasses } from '../../../../../interfaces/types';
+import { CssClasses, Round } from '../../../../../interfaces/types';
 import data1 from '../../../../../data/wordCollectionLevel1';
 import data2 from '../../../../../data/wordCollectionLevel2';
 import data3 from '../../../../../data/wordCollectionLevel3';
@@ -17,26 +17,39 @@ import {
 
 export const data = [...data1, ...data2, ...data3, ...data4, ...data5, ...data6];
 
-export default class SourceBlock extends View {
-  wordContainersBlock: HTMLCollection;
+export class SourceBlock extends View {
+  wordContainersBlock: Element[] | null;
 
-  constructor() {
+  currentSentence: Array<string>;
+
+  currentGame:
+    | {
+        currentRound: Round;
+        currentGameIndex: number;
+      }
+    | undefined;
+
+  constructor(levelId: string) {
     const SourceBlockParameters = {
       tag: 'div',
       classNames: [CssClasses.sourceBlock],
     };
     super(SourceBlockParameters);
+    this.currentGame = getChosenGameObj(data, levelId);
+    const numberOfSentenceInChosenGame = 0; // номер предложения при загрузке раунда
+    this.currentSentence = getCurrentSentence(
+      this.currentGame,
+      numberOfSentenceInChosenGame,
+    ) as Array<string>;
     this.createSourceBlock();
-    this.wordContainersBlock = this.getHtmlelement().children;
+    this.wordContainersBlock = Array.from(this.getHtmlelement().children);
   }
 
   createSourceBlock(): void {
-    const currentGame = getChosenGameObj(data, '1_01');
-    const currentSentenceAsArray = getCurrentSentence(currentGame) as Array<string>;
+    const currentSentenceAsArray = this.currentSentence.slice(0, this.currentSentence.length);
     shuffleSentence(currentSentenceAsArray);
     makeWordsContainer(this.getHtmlelement(), currentSentenceAsArray.length);
     createWordCard(this.getHtmlelement().children, currentSentenceAsArray);
-    // console.log(wordCard.parentElement.parentElement);
   }
 
   clearSourceBlock(): void {
