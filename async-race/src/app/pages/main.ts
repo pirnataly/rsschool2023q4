@@ -1,3 +1,5 @@
+import form from '../../components/view/form';
+
 class MainPage {
   mainContainer: HTMLElement;
 
@@ -7,8 +9,6 @@ class MainPage {
   }
 
   pasteForm() {
-    const form = document.createElement('div');
-    form.className = 'form';
     this.mainContainer.append(form);
   }
 

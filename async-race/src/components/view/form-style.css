@@ -1,0 +1,32 @@
+.form-container {
+  padding: 20px;
+  width: 460px;
+  height: 200px;
+}
+
+.name-input,
+.new-name-input {
+  width: 150px;
+  height: 30px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.color-input,
+.new-color-input {
+  vertical-align: middle;
+  width: 50px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.create-button,
+.update-button {
+  padding: 8px 16px;
+  background-color: #88c2ce;
+  border-radius: 3px;
+  color: #f4f9fc;
+}
+
+.car-img {
+}
