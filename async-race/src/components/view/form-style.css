@@ -7,9 +7,9 @@
 .name-input,
 .new-name-input {
   width: 150px;
-  height: 30px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  height: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .color-input,
@@ -22,7 +22,7 @@
 
 .create-button,
 .update-button {
-  padding: 8px 16px;
+  padding: 5px 16px;
   background-color: #88c2ce;
   border-radius: 3px;
   color: #f4f9fc;

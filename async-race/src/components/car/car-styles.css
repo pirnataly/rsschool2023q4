@@ -1,0 +1,64 @@
+.car-block-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+}
+
+.road-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-image: url('../../components/view/img/road.jpg');
+  margin-bottom: 10px;
+}
+
+.start-button,
+.stop-button,
+.select-button,
+.remove-button {
+  color: #f4f9fc;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.select-button,
+.remove-button {
+  padding: 5px 16px;
+}
+
+.car-img {
+  position: absolute;
+  top: 0;
+  left: 40px;
+  animation:
+    car 5s linear,
+    carright 5s linear;
+}
+
+@keyframes car {
+  100% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  0% {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes carright {
+  100% {
+    transform: translateX(calc(100vw - 150px));
+  }
+  50% {
+    transform: translateX(50vw);
+  }
+  0% {
+    transform: translateX(10vw);
+  }
+}

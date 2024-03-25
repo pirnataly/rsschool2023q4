@@ -1,5 +1,6 @@
 import './form-style.css';
 import fetchCreateCar from '../../services/service';
+import Car from '../car/car';
 import getCar from './car-image';
 
 class Form {
@@ -83,7 +84,9 @@ class Form {
   private async createCar() {
     const carObj = await fetchCreateCar(this.nameInput.value, this.colorInput.value);
     if (carObj) {
-      getCar(this.getForm(), carObj.color);
+      const newCar = new Car(carObj.name, carObj.color);
+      getCar(newCar.getRoad(), newCar.color);
+      this.getForm().append(newCar.getHtml());
     }
   }
 }
