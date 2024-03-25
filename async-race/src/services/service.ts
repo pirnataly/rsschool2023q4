@@ -30,9 +30,9 @@ export async function fetchGetCountOfCars() {
   return false;
 }
 
-export async function fetchGetArrayOfCars(pageNumber: number = 1) {
+export async function fetchGetArrayOfCars(countOfPage: number) {
   try {
-    const response = await fetch(`http://127.0.0.1:3000/garage/?page=${pageNumber}&_limit=7`);
+    const response = await fetch(`http://127.0.0.1:3000/garage/?_page=${countOfPage}&_limit=7`);
     if (response.ok) {
       return await response.json();
     }

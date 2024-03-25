@@ -1,5 +1,8 @@
 import './form-style.css';
 import { fetchCreateCar } from '../../services/service';
+import garage from './garage';
+import { Limits } from '../../interfaces';
+import Car from '../car/car';
 
 class Form {
   nameInput: HTMLInputElement;
@@ -81,10 +84,12 @@ class Form {
 
   private async createCar() {
     const carObj = await fetchCreateCar(this.nameInput.value, this.colorInput.value);
-    if (carObj) {
-      // const newCar = new Car(carObj.name, carObj.color);
-      // getCar(newCar.getRoad(), newCar.color);
-      // this.getForm().append(newCar.getHtml());
+    console.log(carObj, 'gar', garage.numberOfPage * Limits.page);
+
+    if (carObj && carObj.id < garage.numberOfPage * Limits.page) {
+      const newcar = new Car(carObj.name, carObj.color);
+      garage.appendCar(newcar);
+      garage.getHtml().append(garage.prevButton, garage.nextButton);
     }
   }
 }

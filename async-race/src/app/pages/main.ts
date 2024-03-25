@@ -15,7 +15,7 @@ class MainPage {
   }
 
   pasteGarage() {
-    this.mainContainer.append(garage);
+    this.mainContainer.append(garage.getHtml());
   }
 
   getHtmlElement() {
