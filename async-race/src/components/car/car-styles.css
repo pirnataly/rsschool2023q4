@@ -34,6 +34,9 @@
   position: absolute;
   top: 0;
   left: 40px;
+}
+
+.car-img_animated {
   animation:
     car 5s linear,
     carright 5s linear;

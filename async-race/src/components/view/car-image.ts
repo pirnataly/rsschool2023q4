@@ -37,5 +37,5 @@ export default function getCar(where: HTMLDivElement, color: string) {
   );
   const carSvg = where.lastElementChild as SVGSVGElement;
   carSvg.style.fill = color;
-  console.log(carSvg);
+  return carSvg;
 }

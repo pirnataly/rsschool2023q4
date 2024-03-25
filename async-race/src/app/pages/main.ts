@@ -1,4 +1,5 @@
 import form from '../../components/view/form';
+import garage from '../../components/view/garage';
 
 class MainPage {
   mainContainer: HTMLElement;
@@ -6,10 +7,15 @@ class MainPage {
   constructor() {
     this.mainContainer = document.createElement('div');
     this.pasteForm();
+    this.pasteGarage();
   }
 
   pasteForm() {
     this.mainContainer.append(form);
+  }
+
+  pasteGarage() {
+    this.mainContainer.append(garage);
   }
 
   getHtmlElement() {

@@ -1,4 +1,5 @@
 import './car-styles.css';
+import getCar from '../view/car-image';
 
 export default class Car {
   color: string;
@@ -17,6 +18,8 @@ export default class Car {
 
   roadContainer: HTMLDivElement;
 
+  carImage: null | SVGSVGElement;
+
   constructor(name: string, color: string) {
     this.name = document.createElement('span');
     this.name.textContent = name;
@@ -27,6 +30,7 @@ export default class Car {
     this.stopButton = document.createElement('button');
     this.selectButton = document.createElement('button');
     this.removeButton = document.createElement('button');
+    this.carImage = null;
     this.renderCar();
   }
 
@@ -59,6 +63,7 @@ export default class Car {
     buttonContainer.append(this.selectButton, this.removeButton, this.name);
     this.roadContainer.append(this.startButton, this.stopButton);
     this.carBlockContainer.append(buttonContainer, this.roadContainer);
+    this.carImage = getCar(this.getRoad(), this.color);
   }
 
   getHtml() {
