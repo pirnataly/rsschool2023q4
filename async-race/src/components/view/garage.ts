@@ -1,5 +1,6 @@
 import Car from '../car/car';
 import { fetchGetArrayOfCars, fetchGetCountOfCars } from '../../services/service';
+import { Limits } from '../../interfaces';
 
 class Garage {
   heading: HTMLHeadingElement;
@@ -18,7 +19,7 @@ class Garage {
     this.garageContainer = document.createElement('div');
     this.heading = document.createElement('h1');
     this.pageHeading = document.createElement('h2');
-    this.numberOfPage = 3;
+    this.numberOfPage = 1;
     this.prevButton = document.createElement('button');
     this.nextButton = document.createElement('button');
     this.render();
@@ -30,6 +31,7 @@ class Garage {
     this.prevButton.textContent = 'prev'.toUpperCase();
     this.nextButton.textContent = 'next'.toUpperCase();
     const countOfCars = Number(await fetchGetCountOfCars());
+    this.heading.textContent = `Garage (${countOfCars})`;
     const obj = await fetchGetArrayOfCars(this.numberOfPage);
     this.heading.textContent = `Garage (${countOfCars})`;
     this.garageContainer.append(this.heading, this.pageHeading);
@@ -41,6 +43,16 @@ class Garage {
       });
     }
     this.getHtml().append(this.prevButton, this.nextButton);
+    if (countOfCars < this.numberOfPage * Limits.page) {
+      this.nextButton.setAttribute('disabled', 'disabled');
+    } else {
+      this.nextButton.removeAttribute('disabled');
+    }
+    if (this.numberOfPage === 1) {
+      this.prevButton.setAttribute('disabled', 'disabled');
+    } else {
+      this.prevButton.removeAttribute('disabled');
+    }
   }
 
   clear() {
@@ -63,6 +75,7 @@ class Garage {
     this.nextButton.addEventListener('click', () => {
       this.numberOfPage += 1;
       this.clear();
+
       this.render();
     });
     this.prevButton.addEventListener('click', () => {

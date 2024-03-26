@@ -1,5 +1,5 @@
-import form from '../../components/view/form';
 import garage from '../../components/view/garage';
+import form from '../../components/view/form';
 
 class MainPage {
   mainContainer: HTMLElement;
