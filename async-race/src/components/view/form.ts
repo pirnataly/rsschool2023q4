@@ -86,15 +86,15 @@ class Form {
     const carObj = await fetchCreateCar(this.nameInput.value, this.colorInput.value);
     const countOfCars = Number(await fetchGetCountOfCars());
     garage.heading.textContent = `Garage (${countOfCars})`;
-    if (carObj && carObj.id < garage.numberOfPage * Limits.page) {
-      const newcar = new Car(carObj.name, carObj.color);
+    const newcar = new Car(carObj.name, carObj.color, carObj.id);
+    if (carObj && carObj.id <= garage.numberOfPage * Limits.page) {
       garage.appendCar(newcar);
       garage.getHtml().append(garage.prevButton, garage.nextButton);
-      if (countOfCars < garage.numberOfPage * Limits.page) {
-        garage.nextButton.setAttribute('disabled', 'disabled');
-      } else {
-        garage.nextButton.removeAttribute('disabled');
-      }
+    }
+    if (countOfCars <= garage.numberOfPage * Limits.page) {
+      garage.nextButton.setAttribute('disabled', 'disabled');
+    } else {
+      garage.nextButton.removeAttribute('disabled');
     }
   }
 }

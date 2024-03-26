@@ -2,6 +2,10 @@
   display: flex;
   flex-direction: column;
 }
+button {
+  background-color: #88c2ce;
+  border-radius: 3px;
+}
 
 .button-container {
 }
@@ -14,6 +18,13 @@
   height: 50px;
   background-image: url('../../components/view/img/road.jpg');
   margin-bottom: 10px;
+}
+
+.flag {
+  font-weight: 700;
+  top: 0;
+  right: 150px;
+  position: absolute;
 }
 
 .start-button,
@@ -33,35 +44,60 @@
 .car-img {
   position: absolute;
   top: 0;
-  left: 40px;
+  left: 90px;
 }
 
 .car-img_animated {
   animation:
-    car 5s linear,
-    carright 5s linear;
+    car linear,
+    carright linear;
+}
+
+.car-img_animated-pause {
+  animation-play-state: paused;
 }
 
 @keyframes car {
   100% {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
   50% {
     transform: translateY(1px);
   }
   0% {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 }
 
 @keyframes carright {
   100% {
-    transform: translateX(calc(100vw - 150px));
+    transform: translateX(calc(100vw - 250px));
+  }
+  90% {
+    transform: translateX(calc((100vw - 250px) / 100 * 90));
+  }
+  80% {
+    transform: translateX(calc((100vw - 250px) / 100 * 80));
+  }
+  70% {
+    transform: translateX(calc((100vw - 250px) / 100 * 70));
+  }
+  60% {
+    transform: translateX(calc((100vw - 250px) / 100 * 60));
   }
   50% {
-    transform: translateX(50vw);
+    transform: translateX(calc((100vw - 250px) / 100 * 50));
   }
-  0% {
-    transform: translateX(10vw);
+  40% {
+    transform: translateX(calc((100vw - 250px) / 100 * 40));
+  }
+  30% {
+    transform: translateX(calc((100vw - 250px) / 100 * 30));
+  }
+  20% {
+    transform: translateX(calc((100vw - 250px) / 100 * 20));
+  }
+  10% {
+    transform: translateX(calc((100vw - 250px) / 100 * 10));
   }
 }
