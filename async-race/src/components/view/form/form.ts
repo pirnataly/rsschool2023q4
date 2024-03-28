@@ -1,16 +1,15 @@
 import './form-style.css';
-import garage from '../garage/garage';
-import { Limits } from '../../../interfaces';
+
+import { classes, Limits } from '../../../interfaces';
 import { fetchCreateCar, fetchGetCountOfCars, fetchUpdateCar } from '../../../services/service';
 import Car from '../../car/car';
 import store from '../../../utils/store';
+import garage from '../garage/garage';
 
 class Form {
   nameInput: HTMLInputElement;
 
   newNameInput: HTMLInputElement;
-
-  currentCar: null | number;
 
   colorInput: HTMLInputElement;
 
@@ -21,6 +20,12 @@ class Form {
   updateButton: HTMLButtonElement;
 
   formContainer: HTMLDivElement;
+
+  raceButton: HTMLButtonElement;
+
+  resetButton: HTMLButtonElement;
+
+  generateButton: HTMLButtonElement;
 
   constructor() {
     this.formContainer = document.createElement('div');
@@ -37,7 +42,9 @@ class Form {
     });
     this.newColorInput = document.createElement('input');
     this.updateButton = document.createElement('button');
-    this.currentCar = null;
+    this.raceButton = document.createElement('button');
+    this.resetButton = document.createElement('button');
+    this.generateButton = document.createElement('button');
     this.render();
     this.addEventListeners();
   }
@@ -51,24 +58,34 @@ class Form {
       this.newNameInput,
       this.newColorInput,
       this.updateButton,
+      this.raceButton,
+      this.resetButton,
+      this.generateButton,
     ];
-    const classes = [
-      'form-container',
-      'name-input',
-      'color-input',
-      'create-button',
-      'new-name-input',
-      'new-color-input',
-      'update-button',
+
+    const typeAttributes = [
+      '',
+      'text',
+      'color',
+      'button',
+      'text',
+      'color',
+      'button',
+      'button',
+      'button',
+      'button',
     ];
-    const typeAttributes = ['', 'text', 'color', 'button', 'text', 'color', 'button'];
     components.forEach((elem: HTMLElement, index: number) => {
       const el = elem;
       el.className = classes[index];
       if (index === 3 || index === 6) el.textContent = classes[index].slice(0, 6).toUpperCase();
       if (index > 0) el.setAttribute('type', `${typeAttributes[index]}`);
-      if (index > 3) el.setAttribute('disabled', 'disabled');
+      if (index > 3 && index <= 6) el.setAttribute('disabled', 'disabled');
     });
+    this.resetButton.setAttribute('disabled', 'disabled');
+    this.raceButton.textContent = 'race'.toUpperCase();
+    this.resetButton.textContent = 'reset'.toUpperCase();
+    this.generateButton.textContent = 'generate cars'.toUpperCase();
     this.formContainer.append(
       this.nameInput,
       this.colorInput,
@@ -77,6 +94,10 @@ class Form {
       this.newNameInput,
       this.newColorInput,
       this.updateButton,
+      document.createElement('div'),
+      this.raceButton,
+      this.resetButton,
+      this.generateButton,
     );
   }
 
@@ -99,6 +120,16 @@ class Form {
       this.newNameInput.setAttribute('disabled', 'disabled');
       this.updateButton.setAttribute('disabled', 'disabled');
     });
+
+    this.raceButton.addEventListener('click', () => {
+      garage.race();
+      this.resetButton.removeAttribute('disabled');
+    });
+
+    this.resetButton.addEventListener('click', () => {
+      garage.stopRace();
+      this.resetButton.setAttribute('disabled', 'disabled');
+    });
   }
 
   private async createCar() {
@@ -106,6 +137,7 @@ class Form {
     const countOfCars = Number(await fetchGetCountOfCars());
     garage.heading.textContent = `Garage (${countOfCars})`;
     const newcar = new Car(carObj.name, carObj.color, carObj.id);
+    garage.currentCarsArray.push(newcar);
     if (garage.getHtml().children.length < Limits.garageChildren) {
       garage.appendCar(newcar);
       garage.getHtml().append(garage.prevButton, garage.nextButton);

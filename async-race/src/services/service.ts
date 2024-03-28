@@ -80,12 +80,22 @@ export async function fetchGetArrayOfCars(countOfPage: number) {
 }
 
 // animation
+// export const controller = new AbortController();
+// const {signal} = controller;
+//
+// signal.addEventListener('abort', (event) =>{
+// console.log(event.target);
+//   console.log(signal.aborted)
+//   console.log("отмена!")
+// });
+
 export async function fetchDriveEngine(id: number) {
   const config = {
     method: 'PATCH',
   };
   try {
     const response = await fetch(`${baseAdress}/engine?id=${id}&status=drive`, config);
+
     if (response.status === 500) {
       return true;
     }

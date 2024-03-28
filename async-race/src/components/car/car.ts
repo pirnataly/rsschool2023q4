@@ -31,7 +31,10 @@ export default class Car {
 
   id: number;
 
+  timerId: NodeJS.Timeout | undefined;
+
   constructor(name: string, color: string, id: number) {
+    this.timerId = undefined;
     this.id = id;
     this.name = document.createElement('span');
     this.name.textContent = name;
@@ -48,7 +51,6 @@ export default class Car {
     this.removeButton = document.createElement('button');
     this.removeButton.textContent = 'REMOVE';
     this.carImage = null;
-
     this.renderCar();
     this.addEventListeners();
   }
@@ -108,7 +110,10 @@ export default class Car {
     const spec = await fetchStartEngine(this.id);
     if (spec) {
       const duration = getDuration(spec);
+      this.carBlockContainer.dataset.value = 'animated';
+      this.stopButton.removeAttribute('disabled');
       this.carImage?.classList.add('car-img_animated');
+      this.carImage?.classList.remove('car-img_animated-pause');
       this.startButton.setAttribute('disabled', 'disabled');
       (this.carImage as SVGSVGElement).style.animationDuration = `${Math.trunc(duration)}ms`;
       await this.drive(duration);
@@ -116,13 +121,13 @@ export default class Car {
   }
 
   async drive(duration: number) {
-    setTimeout(
+    this.timerId = setTimeout(
       () => {
         (this.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
-        this.stopButton.removeAttribute('disabled');
       },
       duration - duration / 100,
     );
+
     const isBroken = await fetchDriveEngine(this.id);
     if (isBroken) {
       this.stopButton.removeAttribute('disabled');
@@ -131,9 +136,12 @@ export default class Car {
   }
 
   async stop() {
+    clearTimeout(this.timerId);
+    this.carBlockContainer.dataset.value = 'no-animated';
     const isStop = await fetchStopEngine(this.id);
     if (isStop) {
-      this.carImage?.classList.remove('car-img_animated', 'car-img_animated-pause');
+      this.carImage?.classList.remove('car-img_animated');
+      this.carImage?.classList.remove('car-img_animated-pause');
       this.startButton.removeAttribute('disabled');
       this.stopButton.setAttribute('disabled', 'disabled');
     }

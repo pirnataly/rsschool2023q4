@@ -4,6 +4,10 @@
   height: 100px;
 }
 
+button {
+  margin-right: 8px;
+}
+
 .name-input,
 .new-name-input {
   width: 150px;
@@ -21,7 +25,10 @@
 }
 
 .create-button,
-.update-button {
+.update-button,
+.race-button,
+.reset-button,
+.generate-button {
   padding: 5px 16px;
   background-color: #88c2ce;
   border-radius: 3px;

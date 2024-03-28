@@ -23,3 +23,16 @@ export enum Limits {
   'garageChildren' = 11,
   'page' = 7,
 }
+
+export const classes = [
+  'form-container',
+  'name-input',
+  'color-input',
+  'create-button',
+  'new-name-input',
+  'new-color-input',
+  'update-button',
+  'race-button',
+  'reset-button',
+  'generate-button',
+];
