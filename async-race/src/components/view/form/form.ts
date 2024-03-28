@@ -94,7 +94,7 @@ class Form {
       garage.clear();
       garage.render();
       this.newNameInput.value = '';
-      this.newColorInput.value = '';
+      this.newColorInput.value = '#10100F';
       this.newColorInput.setAttribute('disabled', 'disabled');
       this.newNameInput.setAttribute('disabled', 'disabled');
       this.updateButton.setAttribute('disabled', 'disabled');
@@ -106,7 +106,7 @@ class Form {
     const countOfCars = Number(await fetchGetCountOfCars());
     garage.heading.textContent = `Garage (${countOfCars})`;
     const newcar = new Car(carObj.name, carObj.color, carObj.id);
-    if (carObj && carObj.id <= garage.numberOfPage * Limits.page) {
+    if (garage.getHtml().children.length < Limits.garageChildren) {
       garage.appendCar(newcar);
       garage.getHtml().append(garage.prevButton, garage.nextButton);
     }
@@ -115,6 +115,7 @@ class Form {
     } else {
       garage.nextButton.removeAttribute('disabled');
     }
+    this.nameInput.value = '';
   }
 }
 

@@ -1,7 +1,12 @@
 import './car-styles.css';
 import getCar from '../view/car-image';
 import getFlag from '../view/flag-image';
-import { fetchDriveEngine, fetchStartEngine, fetchStopEngine } from '../../services/service';
+import {
+  fetchDeleteCar,
+  fetchDriveEngine,
+  fetchStartEngine,
+  fetchStopEngine,
+} from '../../services/service';
 import getDuration from '../../utils/animation';
 import store from '../../utils/store';
 
@@ -92,6 +97,10 @@ export default class Car {
       store.activeCarName = this.name.textContent as string;
       store.activeCarColor = this.color;
       store.emit();
+    });
+
+    this.removeButton.addEventListener('click', () => {
+      fetchDeleteCar(this.id);
     });
   }
 

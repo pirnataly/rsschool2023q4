@@ -30,9 +30,24 @@ export async function fetchUpdateCar(id: number, name: string = '', color: strin
     body: JSON.stringify(data),
   };
   try {
-    const response = await fetch(`http://127.0.0.1:3000/garage/${id}`, config);
+    const response = await fetch(`${baseAdress}/garage/${id}`, config);
     if (response.ok) {
-      return await response.json();
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+export async function fetchDeleteCar(id: number) {
+  const config = {
+    method: 'DELETE',
+  };
+  try {
+    const response = await fetch(`${baseAdress}/garage/${id}`, config);
+    if (response.ok) {
+      return true;
     }
   } catch {
     return false;
@@ -42,7 +57,7 @@ export async function fetchUpdateCar(id: number, name: string = '', color: strin
 
 export async function fetchGetCountOfCars() {
   try {
-    const response = await fetch('http://127.0.0.1:3000/garage/?_limit=7');
+    const response = await fetch(`${baseAdress}/garage/?_limit=7`);
     if (response.ok) {
       return response.headers.get('X-Total-Count');
     }
@@ -54,7 +69,7 @@ export async function fetchGetCountOfCars() {
 
 export async function fetchGetArrayOfCars(countOfPage: number) {
   try {
-    const response = await fetch(`http://127.0.0.1:3000/garage/?_page=${countOfPage}&_limit=7`);
+    const response = await fetch(`${baseAdress}/garage/?_page=${countOfPage}&_limit=7`);
     if (response.ok) {
       return await response.json();
     }
@@ -109,5 +124,3 @@ export async function fetchStopEngine(id: number) {
   }
   return false;
 }
-
-// /garage/:id

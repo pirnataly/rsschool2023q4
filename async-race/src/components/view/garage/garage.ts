@@ -39,7 +39,6 @@ class Garage {
     this.garageContainer.append(this.heading, this.pageHeading);
     for (let i = 0; i < obj.length; i += 1) {
       const car = new Car(obj[i].name, obj[i].color, obj[i].id);
-
       this.appendCar(car);
     }
     this.getHtml().append(this.prevButton, this.nextButton);
@@ -81,6 +80,13 @@ class Garage {
       this.numberOfPage -= 1;
       this.clear();
       this.render();
+    });
+    this.garageContainer.addEventListener('click', (ev: MouseEvent) => {
+      const { target } = ev;
+      if ((target as HTMLElement).classList.contains('remove-button')) {
+        this.clear();
+        this.render();
+      }
     });
   }
 }

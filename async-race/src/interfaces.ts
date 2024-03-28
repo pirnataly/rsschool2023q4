@@ -20,5 +20,6 @@ export type Specification = {
 };
 
 export enum Limits {
+  'garageChildren' = 11,
   'page' = 7,
 }

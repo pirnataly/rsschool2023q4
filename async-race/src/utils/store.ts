@@ -3,7 +3,7 @@ class Store {
 
   activeCarId: number = 0;
 
-  activeCarColor: string = ' ';
+  activeCarColor: string = '#10100F';
 
   activeCarName: string = ' ';
 
