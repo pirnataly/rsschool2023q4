@@ -1,7 +1,17 @@
 export interface CarInterface {
-  name: string;
-  color: string;
   id: number;
+  name: HTMLSpanElement;
+  color: string;
+  carBlockContainer: HTMLDivElement;
+  roadContainer: HTMLDivElement;
+  startButton: HTMLButtonElement;
+  stopButton: HTMLButtonElement;
+  selectButton: HTMLButtonElement;
+  removeButton: HTMLButtonElement;
+  carImage: SVGSVGElement | null;
+  renderCar: () => void;
+  getHtml: () => HTMLDivElement;
+  getRoad: () => HTMLDivElement;
 }
 
 export type Specification = {

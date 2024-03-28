@@ -1,6 +1,9 @@
 import './car-styles.css';
 import getCar from '../view/car-image';
-import getFlag from '../view/flag';
+import getFlag from '../view/flag-image';
+import { fetchDriveEngine, fetchStartEngine, fetchStopEngine } from '../../services/service';
+import getDuration from '../../utils/animation';
+import store from '../../utils/store';
 
 export default class Car {
   color: string;
@@ -34,11 +37,13 @@ export default class Car {
     this.startButton.textContent = 'S';
     this.stopButton = document.createElement('button');
     this.stopButton.textContent = 'P';
+    this.stopButton.setAttribute('disabled', 'disabled');
     this.selectButton = document.createElement('button');
     this.selectButton.textContent = 'SELECT';
     this.removeButton = document.createElement('button');
     this.removeButton.textContent = 'REMOVE';
     this.carImage = null;
+
     this.renderCar();
     this.addEventListeners();
   }
@@ -76,9 +81,53 @@ export default class Car {
   }
 
   addEventListeners() {
-    this.stopButton.addEventListener('click', () => {
-      this.carImage?.classList.remove('car-img_animated');
+    this.startButton.addEventListener('click', async () => {
+      this.start();
     });
+    this.stopButton.addEventListener('click', () => {
+      this.stop();
+    });
+    this.selectButton.addEventListener('click', () => {
+      store.activeCarId = this.id;
+      store.activeCarName = this.name.textContent as string;
+      store.activeCarColor = this.color;
+      store.emit();
+    });
+  }
+
+  async start() {
+    const spec = await fetchStartEngine(this.id);
+    if (spec) {
+      const duration = getDuration(spec);
+      this.carImage?.classList.add('car-img_animated');
+      this.startButton.setAttribute('disabled', 'disabled');
+      (this.carImage as SVGSVGElement).style.animationDuration = `${Math.trunc(duration)}ms`;
+      await this.drive(duration);
+    }
+  }
+
+  async drive(duration: number) {
+    setTimeout(
+      () => {
+        (this.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
+        this.stopButton.removeAttribute('disabled');
+      },
+      duration - duration / 100,
+    );
+    const isBroken = await fetchDriveEngine(this.id);
+    if (isBroken) {
+      this.stopButton.removeAttribute('disabled');
+      (this.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
+    }
+  }
+
+  async stop() {
+    const isStop = await fetchStopEngine(this.id);
+    if (isStop) {
+      this.carImage?.classList.remove('car-img_animated', 'car-img_animated-pause');
+      this.startButton.removeAttribute('disabled');
+      this.stopButton.setAttribute('disabled', 'disabled');
+    }
   }
 
   getHtml() {

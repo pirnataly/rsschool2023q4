@@ -1,8 +1,9 @@
 import './form-style.css';
-import { fetchCreateCar, fetchGetCountOfCars } from '../../services/service';
-import garage from './garage';
-import { Limits } from '../../interfaces';
-import Car from '../car/car';
+import garage from '../garage/garage';
+import { Limits } from '../../../interfaces';
+import { fetchCreateCar, fetchGetCountOfCars, fetchUpdateCar } from '../../../services/service';
+import Car from '../../car/car';
+import store from '../../../utils/store';
 
 class Form {
   nameInput: HTMLInputElement;
@@ -27,6 +28,13 @@ class Form {
     this.colorInput = document.createElement('input');
     this.createButton = document.createElement('button');
     this.newNameInput = document.createElement('input');
+    store.subscribe(() => {
+      this.newNameInput.removeAttribute('disabled');
+      this.newNameInput.value = store.activeCarName;
+      this.newColorInput.removeAttribute('disabled');
+      this.newColorInput.value = store.activeCarColor;
+      this.updateButton.removeAttribute('disabled');
+    });
     this.newColorInput = document.createElement('input');
     this.updateButton = document.createElement('button');
     this.currentCar = null;
@@ -79,6 +87,17 @@ class Form {
   addEventListeners() {
     this.createButton.addEventListener('click', () => {
       this.createCar();
+    });
+
+    this.updateButton.addEventListener('click', () => {
+      fetchUpdateCar(store.activeCarId, this.newNameInput.value, this.newColorInput.value);
+      garage.clear();
+      garage.render();
+      this.newNameInput.value = '';
+      this.newColorInput.value = '';
+      this.newColorInput.setAttribute('disabled', 'disabled');
+      this.newNameInput.setAttribute('disabled', 'disabled');
+      this.updateButton.setAttribute('disabled', 'disabled');
     });
   }
 

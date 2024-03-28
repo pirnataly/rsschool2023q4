@@ -1,6 +1,3 @@
-import Car from '../components/car/car';
-import getDuration from '../utils/animation';
-
 const baseAdress = 'http://127.0.0.1:3000';
 
 export async function fetchCreateCar(name: string = '', color: string = '#10100F') {
@@ -14,6 +11,26 @@ export async function fetchCreateCar(name: string = '', color: string = '#10100F
   };
   try {
     const response = await fetch(`${baseAdress}/garage`, config);
+    if (response.ok) {
+      return await response.json();
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+export async function fetchUpdateCar(id: number, name: string = '', color: string = '#10100F') {
+  const data = { name, color };
+  const config = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+  try {
+    const response = await fetch(`http://127.0.0.1:3000/garage/${id}`, config);
     if (response.ok) {
       return await response.json();
     }
@@ -48,21 +65,14 @@ export async function fetchGetArrayOfCars(countOfPage: number) {
 }
 
 // animation
-export async function fetchDriveEngine(car: Car, durationTime: number) {
-  setTimeout(
-    () => {
-      (car.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
-    },
-    durationTime - durationTime / 100,
-  );
-  const { id } = car;
+export async function fetchDriveEngine(id: number) {
   const config = {
     method: 'PATCH',
   };
   try {
     const response = await fetch(`${baseAdress}/engine?id=${id}&status=drive`, config);
     if (response.status === 500) {
-      (car.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
+      return true;
     }
   } catch {
     return false;
@@ -70,23 +80,34 @@ export async function fetchDriveEngine(car: Car, durationTime: number) {
   return false;
 }
 
-export async function fetchStartEngine(car: Car) {
-  const { id } = car;
+export async function fetchStartEngine(id: number) {
   const config = {
     method: 'PATCH',
   };
   try {
     const response = await fetch(`${baseAdress}/engine?id=${id}&status=started`, config);
     if (response.ok) {
-      const spec = await response.json();
-      const duration = getDuration(spec);
-      car.carImage?.classList.add('car-img_animated');
-      const car1 = car;
-      (car1.carImage as SVGSVGElement).style.animationDuration = `${Math.trunc(duration)}ms`;
-      await fetchDriveEngine(car1, duration);
+      return await response.json();
     }
   } catch {
     return false;
   }
   return false;
 }
+
+export async function fetchStopEngine(id: number) {
+  const config = {
+    method: 'PATCH',
+  };
+  try {
+    const response = await fetch(`${baseAdress}/engine?id=${id}&status=stopped`, config);
+    if (response.ok) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+// /garage/:id

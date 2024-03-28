@@ -1,6 +1,7 @@
-import Car from '../car/car';
-import { fetchGetArrayOfCars, fetchGetCountOfCars, fetchStartEngine } from '../../services/service';
-import { Limits } from '../../interfaces';
+import { fetchGetArrayOfCars, fetchGetCountOfCars } from '../../../services/service';
+import '../../car/car-styles.css';
+import Car from '../../car/car';
+import { Limits } from '../../../interfaces';
 
 class Garage {
   heading: HTMLHeadingElement;
@@ -38,10 +39,8 @@ class Garage {
     this.garageContainer.append(this.heading, this.pageHeading);
     for (let i = 0; i < obj.length; i += 1) {
       const car = new Car(obj[i].name, obj[i].color, obj[i].id);
+
       this.appendCar(car);
-      car.startButton.addEventListener('click', async () => {
-        await fetchStartEngine(car);
-      });
     }
     this.getHtml().append(this.prevButton, this.nextButton);
     if (countOfCars <= this.numberOfPage * Limits.page) {

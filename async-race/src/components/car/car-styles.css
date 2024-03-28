@@ -4,6 +4,7 @@
 }
 button {
   background-color: #88c2ce;
+  padding: 5px;
   border-radius: 3px;
 }
 
@@ -49,25 +50,24 @@ button {
 
 .car-img_animated {
   animation:
-    car linear,
-    carright linear;
+    /*car linear,*/ carright linear;
 }
 
 .car-img_animated-pause {
   animation-play-state: paused;
 }
 
-@keyframes car {
-  100% {
-    transform: translateY(-2px);
-  }
-  50% {
-    transform: translateY(1px);
-  }
-  0% {
-    transform: translateY(-2px);
-  }
-}
+/*@keyframes car {*/
+/*  100% {*/
+/*    transform: translateY(-2px);*/
+/*  }*/
+/*  50% {*/
+/*    transform: translateY(1px);*/
+/*  }*/
+/*  0% {*/
+/*    transform: translateY(-2px);*/
+/*  }*/
+/*}*/
 
 @keyframes carright {
   100% {
@@ -100,4 +100,8 @@ button {
   10% {
     transform: translateX(calc((100vw - 250px) / 100 * 10));
   }
+}
+
+[disabled] {
+  opacity: 50%;
 }
