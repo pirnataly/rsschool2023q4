@@ -5,6 +5,13 @@ import { fetchCreateCar, fetchGetCountOfCars, fetchUpdateCar } from '../../../se
 import Car from '../../car/car';
 import store from '../../../utils/store';
 import garage from '../garage/garage';
+import {
+  carModels,
+  carNames,
+  getRandomModel,
+  getRandomName,
+  randomColor,
+} from '../../../utils/cars-generator';
 
 class Form {
   nameInput: HTMLInputElement;
@@ -108,6 +115,7 @@ class Form {
 
   addEventListeners() {
     this.createButton.addEventListener('click', () => {
+      this.nameInput.value = this.nameInput.value.length === 0 ? 'anonymous' : this.nameInput.value;
       this.createCar();
     });
 
@@ -137,17 +145,53 @@ class Form {
       }
       this.resetButton.setAttribute('disabled', 'disabled');
     });
+
+    this.generateButton.addEventListener('click', async () => {
+      this.generate();
+    });
+  }
+
+  generate() {
+    const cars = [];
+    for (let i = 0; i < 100; i += 1) {
+      const carFullName = `${getRandomName(carNames)} ${getRandomModel(carModels)}`;
+      const randomcolor = randomColor();
+      cars.push({ carFullName, randomcolor });
+    }
+    const promises = cars.map((car) => fetchCreateCar(car.carFullName, car.randomcolor));
+    Promise.all(promises).then(async (newcars) => {
+      let i = 0;
+      const countOfCars = Number(await fetchGetCountOfCars());
+      garage.heading.textContent = `Garage (${countOfCars})`;
+      while (garage.getHtml().children.length < Limits.garageChildren) {
+        garage
+          .getHtml()
+          .append(new Car(newcars[i].name, newcars[i].color, newcars[i].id).getHtml());
+        garage.getHtml().append(garage.prevButton.getHtml(), garage.nextButton.getHtml());
+        if (countOfCars <= garage.numberOfPage * Limits.page) {
+          garage.nextButton.getHtml().setAttribute('disabled', 'disabled');
+        } else {
+          garage.nextButton.getHtml().removeAttribute('disabled');
+        }
+        i += 1;
+      }
+    });
+    return this;
   }
 
   private async createCar() {
-    this.nameInput.value = this.nameInput.value.length === 0 ? 'anonymous' : this.nameInput.value;
     const carObj = await fetchCreateCar(this.nameInput.value, this.colorInput.value);
-    const countOfCars = Number(await fetchGetCountOfCars());
-    garage.heading.textContent = `Garage (${countOfCars})`;
     const newcar = new Car(carObj.name, carObj.color, carObj.id);
     garage.currentCarsArray.push(newcar);
+    this.changeGarBlockView(newcar);
+  }
+
+  private async changeGarBlockView(car: Car) {
+    const countOfCars = Number(await fetchGetCountOfCars());
+    garage.heading.textContent = `Garage (${countOfCars})`;
+
     if (garage.getHtml().children.length < Limits.garageChildren) {
-      garage.appendCar(newcar);
+      garage.appendCar(car);
       garage.getHtml().append(garage.prevButton.getHtml(), garage.nextButton.getHtml());
     }
     if (countOfCars <= garage.numberOfPage * Limits.page) {
