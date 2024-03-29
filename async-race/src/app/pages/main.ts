@@ -18,10 +18,10 @@ class MainPage {
     this.mainContainer.append(garage.getHtml());
   }
 
-  getHtmlElement() {
+  getHtml() {
     return this.mainContainer;
   }
 }
 
-const mainPage = new MainPage().getHtmlElement();
+const mainPage = new MainPage().getHtml();
 export default mainPage;

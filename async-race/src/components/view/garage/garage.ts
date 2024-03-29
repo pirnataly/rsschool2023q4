@@ -18,6 +18,8 @@ class Garage {
 
   currentCarsArray: Car[];
 
+  isWinner: boolean;
+
   constructor() {
     this.garageContainer = document.createElement('div');
     this.heading = document.createElement('h1');
@@ -26,6 +28,7 @@ class Garage {
     this.prevButton = document.createElement('button');
     this.nextButton = document.createElement('button');
     this.currentCarsArray = [];
+    this.isWinner = false;
     this.render();
     this.setEventListeners();
   }
@@ -97,6 +100,7 @@ class Garage {
   }
 
   race() {
+    this.isWinner = false;
     this.currentCarsArray.forEach((car) => {
       if (!(car.getHtml().dataset.value === 'animated')) {
         car.start();
