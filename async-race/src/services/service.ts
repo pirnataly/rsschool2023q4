@@ -79,16 +79,6 @@ export async function fetchGetArrayOfCars(countOfPage: number) {
   return false;
 }
 
-// animation
-// export const controller = new AbortController();
-// const {signal} = controller;
-//
-// signal.addEventListener('abort', (event) =>{
-// console.log(event.target);
-//   console.log(signal.aborted)
-//   console.log("отмена!")
-// });
-
 export async function fetchDriveEngine(id: number) {
   const config = {
     method: 'PATCH',

@@ -9,9 +9,13 @@ import {
 } from '../../services/service';
 import getDuration from '../../utils/animation';
 import store from '../../utils/store';
+import winMessage from '../../utils/message';
+// import winMessage from "../../utils/message";
 
 export default class Car {
   color: string;
+
+  static raceWinner: Car[];
 
   startButton: HTMLButtonElement;
 
@@ -34,6 +38,7 @@ export default class Car {
   timerId: NodeJS.Timeout | undefined;
 
   constructor(name: string, color: string, id: number) {
+    Car.raceWinner = [];
     this.timerId = undefined;
     this.id = id;
     this.name = document.createElement('span');
@@ -124,6 +129,15 @@ export default class Car {
     this.timerId = setTimeout(
       () => {
         (this.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
+        if (Car.raceWinner.length === 0) {
+          Car.raceWinner.push(this);
+          winMessage.getHtml().style.display = 'flex';
+          winMessage.winMessageHeading2.textContent =
+            `The ${this.name.textContent} car came first in ${Number(duration / 1000).toFixed(2)} sec`.toUpperCase();
+          setTimeout(() => {
+            winMessage.getHtml().style.display = 'none';
+          }, 4000);
+        }
       },
       duration - duration / 100,
     );
@@ -132,6 +146,7 @@ export default class Car {
     if (isBroken) {
       this.stopButton.removeAttribute('disabled');
       (this.carImage as SVGSVGElement).classList.add('car-img_animated-pause');
+      clearTimeout(this.timerId);
     }
   }
 

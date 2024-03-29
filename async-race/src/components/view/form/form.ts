@@ -30,6 +30,7 @@ class Form {
   constructor() {
     this.formContainer = document.createElement('div');
     this.nameInput = document.createElement('input');
+    this.nameInput.placeholder = 'Enter car name';
     this.colorInput = document.createElement('input');
     this.createButton = document.createElement('button');
     this.newNameInput = document.createElement('input');
@@ -128,11 +129,18 @@ class Form {
 
     this.resetButton.addEventListener('click', () => {
       garage.stopRace();
+      if (!garage.prevButton.isDisabled) {
+        garage.prevButton.getHtml().removeAttribute('disabled');
+      }
+      if (!garage.nextButton.isDisabled) {
+        garage.nextButton.getHtml().removeAttribute('disabled');
+      }
       this.resetButton.setAttribute('disabled', 'disabled');
     });
   }
 
   private async createCar() {
+    this.nameInput.value = this.nameInput.value.length === 0 ? 'anonymous' : this.nameInput.value;
     const carObj = await fetchCreateCar(this.nameInput.value, this.colorInput.value);
     const countOfCars = Number(await fetchGetCountOfCars());
     garage.heading.textContent = `Garage (${countOfCars})`;
@@ -140,12 +148,12 @@ class Form {
     garage.currentCarsArray.push(newcar);
     if (garage.getHtml().children.length < Limits.garageChildren) {
       garage.appendCar(newcar);
-      garage.getHtml().append(garage.prevButton, garage.nextButton);
+      garage.getHtml().append(garage.prevButton.getHtml(), garage.nextButton.getHtml());
     }
     if (countOfCars <= garage.numberOfPage * Limits.page) {
-      garage.nextButton.setAttribute('disabled', 'disabled');
+      garage.nextButton.getHtml().setAttribute('disabled', 'disabled');
     } else {
-      garage.nextButton.removeAttribute('disabled');
+      garage.nextButton.getHtml().removeAttribute('disabled');
     }
     this.nameInput.value = '';
   }

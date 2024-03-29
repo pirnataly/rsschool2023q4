@@ -49,25 +49,12 @@ button {
 }
 
 .car-img_animated {
-  animation:
-    /*car linear,*/ carright linear;
+  animation: carright linear;
 }
 
 .car-img_animated-pause {
   animation-play-state: paused;
 }
-
-/*@keyframes car {*/
-/*  100% {*/
-/*    transform: translateY(-2px);*/
-/*  }*/
-/*  50% {*/
-/*    transform: translateY(1px);*/
-/*  }*/
-/*  0% {*/
-/*    transform: translateY(-2px);*/
-/*  }*/
-/*}*/
 
 @keyframes carright {
   100% {
@@ -104,4 +91,22 @@ button {
 
 [disabled] {
   opacity: 50%;
+}
+
+.win-message {
+  z-index: 2;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  position: absolute;
+  width: 50%;
+  height: 200px;
+  border-radius: 5px;
+  background-color: #88c2ce;
+  border: 2px dashed #10100f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f4f9fc;
 }
