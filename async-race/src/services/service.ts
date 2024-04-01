@@ -57,6 +57,21 @@ export async function fetchDeleteCar(id: number) {
   return false;
 }
 
+export async function fetchDeleteWinner(id: number) {
+  const config = {
+    method: 'DELETE',
+  };
+  try {
+    const response = await fetch(`${baseAddress}/winners/${id}`, config);
+    if (response.ok) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
 export async function fetchGetCountOfCars() {
   try {
     const response = await fetch(`${baseAddress}/garage/?_limit=7`);
@@ -211,6 +226,7 @@ export async function fetchGetWinner(id: number, time: number, wins: number = 1)
   } catch {
     return false;
   }
+
   await fetchCreateWinner(id, wins, time);
   return true;
 }

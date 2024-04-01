@@ -133,7 +133,7 @@ export default class Winners {
     const winsTitle = this.columnNamesContainer.children[3];
     winsTitle.addEventListener('click', () => {
       winsTitle.classList.toggle('asc');
-      winsTitle.textContent = winsTitle.classList.contains('asc') ? 'Wins ↑' : 'Wins ↓';
+      winsTitle.textContent = winsTitle.classList.contains('asc') ? 'Wins ↓' : 'Wins ↑';
       const par = winsTitle.classList.contains('asc')
         ? { page: this.numberOfPage, limit: 10, sort: 'wins', order: 'ASC' }
         : { page: this.numberOfPage, limit: 10, sort: 'wins', order: 'DESC' };
@@ -144,8 +144,8 @@ export default class Winners {
     timeTitle.addEventListener('click', () => {
       timeTitle.classList.toggle('asc');
       timeTitle.textContent = timeTitle.classList.contains('asc')
-        ? 'BestTime (sec) ↑'
-        : 'BestTime (sec) ↓';
+        ? 'BestTime (sec) ↓'
+        : 'BestTime (sec) ↑';
       const par = timeTitle.classList.contains('asc')
         ? { page: this.numberOfPage, limit: 10, sort: 'time', order: 'ASC' }
         : { page: this.numberOfPage, limit: 10, sort: 'time', order: 'DESC' };

@@ -3,6 +3,7 @@ import { getCar } from '../view/car-image';
 import getFlag from '../view/flag-image';
 import {
   fetchDeleteCar,
+  fetchDeleteWinner,
   fetchDriveEngine,
   fetchGetWinner,
   fetchStartEngine,
@@ -108,6 +109,7 @@ export default class Car {
 
     this.removeButton.addEventListener('click', () => {
       fetchDeleteCar(this.id);
+      fetchDeleteWinner(this.id);
     });
   }
 
