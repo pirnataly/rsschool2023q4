@@ -51,7 +51,7 @@ class Garage {
     }
 
     this.getHtml().append(this.prevButton.getHtml(), this.nextButton.getHtml());
-    if (countOfCars <= this.numberOfPage * Limits.page) {
+    if (countOfCars <= this.numberOfPage * Limits.pageGarage) {
       this.nextButton.getHtml().setAttribute('disabled', 'disabled');
     } else {
       this.nextButton.getHtml().removeAttribute('disabled');

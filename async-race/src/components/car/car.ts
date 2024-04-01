@@ -1,16 +1,16 @@
 import './car-styles.css';
-import getCar from '../view/car-image';
+import { getCar } from '../view/car-image';
 import getFlag from '../view/flag-image';
 import {
   fetchDeleteCar,
   fetchDriveEngine,
+  fetchGetWinner,
   fetchStartEngine,
   fetchStopEngine,
 } from '../../services/service';
 import getDuration from '../../utils/animation';
 import store from '../../utils/store';
 import winMessage from '../../utils/message';
-// import winMessage from "../../utils/message";
 
 export default class Car {
   color: string;
@@ -132,8 +132,10 @@ export default class Car {
         if (Car.raceWinner.length === 0) {
           Car.raceWinner.push(this);
           winMessage.getHtml().style.display = 'flex';
+          const winTime = Number((duration / 1000).toFixed(2));
           winMessage.winMessageHeading2.textContent =
-            `The ${this.name.textContent} car came first in ${Number(duration / 1000).toFixed(2)} sec`.toUpperCase();
+            `The ${this.name.textContent} car came first in ${winTime} sec`.toUpperCase();
+          fetchGetWinner(this.id, winTime);
           setTimeout(() => {
             winMessage.getHtml().style.display = 'none';
           }, 4000);

@@ -2,7 +2,85 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 200px;
-  height: 300px;
-  background-color: #11abe9;
+  width: 100%;
+  max-width: 480px;
+  margin: 40px auto 20px;
+}
+
+.winners-result-block {
+  display: flex;
+  flex-direction: column;
+  max-width: 460px;
+  width: 100%;
+  background-color: #88c2ce;
+  margin-bottom: 20px;
+}
+
+.column-names-container {
+  display: flex;
+  min-width: 100%;
+  margin: 0;
+}
+
+.column-heading {
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+  background-color: #d6dfe8;
+}
+.wins-column {
+}
+
+.time-column {
+}
+
+.column-heading:first-child {
+  flex-grow: 1;
+}
+
+.column-heading:last-child {
+  cursor: pointer;
+  flex-grow: 3;
+}
+
+.column-heading:nth-child(2) {
+  flex-grow: 5;
+}
+
+.column-heading:nth-child(3) {
+  flex-grow: 32;
+}
+
+.column-heading:nth-child(4) {
+  cursor: pointer;
+  flex-grow: 3;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  min-width: 100%;
+  height: auto;
+  margin: 0;
+  text-align: center;
+}
+
+.cell {
+}
+
+.cell:first-child {
+  width: 14px;
+}
+
+.cell:last-child {
+  width: 138px;
+}
+
+.cell:nth-child(3) {
+  width: 193px;
+}
+
+.cell:nth-child(4) {
+  width: 57px;
 }

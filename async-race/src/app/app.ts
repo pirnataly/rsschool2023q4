@@ -1,6 +1,7 @@
 import AppContainer from './appcontainer';
 import mainPage from './pages/main';
 import winners from './pages/winners';
+import { Limits } from '../interfaces';
 
 export default class App {
   appContainer: AppContainer;
@@ -19,24 +20,25 @@ export default class App {
     document.body.append(this.garageButton, this.winnersButton);
     this.currentPage = mainPage;
     if (this.currentPage === mainPage) {
-      winners.style.visibility = 'hidden';
+      winners.getHtml().style.visibility = 'hidden';
     } else {
       mainPage.style.visibility = 'hidden';
     }
-    this.appContainer = new AppContainer(mainPage, winners);
+    this.appContainer = new AppContainer(mainPage, winners.getHtml());
     document.body.append(this.appContainer.getHtml());
     this.addListeners();
   }
 
   addListeners() {
     this.winnersButton.addEventListener('click', () => {
-      this.currentPage = winners;
+      this.currentPage = winners.getHtml();
+      winners.render({ page: winners.numberOfPage, limit: Limits.pageWinners });
       mainPage.style.visibility = 'hidden';
-      winners.style.visibility = 'visible';
+      winners.getHtml().style.visibility = 'visible';
     });
     this.garageButton.addEventListener('click', () => {
       this.currentPage = mainPage;
-      winners.style.visibility = 'hidden';
+      winners.getHtml().style.visibility = 'hidden';
       this.currentPage.style.visibility = 'visible';
     });
   }

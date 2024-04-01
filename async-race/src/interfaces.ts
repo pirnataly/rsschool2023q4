@@ -21,7 +21,9 @@ export type Specification = {
 
 export enum Limits {
   'garageChildren' = 12,
-  'page' = 7,
+  'pageGarage' = 7,
+  'pageWinners' = 10,
+  'columns' = 5,
 }
 
 export const classes = [
@@ -36,3 +38,30 @@ export const classes = [
   'reset-button',
   'generate-button',
 ];
+
+export type Winner = {
+  id: number;
+  time: number;
+  wins: number;
+};
+
+export type ResultRow = {
+  id: number;
+  time: number;
+  wins: number;
+  color: string;
+  name: string;
+}[];
+
+export type Car = {
+  id: number;
+  name: string;
+  color: string;
+};
+
+export type Params = {
+  page: number;
+  limit: Limits.pageWinners;
+  sort?: string | undefined;
+  order?: string | undefined;
+};

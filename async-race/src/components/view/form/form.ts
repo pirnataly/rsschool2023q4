@@ -168,7 +168,7 @@ class Form {
           .getHtml()
           .append(new Car(newcars[i].name, newcars[i].color, newcars[i].id).getHtml());
         garage.getHtml().append(garage.prevButton.getHtml(), garage.nextButton.getHtml());
-        if (countOfCars <= garage.numberOfPage * Limits.page) {
+        if (countOfCars <= garage.numberOfPage * Limits.pageGarage) {
           garage.nextButton.getHtml().setAttribute('disabled', 'disabled');
         } else {
           garage.nextButton.getHtml().removeAttribute('disabled');
@@ -194,7 +194,7 @@ class Form {
       garage.appendCar(car);
       garage.getHtml().append(garage.prevButton.getHtml(), garage.nextButton.getHtml());
     }
-    if (countOfCars <= garage.numberOfPage * Limits.page) {
+    if (countOfCars <= garage.numberOfPage * Limits.pageGarage) {
       garage.nextButton.getHtml().setAttribute('disabled', 'disabled');
     } else {
       garage.nextButton.getHtml().removeAttribute('disabled');
