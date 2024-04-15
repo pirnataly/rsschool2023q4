@@ -1,3 +1,2 @@
-#!/bin/sh
 cd fun-chat
 npm run lint
