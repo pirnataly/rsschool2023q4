@@ -1,0 +1,77 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  height: 360px;
+  margin: calc(50vh - 180px) auto;
+  border-radius: 6px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-size: 20px;
+  /*text-align: center;*/
+  margin: 40px auto;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+li {
+  display: flex;
+  width: 90%;
+  height: 40px;
+  margin: 0 auto 20px;
+  list-style-type: none;
+}
+
+li > label {
+  flex: 1.5;
+  align-self: center;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+}
+
+input {
+  position: relative;
+  flex: 2.5;
+  font-size: 17px;
+  outline: none;
+  border-radius: 6px;
+  border: 1px solid #dddfe2;
+  padding: 5px 10px;
+}
+
+.input:invalid {
+  border: 2px solid lightpink;
+}
+
+span {
+  padding: 5px 0 0;
+  font-size: 10px;
+  position: absolute;
+  height: auto;
+  color: red;
+}
+
+.error {
+  width: 0;
+  height: 0;
+}
+.error .active {
+  padding: 0.3em;
+}
+
+.form-button,
+.about-button {
+  font-size: 17px;
+  padding: 8px 10px;
+  width: 145px;
+}
+
+.form-button:hover,
+.about-button:hover {
+  cursor: pointer;
+}

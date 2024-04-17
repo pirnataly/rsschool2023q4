@@ -36,6 +36,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
       filename: 'index.html',
+      favicon: path.join(__dirname, 'src', 'favicon.ico'),
+
     }),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new EslintPlugin({ extensions: ['ts'] }),

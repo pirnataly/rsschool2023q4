@@ -1,5 +1,12 @@
-.div {
-  width: 200px;
-  height: 200px;
-  background-color: #11abe9;
+body {
+  margin: 0;
+  padding: 0;
+  color: #1c1e21;
+  background-color: #f0f2f5;
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  padding: 2px;
+  margin-bottom: 10px;
 }

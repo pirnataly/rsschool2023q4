@@ -1,0 +1,8 @@
+.app {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  min-width: 380px;
+  height: 100vh;
+  margin: 0 auto;
+}
