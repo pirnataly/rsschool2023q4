@@ -5,12 +5,13 @@ import {
   loginAttributes,
   passwordAttributes,
 } from '../../interfaces';
-import setLocalStorage from '../../../services/local-storage';
+
 import { createButton, createInput, createLabel } from '../../../utils/create-form-elements';
 import { removeMessage, setCoords, showError } from '../../../utils/validate-functions';
 import aboutButton from '../aboutButton';
+import { setSessionStorage } from '../../../services/session-storage';
 
-class Form {
+export default class Form {
   formContainer: HTMLFormElement;
 
   loginRow: HTMLLIElement;
@@ -80,28 +81,26 @@ class Form {
       this.formButton,
       this.aboutButton,
     );
-    this.formContainer.onsubmit = (ev) => {
-      if (!this.loginInput.validity.valid) {
-        ev.preventDefault();
-        showError(this.loginInput, this.loginMessageError);
-      }
-      if (!this.passwordInput.validity.valid) {
-        ev.preventDefault();
-        showError(this.passwordInput, this.passwordError);
-      }
-      if (this.passwordInput.validity.valid && this.loginInput.validity.valid) {
-        ev.preventDefault();
-        setLocalStorage('login', this.loginInput.value);
-        setLocalStorage('password', this.passwordInput.value);
-        // this.login();
-      }
-    };
+  }
+
+  checkValidation(ev: SubmitEvent) {
+    if (!this.loginInput.validity.valid) {
+      ev.preventDefault();
+      showError(this.loginInput, this.loginMessageError);
+    }
+    if (!this.passwordInput.validity.valid) {
+      ev.preventDefault();
+      showError(this.passwordInput, this.passwordError);
+    }
+    if (this.passwordInput.validity.valid && this.loginInput.validity.valid) {
+      ev.preventDefault();
+      setSessionStorage('login', this.loginInput.value);
+      setSessionStorage('password', this.passwordInput.value);
+    }
+    return true;
   }
 
   makeButtonBeClicked(e: Event) {
-    console.log(e.target);
-    // const inputSurname = this.formRowSurname?.children[1] as HTMLInputElement;
-    // const inputName = this.formRowName?.children[1] as HTMLInputElement;
     const anotherInput = e.target === this.loginInput ? this.passwordInput : this.loginInput;
     if (anotherInput.validity.valid) {
       this.formButton.removeAttribute('disabled');
@@ -112,6 +111,3 @@ class Form {
     return this.formContainer;
   }
 }
-
-const form = new Form();
-export default form;

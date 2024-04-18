@@ -10,3 +10,11 @@ button {
   padding: 2px;
   margin-bottom: 10px;
 }
+
+button:hover {
+  cursor: pointer;
+}
+
+button:disabled:hover {
+  cursor: not-allowed;
+}

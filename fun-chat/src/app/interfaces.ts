@@ -32,3 +32,8 @@ export const aboutButtonProperties = {
   className: 'about-button',
   textContent: 'About',
 };
+
+export const prevbuttonProperties = {
+  className: 'prev-button',
+  textContent: 'Back',
+};
