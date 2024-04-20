@@ -21,3 +21,9 @@ export function createButton(
   button.className = className;
   return button;
 }
+
+export function createElement(classname: string, tag = 'div'): HTMLElement | HTMLDivElement {
+  const el = document.createElement(tag);
+  el.className = classname;
+  return el;
+}

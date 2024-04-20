@@ -1,8 +1,43 @@
 .app {
   display: flex;
+  justify-content: center;
   max-width: 1200px;
   width: 100%;
-  min-width: 380px;
   height: 100vh;
   margin: 0 auto;
+}
+
+.overlay {
+  z-index: 1;
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+.dialog {
+  z-index: 2;
+  position: absolute;
+  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  width: 324px;
+  height: 100px;
+  margin: calc(50vh - 50px) auto;
+  border-radius: 6px;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  left: 0;
+  right: 0;
+  display: none;
+}
+
+.exit {
+  font-size: 17px;
+  padding: 8px 10px;
+  width: 145px;
 }

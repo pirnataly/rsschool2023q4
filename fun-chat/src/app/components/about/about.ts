@@ -1,7 +1,7 @@
 import './about.css';
-import { createButton } from '../../../utils/create-form-elements';
-import { aboutButtonAttributes, prevbuttonProperties } from '../../interfaces';
-import curParent from '../../../utils/current-user';
+import { prevButtonProperties, typicalButtonAttributes } from '../../interfaces';
+import { createButton } from '../../../utils/elements-creators';
+import curUser from '../../../utils/current-user';
 
 class AboutPage {
   private aboutContainer: HTMLElement;
@@ -19,15 +19,9 @@ class AboutPage {
     a.textContent = 'Author: pirnataly';
     a.href = 'https://github.com/pirnataly';
     p.textContent = text;
-    const prevButton = createButton(aboutButtonAttributes, prevbuttonProperties);
+    const prevButton = createButton(typicalButtonAttributes, prevButtonProperties);
     prevButton.addEventListener('click', () => {
-      const parent = this.aboutContainer.parentElement;
-      if (parent) {
-        parent.innerHTML = '';
-        if (curParent) {
-          parent.append(curParent.current as Node);
-        }
-      }
+      curUser.notify();
     });
     this.aboutContainer.append(h3, p, a, prevButton);
   }

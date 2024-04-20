@@ -1,6 +1,12 @@
-export function setSessionStorage(str: string, nodeElement: string) {
-  const node = nodeElement;
-  sessionStorage.setItem(str, node);
+import { CurrentUser } from '../utils/current-user';
+
+export function setSessionStorage(obj: CurrentUser) {
+  const keyValueArray = Object.entries(obj);
+  keyValueArray.forEach(([key, value]) => {
+    if (key !== 'password') {
+      sessionStorage.setItem(key, String(value));
+    }
+  });
 }
 
 export function getSessionStorage(key: string) {

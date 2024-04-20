@@ -1,0 +1,57 @@
+.header-text {
+  display: flex;
+  justify-content: space-between;
+  flex: 0 4 60%;
+}
+
+.header-buttons {
+  display: flex;
+  align-items: center;
+  flex: 2 0 40%;
+}
+
+.header_about-button,
+.logout-button {
+  margin: 0 10px 10px;
+  font-size: 17px;
+  padding: 8px 10px;
+  max-width: 145px;
+  width: 145px;
+  min-width: 80px;
+}
+
+@media (max-width: 1100px) and (min-width: 870px) {
+  .header-text {
+    flex-basis: 50%;
+    margin-bottom: 5px;
+  }
+  .header-buttons {
+    flex-basis: 50%;
+  }
+}
+
+@media (max-width: 869px) and (min-width: 360px) {
+  .header-text {
+    flex-direction: column-reverse;
+    flex-basis: 50%;
+  }
+  .header-text > * {
+    font-size: 14px;
+  }
+
+  .header-buttons {
+    margin-right: 20px;
+    flex-basis: 50%;
+  }
+  .header_about-button,
+  .logout-button {
+    width: 80px;
+  }
+}
+
+@media (max-width: 359px) and (min-width: 260px) {
+  .header-buttons {
+    flex-wrap: wrap;
+    flex-basis: 60%;
+  }
+}

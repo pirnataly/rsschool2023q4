@@ -10,7 +10,7 @@ export const loginAttributes = [
 export const passwordAttributes = [
   ['type', 'password'],
   ['required', 'required'],
-  ['id', 'surname'],
+  ['id', 'passwordInput'],
   ['pattern', '^[A-Z][\\-a-zA-z]+$'],
   ['minlength', '4'],
   ['placeholder', 'Enter password'],
@@ -26,14 +26,87 @@ export const formButtonProperties = {
   textContent: 'Enter',
 };
 
-export const aboutButtonAttributes = [['type', 'button']];
+export const typicalButtonAttributes = [['type', 'button']];
 
 export const aboutButtonProperties = {
   className: 'about-button',
   textContent: 'About',
 };
 
-export const prevbuttonProperties = {
+export const ExitButtonProperties = {
+  className: 'exit',
+  textContent: 'Continue',
+};
+
+export const prevButtonProperties = {
   className: 'prev-button',
   textContent: 'Back',
 };
+
+export const headerAboutButtonProperties = {
+  className: 'header_about-button',
+  textContent: 'About',
+};
+
+export const logoutButtonProperties = {
+  className: 'logout-button',
+  textContent: 'Logout',
+};
+
+export interface FormInterface {
+  formContainer: HTMLFormElement;
+
+  loginRow: HTMLLIElement;
+
+  passwordRow: HTMLLIElement;
+
+  heading: HTMLHeadingElement;
+
+  loginInput: HTMLInputElement;
+
+  passwordInput: HTMLInputElement;
+
+  formButton: HTMLButtonElement;
+
+  aboutButton: HTMLButtonElement;
+
+  loginMessageError: HTMLSpanElement;
+
+  passwordError: HTMLSpanElement;
+
+  checkValidation: (ev: SubmitEvent) => boolean;
+
+  makeButtonBeClicked: (e: Event) => void;
+
+  getHtml: () => HTMLFormElement;
+}
+
+export const appConstant = {
+  routes: {
+    login: '/login',
+    about: '/about',
+    main: '/main',
+  },
+};
+
+export type User = {
+  login: string;
+
+  password: string;
+
+  isLogined: false;
+
+  error: string;
+};
+
+export interface ObserverInterface {
+  update(param: User): void;
+}
+
+export interface UserData {
+  observers: HTMLElement[];
+  user: User;
+  subscribe: (observer: HTMLElement) => void;
+
+  notify: () => void;
+}

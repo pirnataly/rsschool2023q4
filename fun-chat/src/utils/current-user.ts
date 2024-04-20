@@ -1,14 +1,26 @@
-class CurrentParent {
-  current: null | HTMLElement;
+import { ObserverInterface, User } from '../app/interfaces';
 
-  constructor() {
-    this.current = null;
+export class CurrentUser {
+  observers = new Array<ObserverInterface>();
+
+  user: User = {
+    login: '',
+
+    password: '',
+
+    isLogined: false,
+
+    error: '',
+  };
+
+  subscribe(observer: ObserverInterface) {
+    this.observers.push(observer);
   }
 
-  getHtml() {
-    return this.current;
+  notify() {
+    this.observers.forEach((observer) => observer.update(this.user));
   }
 }
 
-const curParent = new CurrentParent();
-export default curParent;
+const curUser = new CurrentUser();
+export default curUser;

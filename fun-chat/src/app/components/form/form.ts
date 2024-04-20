@@ -1,17 +1,23 @@
 import './form.css';
 import {
+  aboutButtonProperties,
   formButtonAttributes,
   formButtonProperties,
   loginAttributes,
+  ObserverInterface,
   passwordAttributes,
+  typicalButtonAttributes,
+  User,
 } from '../../interfaces';
 
-import { createButton, createInput, createLabel } from '../../../utils/create-form-elements';
 import { removeMessage, setCoords, showError } from '../../../utils/validate-functions';
-import aboutButton from '../aboutButton';
+import AboutButton from '../aboutButton';
 import { setSessionStorage } from '../../../services/session-storage';
+import curUser from '../../../utils/current-user';
+import socket from '../../../services/socket';
+import { createButton, createInput, createLabel } from '../../../utils/elements-creators';
 
-export default class Form {
+export default class Form implements ObserverInterface {
   formContainer: HTMLFormElement;
 
   loginRow: HTMLLIElement;
@@ -73,7 +79,7 @@ export default class Form {
 
     this.passwordRow.append(passwordLabel, this.passwordInput, this.passwordError);
     this.formButton = createButton(formButtonAttributes, formButtonProperties);
-    this.aboutButton = aboutButton;
+    this.aboutButton = new AboutButton(typicalButtonAttributes, aboutButtonProperties).getHtml();
     this.formContainer.append(
       this.heading,
       this.loginRow,
@@ -81,9 +87,11 @@ export default class Form {
       this.formButton,
       this.aboutButton,
     );
+    this.addEventListeners();
+    curUser.subscribe(this);
   }
 
-  checkValidation(ev: SubmitEvent) {
+  checkValidation(ev: SubmitEvent): boolean {
     if (!this.loginInput.validity.valid) {
       ev.preventDefault();
       showError(this.loginInput, this.loginMessageError);
@@ -94,8 +102,8 @@ export default class Form {
     }
     if (this.passwordInput.validity.valid && this.loginInput.validity.valid) {
       ev.preventDefault();
-      setSessionStorage('login', this.loginInput.value);
-      setSessionStorage('password', this.passwordInput.value);
+      this.setCurUser();
+      setSessionStorage(curUser);
     }
     return true;
   }
@@ -107,7 +115,39 @@ export default class Form {
     }
   }
 
+  update(param: User) {
+    this.loginInput.value = param.login;
+    this.passwordInput.value = param.login;
+  }
+
+  setCurUser() {
+    curUser.user.login = this.loginInput.value;
+    curUser.user.password = this.passwordInput.value;
+  }
+
+  addEventListeners() {
+    this.formContainer.addEventListener('submit', (e: SubmitEvent) => {
+      if (this.checkValidation(e)) {
+        socket.send(
+          JSON.stringify({
+            id: 'ul',
+            type: 'USER_LOGIN',
+            payload: {
+              user: {
+                login: this.loginInput.value,
+                password: this.passwordInput.value,
+              },
+            },
+          }),
+        );
+        // console.log(curUser,'curUser from form')
+      }
+    });
+  }
+
   getHtml() {
     return this.formContainer;
   }
 }
+
+export const form = new Form();

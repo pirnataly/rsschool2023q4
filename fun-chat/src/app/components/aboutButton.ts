@@ -1,18 +1,21 @@
-import { aboutButtonAttributes, aboutButtonProperties } from '../interfaces';
-import { createButton } from '../../utils/create-form-elements';
-import aboutPage from './about/about';
-import curParent from '../../utils/current-user';
+import { aboutButtonProperties } from '../interfaces';
+import { createButton } from '../../utils/elements-creators';
+import appStore from '../../utils/app-store';
 
-const aboutButton = createButton(aboutButtonAttributes, aboutButtonProperties);
-aboutButton.addEventListener('click', () => {
-  window.history.pushState(null, `${window.location.href}about`);
-  window.history.forward();
-  const parent = aboutButton.parentElement?.parentElement;
-  if (parent) {
-    parent.innerHTML = '';
-    parent.append(aboutPage.getHtml());
-    curParent.current = aboutButton.parentElement;
+export default class AboutButton {
+  aboutButton: HTMLButtonElement;
+
+  constructor(
+    attributesPairs: string[][],
+    { textContent = 'Login', className = 'button' } = aboutButtonProperties,
+  ) {
+    this.aboutButton = createButton(attributesPairs, { textContent, className });
+    this.aboutButton.addEventListener('click', () => {
+      appStore.emit();
+    });
   }
-});
 
-export default aboutButton;
+  getHtml() {
+    return this.aboutButton as HTMLButtonElement;
+  }
+}
