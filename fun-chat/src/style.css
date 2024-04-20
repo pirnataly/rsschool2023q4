@@ -14,9 +14,12 @@ button {
   padding: 2px;
   margin-bottom: 10px;
   height: fit-content;
+  transition: all 300ms;
+  border-radius: 6px;
 }
 
 button:hover {
+  opacity: 70%;
   cursor: pointer;
 }
 

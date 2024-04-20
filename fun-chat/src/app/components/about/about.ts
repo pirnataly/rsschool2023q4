@@ -2,6 +2,7 @@ import './about.css';
 import { prevButtonProperties, typicalButtonAttributes } from '../../interfaces';
 import { createButton } from '../../../utils/elements-creators';
 import curUser from '../../../utils/current-user';
+import GithubLink from '../github-link';
 
 class AboutPage {
   private aboutContainer: HTMLElement;
@@ -15,9 +16,7 @@ class AboutPage {
     const p = document.createElement('p');
     const text =
       'Application designed for Fun Chat work assignments as part of the RSSchool JS/FE course Q3 2023.';
-    const a = document.createElement('a');
-    a.textContent = 'Author: pirnataly';
-    a.href = 'https://github.com/pirnataly';
+    const a = new GithubLink('Author: pirnataly').getHtml();
     p.textContent = text;
     const prevButton = createButton(typicalButtonAttributes, prevButtonProperties);
     prevButton.addEventListener('click', () => {
