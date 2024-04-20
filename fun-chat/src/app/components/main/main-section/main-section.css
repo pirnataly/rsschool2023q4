@@ -1,0 +1,59 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 35%;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #436c00;
+  height: 100%;
+  width: 65%;
+}
+
+.search-input {
+  position: static;
+  border-radius: unset;
+  height: 30px;
+  padding: 5px;
+  border: 1px solid #436c00;
+}
+
+.user-list {
+  margin: 0;
+  height: 90%;
+  padding: 5px;
+  overflow-y: auto;
+  border: 1px solid #b1ca80;
+}
+
+.user-item {
+  display: flex;
+  box-sizing: border-box;
+  margin: 0 2% 0 0;
+  overflow-x: hidden;
+  width: 75%;
+  height: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  color: #002500;
+}
+
+.user-marker {
+  border-radius: 50%;
+  height: 6px;
+  width: 6px;
+  margin: 0 5px 0 0;
+  background-color: #3a3a3a;
+}
+
+.user-active {
+  background-color: #3fcc59;
+}
+
+.user-name {
+  font-size: 16px;
+  color: black;
+}

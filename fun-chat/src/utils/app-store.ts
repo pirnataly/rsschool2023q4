@@ -3,8 +3,6 @@ class Store {
 
   parent: HTMLElement | null = null;
 
-  currentPage: HTMLElement | null = null;
-
   subscribe(callback: () => void) {
     this.callback = callback;
   }

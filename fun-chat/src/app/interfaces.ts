@@ -53,6 +53,11 @@ export const logoutButtonProperties = {
   textContent: 'Logout',
 };
 
+export const searchAttributes = [
+  ['type', 'search'],
+  ['placeholder', 'Find ...'],
+];
+
 export interface FormInterface {
   formContainer: HTMLFormElement;
 
@@ -97,16 +102,26 @@ export type User = {
   isLogined: false;
 
   error: string;
+
+  activeUsers: UserFromResponse[];
+
+  inactiveUsers: UserFromResponse[];
+
+  newUser?: UserFromResponse;
 };
 
 export interface ObserverInterface {
-  update(param: User): void;
+  update(param: User, id: string): void;
 }
 
 export interface UserData {
   observers: HTMLElement[];
   user: User;
   subscribe: (observer: HTMLElement) => void;
-
   notify: () => void;
 }
+
+export type UserFromResponse = {
+  login: string;
+  isLogined: boolean;
+};

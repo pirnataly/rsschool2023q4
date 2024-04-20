@@ -20,7 +20,7 @@ class AboutPage {
     p.textContent = text;
     const prevButton = createButton(typicalButtonAttributes, prevButtonProperties);
     prevButton.addEventListener('click', () => {
-      curUser.notify();
+      curUser.notify('prev');
     });
     this.aboutContainer.append(h3, p, a, prevButton);
   }

@@ -140,6 +140,23 @@ export default class Form implements ObserverInterface {
             },
           }),
         );
+
+        socket.send(
+          JSON.stringify({
+            id: 'ua',
+            type: 'USER_ACTIVE',
+            payload: null,
+          }),
+        );
+
+        socket.send(
+          JSON.stringify({
+            id: 'ui',
+            type: 'USER_INACTIVE',
+            payload: null,
+          }),
+        );
+
         // console.log(curUser,'curUser from form')
       }
     });

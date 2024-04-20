@@ -11,14 +11,18 @@ export class CurrentUser {
     isLogined: false,
 
     error: '',
+
+    activeUsers: [],
+
+    inactiveUsers: [],
   };
 
   subscribe(observer: ObserverInterface) {
     this.observers.push(observer);
   }
 
-  notify() {
-    this.observers.forEach((observer) => observer.update(this.user));
+  notify(id: string) {
+    this.observers.forEach((observer) => observer.update(this.user, id));
   }
 }
 
