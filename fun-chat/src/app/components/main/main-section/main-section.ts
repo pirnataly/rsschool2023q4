@@ -1,6 +1,8 @@
 import './main-section.css';
 import { createElement, createInput } from '../../../../utils/elements-creators';
 import { searchAttributes, User, UserFromResponse } from '../../../interfaces';
+import curUser from '../../../../utils/current-user';
+import { eraseMyselfFromActive } from '../../../../utils/array-modifier';
 
 export default class MainSection {
   mainSection: HTMLElement | HTMLDivElement | HTMLLinkElement;
@@ -22,6 +24,7 @@ export default class MainSection {
     this.userlist = createElement('user-list', 'ul');
     this.usersListContainer.append(this.searchinput);
     this.mainSection.append(this.usersListContainer, this.chatContainer);
+    this.addEventListeners();
   }
 
   fillUserList(arrayOfUsers: UserFromResponse[]) {
@@ -45,6 +48,26 @@ export default class MainSection {
     const concatenatedUsersList = param.activeUsers.concat(param.inactiveUsers);
     this.clearUserList();
     this.fillUserList(concatenatedUsersList);
+  }
+
+  addEventListeners() {
+    this.searchinput.addEventListener('input', () => {
+      const currentValue = this.searchinput.value;
+      const arrayToFilter = eraseMyselfFromActive(curUser.user).concat(curUser.user.inactiveUsers);
+      const filteredUsers = arrayToFilter.filter((item) =>
+        item.login.toLowerCase().startsWith(currentValue.toLowerCase()),
+      );
+      this.userlist.innerHTML = '';
+      this.fillUserList(filteredUsers);
+    });
+
+    this.userlist.addEventListener('click', (ev) => {
+      const { target } = ev;
+      const li = (target as HTMLElement).closest('li');
+      if (li) {
+        this.chatContainer.textContent = li.children[1].textContent;
+      }
+    });
   }
 
   getHTml() {

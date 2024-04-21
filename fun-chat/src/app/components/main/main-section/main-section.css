@@ -41,6 +41,10 @@
   color: #002500;
 }
 
+.user-item *:hover {
+  cursor: default;
+}
+
 .user-marker {
   border-radius: 50%;
   height: 6px;
