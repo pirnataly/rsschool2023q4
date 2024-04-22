@@ -3,6 +3,7 @@ export default class GithubLink {
 
   constructor(text: string) {
     this.link = document.createElement('a');
+    this.link.className = 'github-link';
     this.link.textContent = text;
     this.link.href = 'https://github.com/pirnataly';
   }

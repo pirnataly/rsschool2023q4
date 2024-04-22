@@ -36,3 +36,15 @@ export function showError(nodeElem: HTMLInputElement, message: HTMLSpanElement):
   }
   messageBlock.className = 'error active';
 }
+
+export function getRuDate(date: Date) {
+  const formatter = new Intl.DateTimeFormat([], {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+  return formatter.format(date);
+}

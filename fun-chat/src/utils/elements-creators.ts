@@ -1,3 +1,6 @@
+import { User, UserFromResponse } from '../app/interfaces';
+import socket from '../services/socket';
+
 export function createInput(attributesPairs: string[][]): HTMLInputElement {
   const input = document.createElement('input');
   attributesPairs.forEach(([key, value]) => input.setAttribute(key, value));
@@ -25,7 +28,7 @@ export function createButton(
 export function createElement(
   classname: string,
   tag = 'div',
-): HTMLElement | HTMLDivElement | HTMLLinkElement {
+): HTMLElement | HTMLDivElement | HTMLLinkElement | HTMLFormElement {
   const el = document.createElement(tag);
   el.className = classname;
   return el;
@@ -58,4 +61,33 @@ export default function getSvg(where: HTMLElement) {
       '</g>\n' +
       '</svg>',
   );
+}
+
+export function getHistoryForCertainUser(idValue: string, user: UserFromResponse) {
+  socket.send(
+    JSON.stringify({
+      id: idValue,
+      type: 'MSG_FROM_USER',
+      payload: {
+        user: {
+          login: user.login,
+        },
+      },
+    }),
+  );
+}
+
+export function getHistoryFromAllUsers(param: User, str: 'active' | 'inactive') {
+  const arrayForGetHistory = str === 'active' ? param.activeUsers : param.inactiveUsers;
+  const idValue = str === 'active' ? 'mfau' : 'mfia';
+  arrayForGetHistory.forEach((user) => getHistoryForCertainUser(idValue, user));
+}
+
+export function addHistory(param: User, str: 'active' | 'inactive') {
+  const arrForAddHistory = str === 'active' ? param.activeUsers : param.inactiveUsers;
+  arrForAddHistory.forEach((userItem) => {
+    if (param.messages) {
+      userItem.history.concat(param.messages);
+    }
+  });
 }

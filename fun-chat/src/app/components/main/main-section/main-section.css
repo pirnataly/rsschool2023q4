@@ -1,5 +1,6 @@
 .list-container {
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   height: 100%;
   width: 35%;
@@ -7,6 +8,7 @@
 
 .chat-container {
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   border: 1px solid #436c00;
   height: 100%;
@@ -14,16 +16,19 @@
 }
 
 .search-input {
+  font-size: 17px;
   position: static;
+  box-sizing: border-box;
   border-radius: unset;
-  height: 30px;
+  height: 10%;
+  max-height: 30px;
   padding: 5px;
   border: 1px solid #436c00;
 }
 
 .user-list {
   margin: 0;
-  height: 90%;
+  height: 100%;
   padding: 5px;
   overflow-y: auto;
   border: 1px solid #b1ca80;
@@ -34,7 +39,7 @@
   box-sizing: border-box;
   margin: 0 2% 0 0;
   overflow-x: hidden;
-  width: 75%;
+  width: 85%;
   height: 20px;
   justify-content: flex-start;
   align-items: center;
@@ -53,6 +58,13 @@
   background-color: #3a3a3a;
 }
 
+.unread-number {
+  background-color: greenyellow;
+  margin: 0 5px 0 auto;
+  padding: 0 5px;
+  border-radius: 16px;
+}
+
 .user-active {
   background-color: #3fcc59;
 }
@@ -67,9 +79,73 @@
   border-bottom: 1px solid #436c00;
   box-sizing: border-box;
   display: flex;
-  height: 45px;
+  height: 10%;
+  max-height: 30px;
   justify-content: space-around;
   margin: 0;
   padding: 5px;
   width: initial;
+}
+
+.main-dialog-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+}
+
+.dialog-container {
+  display: flex;
+  position: relative;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.chat-form {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #436c00;
+  box-sizing: border-box;
+  height: 10%;
+  justify-content: space-around;
+  margin: 0;
+  max-height: 38px;
+  padding: 5px;
+  width: 100%;
+}
+
+.message-input {
+  width: 70%;
+}
+
+.send-button {
+  margin: 0 10px;
+  font-size: 17px;
+  padding: 8px 10px;
+  max-width: 145px;
+  width: 145px;
+  min-width: 80px;
+}
+
+@media (max-width: 600px) and (min-width: 300px) {
+  .send-button {
+    width: 26%;
+  }
+}
+
+.text-line {
+  opacity: 50%;
+  margin-top: 20%;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.message-count {
+  align-self: flex-end;
+  background-color: #3fcc59;
+  padding: 0 5px;
+  border-radius: 12px;
 }

@@ -12,7 +12,7 @@ export default class Footer {
     (logoSchool as HTMLLinkElement).href = 'https://app.rs.school/';
     getSvg(logoSchool);
     const githubLink = new GithubLink('Github').getHtml();
-    githubLink.className = 'footer__element footer_github';
+    githubLink.classList.add('footer__element');
     const yearOfCreation = createElement('footer__element year', 'p');
     yearOfCreation.textContent = '2024';
     this.footerContainer.append(logoSchool, githubLink, yearOfCreation);

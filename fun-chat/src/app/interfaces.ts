@@ -16,6 +16,12 @@ export const passwordAttributes = [
   ['placeholder', 'Enter password'],
 ];
 
+export const messageInputAttributes = [
+  ['type', 'text'],
+  ['disabled', 'disabled'],
+  ['placeholder', 'Enter your message... '],
+];
+
 export const formButtonAttributes = [
   ['type', 'submit'],
   ['disabled', 'disabled'],
@@ -24,6 +30,11 @@ export const formButtonAttributes = [
 export const formButtonProperties = {
   className: 'form-button',
   textContent: 'Enter',
+};
+
+export const sendButtonProperties = {
+  className: 'send-button',
+  textContent: 'Send',
 };
 
 export const typicalButtonAttributes = [['type', 'button']];
@@ -108,6 +119,12 @@ export type User = {
   inactiveUsers: UserFromResponse[];
 
   newUser?: UserFromResponse;
+
+  companion?: UserFromResponse;
+
+  messages?: MessageType[];
+
+  latestMessage?: MessageType;
 };
 
 export interface ObserverInterface {
@@ -122,6 +139,20 @@ export interface UserData {
 }
 
 export type UserFromResponse = {
+  history: MessageType[];
   login: string;
   isLogined: boolean;
+};
+
+export type MessageType = {
+  id: string;
+  from: string;
+  to: string;
+  text: string;
+  datetime: number;
+  status: {
+    isDelivered: boolean;
+    isReaded: boolean;
+    isEdited: boolean;
+  };
 };

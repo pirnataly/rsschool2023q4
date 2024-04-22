@@ -156,8 +156,6 @@ export default class Form implements ObserverInterface {
             payload: null,
           }),
         );
-
-        // console.log(curUser,'curUser from form')
       }
     });
   }

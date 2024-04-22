@@ -22,7 +22,7 @@ class AboutPage {
     prevButton.addEventListener('click', () => {
       curUser.notify('prev');
     });
-    this.aboutContainer.append(h3, p, a, prevButton);
+    this.aboutContainer.append(h3, p, prevButton, a);
   }
 
   getHtml() {

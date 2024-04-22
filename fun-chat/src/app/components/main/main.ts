@@ -1,10 +1,16 @@
 import './main.css';
 import curUser from '../../../utils/current-user';
 import { ObserverInterface, User } from '../../interfaces';
-import { createElement } from '../../../utils/elements-creators';
+import {
+  addHistory,
+  createElement,
+  getHistoryForCertainUser,
+  getHistoryFromAllUsers,
+} from '../../../utils/elements-creators';
 import Header from './header/header';
 import Footer from './footer/footer';
 import MainSection from './main-section/main-section';
+import { concatActiveAndInactive } from '../../../utils/array-modifier';
 
 class Main implements ObserverInterface {
   mainContainer: HTMLElement;
@@ -37,13 +43,69 @@ class Main implements ObserverInterface {
     switch (id) {
       case 'ul':
         this.header.changeUserName(param.login);
+        this.mainSection.disabledChatForm();
         break;
+
+      case 'ua':
+        getHistoryFromAllUsers(param, 'active');
+        break;
+
       case 'ui':
+        getHistoryFromAllUsers(param, 'inactive');
+        break;
+
       case 'uel':
-      case 'ueo':
+        if (!param.newUser?.history) {
+          Object.defineProperty(param.newUser, 'history', {
+            value: [],
+          });
+          if (param.newUser) {
+            getHistoryForCertainUser('mfau', param.newUser);
+          }
+        }
+        addHistory(param, 'active');
         this.mainSection.render(param);
         break;
-      case 'ua':
+
+      case 'ueo':
+        this.mainSection.clearUserList();
+        this.mainSection.fillUserList(concatActiveAndInactive(param));
+        // if(!param.newUser?.history) {
+        //   Object.defineProperty(param.newUser, 'history', {
+        //     value: []
+        //   })
+        //   if (param.newUser) {
+        //     getHistoryForCertainUser('mfia', param.newUser)
+        //   }
+        // }
+        addHistory(param, 'inactive');
+        this.mainSection.render(param);
+        break;
+
+      case 'ms':
+        if (param.latestMessage) {
+          const messageFrom = param.latestMessage.from;
+          const messageTo = param.latestMessage.to;
+          const userToChat = this.mainSection.userToChatWith.textContent;
+          if (messageFrom === userToChat || messageTo === userToChat) {
+            this.mainSection.appendMessage(param, param.latestMessage);
+          } else {
+            this.mainSection.clearUserList();
+            this.mainSection.fillUserList(concatActiveAndInactive(param));
+          }
+        }
+        break;
+
+      case 'mfau':
+        addHistory(param, 'active');
+
+        this.mainSection.render(param);
+        break;
+
+      case 'mfia':
+        addHistory(param, 'inactive');
+        this.mainSection.render(param);
+        break;
       default:
         break;
     }
