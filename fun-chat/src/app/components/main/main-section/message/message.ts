@@ -27,18 +27,12 @@ export default class Message {
     this.messageContainer = createElement('message-container', 'div');
     this.messageHeader = createElement('message-header', 'div');
     this.messageFrom = createElement('message-from', 'label');
-
     this.messageTime = createElement('message-time', 'label');
-
     this.messageText = createElement('message-text', 'p');
-
     this.changeStatus = createElement('change-status', 'label');
-
     this.messageStatuses = createElement('message-statuses', 'div');
-
     this.messageStatus1 = createElement('message-status1', 'label');
     this.messageStatus2 = createElement('message-status2', 'label');
-
     this.messageStatuses.append(this.messageStatus1, this.messageStatus2);
     this.messageHeader.append(this.messageFrom, this.messageTime);
     this.messageContainer.append(this.messageHeader, this.messageText, this.messageStatuses);

@@ -133,6 +133,9 @@ export default class MainSection {
         messageView.messageStatus2.textContent = 'Delivered';
       } else messageView.messageStatus2.textContent = 'Sent';
     }
+    if (message.to === param.login) {
+      messageView.messageFrom.textContent = message.from;
+    }
     messageView.messageTime.textContent = getRuDate(new Date(message.datetime));
     messageView.messageText.textContent = message.text;
     if (this.dialogContainer.firstElementChild?.classList.contains('text-line')) {

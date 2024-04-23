@@ -4,7 +4,7 @@ import { ObserverInterface, User } from '../../interfaces';
 import {
   addHistory,
   createElement,
-  getHistoryForCertainUser,
+  // getHistoryForCertainUser,
   getHistoryFromAllUsers,
 } from '../../../utils/elements-creators';
 import Header from './header/header';
@@ -55,21 +55,21 @@ class Main implements ObserverInterface {
         break;
 
       case 'uel':
-        if (!param.newUser?.history) {
-          Object.defineProperty(param.newUser, 'history', {
-            value: [],
-          });
-          if (param.newUser) {
-            getHistoryForCertainUser('mfau', param.newUser);
-          }
-        }
-        addHistory(param, 'active');
+        // if (!param.newUser?.history) {
+        //   Object.defineProperty(param.newUser, 'history', {
+        //     value: [],
+        //   });
+        //   if (param.newUser) {
+        //     getHistoryForCertainUser('mfau', param.newUser);
+        //   }
+        // }
+        // addHistory(param, 'active');
         this.mainSection.render(param);
         break;
 
       case 'ueo':
-        this.mainSection.clearUserList();
-        this.mainSection.fillUserList(concatActiveAndInactive(param));
+        // this.mainSection.clearUserList();
+        // this.mainSection.fillUserList(concatActiveAndInactive(param));
         // if(!param.newUser?.history) {
         //   Object.defineProperty(param.newUser, 'history', {
         //     value: []
@@ -78,7 +78,7 @@ class Main implements ObserverInterface {
         //     getHistoryForCertainUser('mfia', param.newUser)
         //   }
         // }
-        addHistory(param, 'inactive');
+        // addHistory(param, 'inactive');
         this.mainSection.render(param);
         break;
 
@@ -98,7 +98,6 @@ class Main implements ObserverInterface {
 
       case 'mfau':
         addHistory(param, 'active');
-
         this.mainSection.render(param);
         break;
 
