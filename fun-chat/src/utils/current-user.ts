@@ -15,6 +15,8 @@ export class CurrentUser {
     activeUsers: [],
 
     inactiveUsers: [],
+
+    messages: [],
   };
 
   subscribe(observer: ObserverInterface) {

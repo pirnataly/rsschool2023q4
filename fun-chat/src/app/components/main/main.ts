@@ -1,16 +1,10 @@
 import './main.css';
 import curUser from '../../../utils/current-user';
 import { ObserverInterface, User } from '../../interfaces';
-import {
-  addHistory,
-  createElement,
-  // getHistoryForCertainUser,
-  getHistoryFromAllUsers,
-} from '../../../utils/elements-creators';
+import { createElement } from '../../../utils/elements-creators';
 import Header from './header/header';
 import Footer from './footer/footer';
 import MainSection from './main-section/main-section';
-import { concatActiveAndInactive } from '../../../utils/array-modifier';
 
 class Main implements ObserverInterface {
   mainContainer: HTMLElement;
@@ -39,6 +33,7 @@ class Main implements ObserverInterface {
     this.render(param, id);
   }
 
+  // обращается к изменяющим элементы функциям
   render(param: User, id: string) {
     switch (id) {
       case 'ul':
@@ -47,11 +42,13 @@ class Main implements ObserverInterface {
         break;
 
       case 'ua':
-        getHistoryFromAllUsers(param, 'active');
+        this.mainSection.userlist.activeUsers = curUser.user.activeUsers;
+        this.mainSection.userlist.getHistory('active');
         break;
 
       case 'ui':
-        getHistoryFromAllUsers(param, 'inactive');
+        this.mainSection.userlist.inactiveUsers = curUser.user.inactiveUsers;
+        this.mainSection.userlist.getHistory('inactive');
         break;
 
       case 'uel':
@@ -64,7 +61,7 @@ class Main implements ObserverInterface {
         //   }
         // }
         // addHistory(param, 'active');
-        this.mainSection.render(param);
+        this.mainSection.render();
         break;
 
       case 'ueo':
@@ -79,7 +76,7 @@ class Main implements ObserverInterface {
         //   }
         // }
         // addHistory(param, 'inactive');
-        this.mainSection.render(param);
+        this.mainSection.render();
         break;
 
       case 'ms':
@@ -91,19 +88,19 @@ class Main implements ObserverInterface {
             this.mainSection.appendMessage(param, param.latestMessage);
           } else {
             this.mainSection.clearUserList();
-            this.mainSection.fillUserList(concatActiveAndInactive(param));
+
+            this.mainSection.addUserList(this.mainSection.userlist.getAllUsers());
           }
         }
         break;
 
       case 'mfau':
-        addHistory(param, 'active');
-        this.mainSection.render(param);
+        this.mainSection.userlist.activeUsersMessages.push(curUser.user.messages);
         break;
 
-      case 'mfia':
-        addHistory(param, 'inactive');
-        this.mainSection.render(param);
+      case 'mfiu':
+        this.mainSection.userlist.inactiveUsersMessages.push(curUser.user.messages);
+        this.mainSection.render();
         break;
       default:
         break;

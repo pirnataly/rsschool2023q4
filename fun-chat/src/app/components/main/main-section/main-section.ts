@@ -10,10 +10,10 @@ import {
   UserFromResponse,
 } from '../../../interfaces';
 import curUser from '../../../../utils/current-user';
-import { concatActiveAndInactive, eraseMyselfFromActive } from '../../../../utils/array-modifier';
 import socket from '../../../../services/socket';
 import Message from './message/message';
 import { getRuDate } from '../../../../utils/validate-functions';
+import UserList from './list/user-list';
 
 export default class MainSection {
   mainSection: HTMLElement | HTMLDivElement | HTMLLinkElement;
@@ -24,7 +24,7 @@ export default class MainSection {
 
   searchinput: HTMLInputElement;
 
-  userlist: HTMLElement | HTMLDivElement | HTMLLinkElement;
+  userlist: UserList;
 
   chatHeader: HTMLElement | HTMLDivElement | HTMLLinkElement;
 
@@ -60,37 +60,20 @@ export default class MainSection {
     this.chatForm.append(this.messageInput, this.sendButton);
     this.searchinput = createInput(searchAttributes);
     this.searchinput.className = 'search-input';
-    this.userlist = createElement('user-list', 'ul');
+    this.userlist = new UserList();
     this.chatContainer.append(this.chatHeader, this.mainDialogContainer, this.chatForm);
     this.usersListContainer.append(this.searchinput);
     this.mainSection.append(this.usersListContainer, this.chatContainer);
     this.addEventListeners();
   }
 
-  fillUserList(arrayOfUsers: UserFromResponse[]) {
-    const copyArrayOfUsers = arrayOfUsers.slice();
-    copyArrayOfUsers.forEach((item: UserFromResponse) => {
-      const userItem = createElement('user-item', 'li');
-      const userName = createElement('user-name', 'i');
-      const numberOfUnread = createElement('unread-number', 'div');
-      if (item.history?.length !== 0) {
-        const filtered = item.history?.filter((historyItem) => !historyItem.status.isReaded);
-        const filteredToMe = filtered?.filter((newitem) => newitem.to === curUser.user.login);
-        if (filteredToMe?.length !== 0) {
-          numberOfUnread.textContent = String(filteredToMe?.length);
-        }
-      }
-
-      const disk = createElement(item.isLogined ? 'user-marker user-active' : 'user-marker', 'div');
-      userName.textContent = item.login;
-      userItem.append(disk, userName, numberOfUnread);
-      this.userlist.append(userItem);
-    });
-    this.usersListContainer.append(this.userlist);
+  addUserList(users: UserFromResponse[]) {
+    this.userlist.fillUserList(users);
+    this.usersListContainer.append(this.userlist.getHtml());
   }
 
   clearUserList() {
-    this.userlist.innerHTML = '';
+    this.userlist.getHtml().innerHTML = '';
   }
 
   clearDialogContainer() {
@@ -103,24 +86,24 @@ export default class MainSection {
     );
   }
 
-  showMessageHistory(user: User, param: UserFromResponse[]) {
-    if (param.length) {
-      const currentUserToChat = param.find(
-        (item) => item.login === this.userToChatWith.textContent,
-      );
-      if (currentUserToChat) {
-        if (currentUserToChat.history.length !== 0) {
-          currentUserToChat.history.forEach((historyMessage) => {
-            this.appendMessage(user, historyMessage);
-          });
-        } else {
-          const textLine = createElement('text-line', 'p');
-          textLine.textContent = 'Write your first message...';
-          this.dialogContainer.append(textLine);
-        }
-      }
-    }
-  }
+  // showMessageHistory(user: User, param: UserFromResponse[]) {
+  //   if (param.length) {
+  //     const currentUserToChat = param.find(
+  //       (item) => item.login === this.userToChatWith.textContent,
+  //     );
+  //     if (currentUserToChat) {
+  //       if (currentUserToChat.history.length !== 0) {
+  //         currentUserToChat.history.forEach((historyMessage) => {
+  //           this.appendMessage(user, historyMessage);
+  //         });
+  //       } else {
+  //         const textLine = createElement('text-line', 'p');
+  //         textLine.textContent = 'Write your first message...';
+  //         this.dialogContainer.append(textLine);
+  //       }
+  //     }
+  //   }
+  // }
 
   appendMessage(param: User, message: MessageType) {
     const messageView = new Message();
@@ -152,10 +135,9 @@ export default class MainSection {
     }
   }
 
-  render(param: User) {
-    const concatenatedUsersList = concatActiveAndInactive(param);
+  render() {
     this.clearUserList();
-    this.fillUserList(concatenatedUsersList);
+    this.addUserList(this.userlist.getAllUsers());
     this.updateStatus();
     this.clearDialogContainer();
   }
@@ -163,15 +145,15 @@ export default class MainSection {
   addEventListeners() {
     this.searchinput.addEventListener('input', () => {
       const currentValue = this.searchinput.value;
-      const arrayToFilter = eraseMyselfFromActive(curUser.user).concat(curUser.user.inactiveUsers);
+      const arrayToFilter = this.userlist.allUsers;
       const filteredUsers = arrayToFilter.filter((item) =>
         item.login.toLowerCase().startsWith(currentValue.toLowerCase()),
       );
-      this.userlist.innerHTML = '';
-      this.fillUserList(filteredUsers);
+      this.userlist.getHtml().innerHTML = '';
+      this.addUserList(filteredUsers);
     });
 
-    this.userlist.addEventListener('click', (ev) => {
+    this.userlist.getHtml().addEventListener('click', (ev) => {
       const { target } = ev;
       const li = (target as HTMLElement).closest('li');
       if (li) {
@@ -181,8 +163,9 @@ export default class MainSection {
           : 'offline';
         Array.from(this.chatForm.children).forEach((child) => child.removeAttribute('disabled'));
         this.dialogContainer.innerHTML = '';
-        const concatArrays = concatActiveAndInactive(curUser.user);
-        this.showMessageHistory(curUser.user, concatArrays);
+        // усли убрать, то сообщения не отображаются
+        // const concatArrays = this.userlist.getAllUsers();
+        // this.showMessageHistory(curUser.user, concatArrays);
       }
     });
 

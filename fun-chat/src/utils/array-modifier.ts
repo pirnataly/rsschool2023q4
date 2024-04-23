@@ -29,8 +29,8 @@ export function getCopyOfUser(
   return result;
 }
 
-export function concatActiveAndInactive(param: User) {
-  return param.activeUsers.concat(param.inactiveUsers);
+export function concatActiveAndInactive(active: UserFromResponse[], inactive: UserFromResponse[]) {
+  return active.concat(inactive);
 }
 
 export function getModifiedArray(param: User, str: 'active' | 'inactive'): UserFromResponse[] {

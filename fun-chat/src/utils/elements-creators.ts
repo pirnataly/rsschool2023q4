@@ -83,11 +83,11 @@ export function getHistoryFromAllUsers(param: User, str: 'active' | 'inactive') 
   arrayForGetHistory.forEach((user) => getHistoryForCertainUser(idValue, user));
 }
 
-export function addHistory(param: User, str: 'active' | 'inactive') {
-  const arrForAddHistory = str === 'active' ? param.activeUsers : param.inactiveUsers;
-  arrForAddHistory.forEach((userItem) => {
-    if (param.messages) {
-      userItem.history.concat(param.messages);
-    }
-  });
-}
+// export function addHistory(param: User, str: 'active' | 'inactive') {
+//   const arrForAddHistory = str === 'active' ? param.activeUsers : param.inactiveUsers;
+//   arrForAddHistory.forEach((userItem) => {
+//     if (param.messages) {
+//       userItem.history.concat(param.messages);
+//     }
+//   });
+// }

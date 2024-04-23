@@ -122,7 +122,7 @@ export type User = {
 
   companion?: UserFromResponse;
 
-  messages?: MessageType[];
+  messages: MessageType[];
 
   latestMessage?: MessageType;
 };

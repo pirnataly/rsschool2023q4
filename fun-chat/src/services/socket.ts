@@ -36,17 +36,11 @@ socket.onmessage = function abcd(event) {
     case 'USER_ACTIVE':
       curUser.user.activeUsers = message.payload.users;
       curUser.user.activeUsers = eraseMyselfFromActive(curUser.user);
-      curUser.user.activeUsers.forEach((user) => {
-        addPropertyHistory(user);
-      });
       curUser.notify('ua');
       break;
 
     case 'USER_INACTIVE':
       curUser.user.inactiveUsers = message.payload.users;
-      curUser.user.inactiveUsers.forEach((user) => {
-        addPropertyHistory(user);
-      });
       curUser.notify('ui');
       break;
 
