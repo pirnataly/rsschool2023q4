@@ -58,8 +58,6 @@ class Main implements ObserverInterface {
       case 'ueo':
         this.mainSection.userlist.activeUsers = curUser.user.activeUsers;
         this.mainSection.userlist.inactiveUsers = curUser.user.inactiveUsers;
-        this.mainSection.clearUserList();
-        this.mainSection.addUserList(this.mainSection.userlist.getAllUsers());
         this.mainSection.render();
         break;
 
