@@ -41,6 +41,7 @@ class Main implements ObserverInterface {
         this.mainSection.userlist.activeUsersMessages = [];
         this.mainSection.userlist.inactiveUsersMessages = [];
         this.mainSection.disabledChatForm();
+        this.mainSection.render();
         break;
 
       case 'ua':
@@ -54,34 +55,16 @@ class Main implements ObserverInterface {
         break;
 
       case 'uel':
-        // if (!param.newUser?.history) {
-        //   Object.defineProperty(param.newUser, 'history', {
-        //     value: [],
-        //   });
-        //   if (param.newUser) {
-        //     getHistoryForCertainUser('mfau', param.newUser);
-        //   }
-        // }
-        // addHistory(param, 'active');
         this.mainSection.userlist.activeUsers = curUser.user.activeUsers;
         this.mainSection.userlist.inactiveUsers = curUser.user.inactiveUsers;
         this.mainSection.clearUserList();
         this.mainSection.addUserList(this.mainSection.userlist.getAllUsers());
-        // this.mainSection.render();
+        this.mainSection.render();
         break;
 
       case 'ueo':
-        // this.mainSection.clearUserList();
-        // this.mainSection.fillUserList(concatActiveAndInactive(param));
-        // if(!param.newUser?.history) {
-        //   Object.defineProperty(param.newUser, 'history', {
-        //     value: []
-        //   })
-        //   if (param.newUser) {
-        //     getHistoryForCertainUser('mfia', param.newUser)
-        //   }
-        // }
-        // addHistory(param, 'inactive');
+        this.mainSection.userlist.activeUsers = curUser.user.activeUsers;
+        this.mainSection.userlist.inactiveUsers = curUser.user.inactiveUsers;
         this.mainSection.render();
         break;
 
