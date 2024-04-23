@@ -1,5 +1,7 @@
 import './message.css';
 import { createElement } from '../../../../../utils/elements-creators';
+import { MessageType } from '../../../../interfaces';
+import { getRuDate } from '../../../../../utils/validate-functions';
 
 export default class Message {
   messageBlock: HTMLElement | HTMLDivElement | HTMLLinkElement | HTMLFormElement;
@@ -37,6 +39,24 @@ export default class Message {
     this.messageHeader.append(this.messageFrom, this.messageTime);
     this.messageContainer.append(this.messageHeader, this.messageText, this.messageStatuses);
     this.messageBlock.append(this.messageContainer);
+  }
+
+  // from от меня
+  renderMessage(message: MessageType, str: 'from' | 'to') {
+    if (str === 'from') {
+      this.getHtml().classList.add('right');
+      this.messageFrom.textContent = 'You';
+      if (message.status.isReaded) {
+        this.messageStatus2.textContent = 'Read';
+      } else if (message.status.isDelivered) {
+        this.messageStatus2.textContent = 'Delivered';
+      } else this.messageStatus2.textContent = 'Sent';
+    }
+    if (str === 'to') {
+      this.messageFrom.textContent = message.from;
+    }
+    this.messageTime.textContent = getRuDate(new Date(message.datetime));
+    this.messageText.textContent = message.text;
   }
 
   getHtml() {

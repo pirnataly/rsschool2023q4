@@ -30,7 +30,7 @@ export default class UserItem {
       const unreadMessagesFromCertainUser = unreadMessages.filter(
         (message) => message.from === this.userName.textContent,
       );
-      if (unreadMessages.length !== 0) {
+      if (unreadMessagesFromCertainUser.length !== 0) {
         this.numberOfUnread.textContent = String(unreadMessagesFromCertainUser.length);
       }
     }

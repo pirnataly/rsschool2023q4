@@ -1,6 +1,5 @@
 import curUser from '../utils/current-user';
 import {
-  addPropertyHistory,
   eraseItemFromArray,
   eraseMyselfFromActive,
   getCopyOfUser,
@@ -28,8 +27,8 @@ socket.onmessage = function abcd(event) {
       curUser.user.password = '';
       curUser.user.error = '';
       curUser.user.isLogined = false;
-      // curUser.user.activeUsers = [];
-      // curUser.user.inactiveUsers = [];
+      curUser.user.activeUsers = [];
+      curUser.user.inactiveUsers = [];
       curUser.notify('uo');
       break;
 
@@ -50,16 +49,11 @@ socket.onmessage = function abcd(event) {
         const itemToErase = getCopyOfUser(arrayToModify, message.payload.user);
         if (itemToErase) {
           curUser.user.inactiveUsers = eraseItemFromArray(arrayToModify, itemToErase);
-          const [itemToPaste] = itemToErase;
-          itemToPaste.isLogined = true;
-          curUser.user.activeUsers.push(itemToPaste);
+          curUser.user.activeUsers.push(message.payload.user);
         }
       } else {
         curUser.user.newUser = message.payload.user;
-        if (curUser.user.newUser) {
-          addPropertyHistory(curUser.user.newUser);
-          curUser.user.activeUsers.push(curUser.user.newUser);
-        }
+        curUser.user.activeUsers.push(message.payload.user);
       }
       curUser.notify('uel');
       break;
@@ -71,9 +65,7 @@ socket.onmessage = function abcd(event) {
         const itemToErase = getCopyOfUser(arrayToModify, message.payload.user);
         if (itemToErase) {
           curUser.user.activeUsers = eraseItemFromArray(arrayToModify, itemToErase);
-          const [itemToPaste] = itemToErase;
-          itemToPaste.isLogined = false;
-          curUser.user.inactiveUsers.push(itemToPaste);
+          curUser.user.inactiveUsers.push(message.payload.user);
         }
       }
       curUser.notify('ueo');
@@ -81,14 +73,6 @@ socket.onmessage = function abcd(event) {
 
     case 'MSG_SEND':
       curUser.user.latestMessage = message.payload.message;
-      curUser.user.inactiveUsers.concat(curUser.user.activeUsers).forEach((user) => {
-        if (
-          user.login === message.payload.message.to ||
-          user.login === message.payload.message.from
-        ) {
-          user.history.push(message.payload.message);
-        }
-      });
       curUser.notify('ms');
       break;
 

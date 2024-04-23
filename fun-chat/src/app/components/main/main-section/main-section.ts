@@ -6,13 +6,11 @@ import {
   MessageType,
   searchAttributes,
   sendButtonProperties,
-  User,
   UserFromResponse,
 } from '../../../interfaces';
 import curUser from '../../../../utils/current-user';
 import socket from '../../../../services/socket';
 import Message from './message/message';
-import { getRuDate } from '../../../../utils/validate-functions';
 import UserList from './list/user-list';
 
 export default class MainSection {
@@ -105,22 +103,9 @@ export default class MainSection {
   //   }
   // }
 
-  appendMessage(param: User, message: MessageType) {
+  appendMessage(message: MessageType, str: 'from' | 'to') {
     const messageView = new Message();
-    if (message.from === param.login) {
-      messageView.getHtml().classList.add('right');
-      messageView.messageFrom.textContent = 'You';
-      if (message.status.isReaded) {
-        messageView.messageStatus2.textContent = 'Read';
-      } else if (message.status.isDelivered) {
-        messageView.messageStatus2.textContent = 'Delivered';
-      } else messageView.messageStatus2.textContent = 'Sent';
-    }
-    if (message.to === param.login) {
-      messageView.messageFrom.textContent = message.from;
-    }
-    messageView.messageTime.textContent = getRuDate(new Date(message.datetime));
-    messageView.messageText.textContent = message.text;
+    messageView.renderMessage(message, str);
     if (this.dialogContainer.firstElementChild?.classList.contains('text-line')) {
       this.dialogContainer.innerHTML = '';
     }
@@ -145,7 +130,7 @@ export default class MainSection {
   addEventListeners() {
     this.searchinput.addEventListener('input', () => {
       const currentValue = this.searchinput.value;
-      const arrayToFilter = this.userlist.allUsers;
+      const arrayToFilter = this.userlist.getAllUsers();
       const filteredUsers = arrayToFilter.filter((item) =>
         item.login.toLowerCase().startsWith(currentValue.toLowerCase()),
       );

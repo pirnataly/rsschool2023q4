@@ -38,6 +38,8 @@ class Main implements ObserverInterface {
     switch (id) {
       case 'ul':
         this.header.changeUserName(param.login);
+        this.mainSection.userlist.activeUsersMessages = [];
+        this.mainSection.userlist.inactiveUsersMessages = [];
         this.mainSection.disabledChatForm();
         break;
 
@@ -61,7 +63,11 @@ class Main implements ObserverInterface {
         //   }
         // }
         // addHistory(param, 'active');
-        this.mainSection.render();
+        this.mainSection.userlist.activeUsers = curUser.user.activeUsers;
+        this.mainSection.userlist.inactiveUsers = curUser.user.inactiveUsers;
+        this.mainSection.clearUserList();
+        this.mainSection.addUserList(this.mainSection.userlist.getAllUsers());
+        // this.mainSection.render();
         break;
 
       case 'ueo':
@@ -84,11 +90,16 @@ class Main implements ObserverInterface {
           const messageFrom = param.latestMessage.from;
           const messageTo = param.latestMessage.to;
           const userToChat = this.mainSection.userToChatWith.textContent;
-          if (messageFrom === userToChat || messageTo === userToChat) {
-            this.mainSection.appendMessage(param, param.latestMessage);
+          if (messageFrom === userToChat) {
+            this.mainSection.appendMessage(param.latestMessage, 'to');
+          }
+          if (messageTo === userToChat) {
+            this.mainSection.appendMessage(param.latestMessage, 'from');
           } else {
+            const newarr = [];
+            newarr.push(param.latestMessage);
+            this.mainSection.userlist.activeUsersMessages.push(newarr);
             this.mainSection.clearUserList();
-
             this.mainSection.addUserList(this.mainSection.userlist.getAllUsers());
           }
         }
