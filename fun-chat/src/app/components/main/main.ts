@@ -113,6 +113,10 @@ class Main implements ObserverInterface {
         this.mainSection.userlist.inactiveUsersMessages.push(curUser.user.messages);
         this.mainSection.render();
         break;
+
+      case 'mfcu':
+        this.mainSection.showMessageHistory(curUser.user.messages);
+        break;
       default:
         break;
     }

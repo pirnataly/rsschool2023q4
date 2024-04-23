@@ -84,27 +84,41 @@ export default class MainSection {
     );
   }
 
-  // showMessageHistory(user: User, param: UserFromResponse[]) {
-  //   if (param.length) {
-  //     const currentUserToChat = param.find(
-  //       (item) => item.login === this.userToChatWith.textContent,
-  //     );
-  //     if (currentUserToChat) {
-  //       if (currentUserToChat.history.length !== 0) {
-  //         currentUserToChat.history.forEach((historyMessage) => {
-  //           this.appendMessage(user, historyMessage);
-  //         });
-  //       } else {
-  //         const textLine = createElement('text-line', 'p');
-  //         textLine.textContent = 'Write your first message...';
-  //         this.dialogContainer.append(textLine);
-  //       }
-  //     }
-  //   }
-  // }
+  showMessageHistory(messages: MessageType[]) {
+    if (messages.length) {
+      messages.forEach((message) => {
+        if (message.from === curUser.user.login) {
+          this.appendMessage(message, 'from');
+        } else {
+          this.appendMessage(message, 'to');
+        }
+      });
+    } else {
+      const textLine = createElement('text-line', 'p');
+      textLine.textContent = 'Write your first message...';
+      this.dialogContainer.append(textLine);
+    }
+    // const currentUserToChat = param.find(
+    //   (item) => item.login === this.userToChatWith.textContent,
+    // );
+
+    //   mesage
+    //   if (currentUserToChat) {
+    //     if (currentUserToChat.history.length !== 0) {
+    //       currentUserToChat.history.forEach((historyMessage) => {
+    //         this.appendMessage(user, historyMessage);
+    //       });
+    //     } else {
+    //       const textLine = createElement('text-line', 'p');
+    //       textLine.textContent = 'Write your first message...';
+    //       this.dialogContainer.append(textLine);
+    //     }
+    //   }
+    // }
+  }
 
   appendMessage(message: MessageType, str: 'from' | 'to') {
-    const messageView = new Message();
+    const messageView = new Message(message.id);
     messageView.renderMessage(message, str);
     if (this.dialogContainer.firstElementChild?.classList.contains('text-line')) {
       this.dialogContainer.innerHTML = '';
@@ -139,15 +153,28 @@ export default class MainSection {
     });
 
     this.userlist.getHtml().addEventListener('click', (ev) => {
+      this.dialogContainer.innerHTML = '';
       const { target } = ev;
       const li = (target as HTMLElement).closest('li');
       if (li) {
         this.userToChatWith.textContent = li.children[1].textContent;
+        socket.send(
+          JSON.stringify({
+            id: 'mfcu',
+            type: 'MSG_FROM_USER',
+            payload: {
+              user: {
+                login: this.userToChatWith.textContent,
+              },
+            },
+          }),
+        );
         this.userToChatWithStatus.textContent = li.children[0].classList.contains('user-active')
           ? 'online'
           : 'offline';
         Array.from(this.chatForm.children).forEach((child) => child.removeAttribute('disabled'));
         this.dialogContainer.innerHTML = '';
+
         // усли убрать, то сообщения не отображаются
         // const concatArrays = this.userlist.getAllUsers();
         // this.showMessageHistory(curUser.user, concatArrays);

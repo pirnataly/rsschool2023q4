@@ -24,7 +24,10 @@ export default class Message {
 
   messageStatus2: HTMLElement | HTMLDivElement | HTMLLinkElement | HTMLFormElement;
 
-  constructor() {
+  id: string;
+
+  constructor(messageId: string) {
+    this.id = messageId;
     this.messageBlock = createElement('message-block', 'div');
     this.messageContainer = createElement('message-container', 'div');
     this.messageHeader = createElement('message-header', 'div');
