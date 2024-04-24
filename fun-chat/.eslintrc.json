@@ -17,7 +17,5 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["prettier", "import", "@typescript-eslint"],
-  "rules": {
-    "no-console": 0
-  }
+  "rules": {}
 }

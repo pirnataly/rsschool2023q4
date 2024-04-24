@@ -98,32 +98,24 @@ export default class MainSection {
       textLine.textContent = 'Write your first message...';
       this.dialogContainer.append(textLine);
     }
-    // const currentUserToChat = param.find(
-    //   (item) => item.login === this.userToChatWith.textContent,
-    // );
-
-    //   mesage
-    //   if (currentUserToChat) {
-    //     if (currentUserToChat.history.length !== 0) {
-    //       currentUserToChat.history.forEach((historyMessage) => {
-    //         this.appendMessage(user, historyMessage);
-    //       });
-    //     } else {
-    //       const textLine = createElement('text-line', 'p');
-    //       textLine.textContent = 'Write your first message...';
-    //       this.dialogContainer.append(textLine);
-    //     }
-    //   }
-    // }
   }
 
   appendMessage(message: MessageType, str: 'from' | 'to') {
     const messageView = new Message(message.id);
     messageView.renderMessage(message, str);
+
     if (this.dialogContainer.firstElementChild?.classList.contains('text-line')) {
       this.dialogContainer.innerHTML = '';
     }
     this.dialogContainer.append(messageView.getHtml());
+    setTimeout(
+      () =>
+        this.dialogContainer.lastElementChild?.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        }),
+      0,
+    );
   }
 
   updateStatus() {

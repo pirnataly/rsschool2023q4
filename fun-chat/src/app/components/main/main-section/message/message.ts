@@ -62,6 +62,10 @@ export default class Message {
     this.messageText.textContent = message.text;
   }
 
+  getCont() {
+    return this.messageContainer;
+  }
+
   getHtml() {
     return this.messageBlock;
   }
